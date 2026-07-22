@@ -14,3 +14,7 @@ An initiative should contain:
 - closure record.
 
 Do not use initiatives for single-repository work or as a second implementation tracker.
+
+## Active initiatives
+
+- [Provider-neutral repository automation](provider-neutral-repository-automation.md)
