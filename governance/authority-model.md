@@ -12,10 +12,14 @@ Dornglut uses explicit authorities so planning documents, issue trackers, automa
 | What local architecture is durable? | An accepted repository decision record |
 | What cross-repository decision is durable? | An accepted ADR in this repository |
 | What outcome spans repositories? | An initiative in this repository with linked local issues |
-| What is currently prioritized or scheduled? | The Dornglut Engineering Portfolio in GitHub Projects |
+| What is currently prioritized or scheduled? | Local issues and explicit initiative sequencing until the Engineering Portfolio is activated; the portfolio afterward |
 | What changed in a delivery? | The pull request and its validation evidence |
 | What defaults apply when a repository is silent? | `dornglut/.github` |
 | How is shared CI orchestrated? | `dornglut/github-workflows` |
+
+## Portfolio activation
+
+The Dornglut Engineering Portfolio becomes the live authority for priority, status, sequencing, and dates only after the GitHub Project exists, its field model is accepted, and active repository issues are linked. Until then, local issues and explicit initiative sequencing remain authoritative.
 
 ## Precedence
 
