@@ -1,11 +1,27 @@
 # Initiatives
 
-An initiative describes one genuine cross-repository outcome with multiple owning issues, explicit sequencing, rollback, and closure evidence. It must not replace repository-local implementation tracking or duplicate live Project state.
+An initiative is an optional durable charter for one large cross-repository outcome.
 
-## Active initiatives
+Use an initiative only when:
+
+- at least two repositories are affected;
+- multiple local issues or delivery phases are required;
+- sequencing or migration order matters;
+- rollback or closure evidence matters;
+- one engineering issue cannot represent the outcome clearly.
+
+An initiative links repository-local issues. It does not replace ADRs, the Engineering Portfolio, repository roadmaps, or pull requests.
+
+Allowed statuses are `proposed`, `active`, `completed`, and `cancelled`.
+
+## Proposed
 
 None.
 
-## Closed initiatives
+## Active
 
-- [Provider-neutral repository automation](provider-neutral-repository-automation.md) — cancelled by ADR 0003 before implementation or product adoption
+None.
+
+## Closed
+
+- [Provider-neutral repository automation](provider-neutral-repository-automation.md) — cancelled by ADR 0003
