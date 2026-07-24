@@ -1,20 +1,11 @@
 # Initiatives
 
-An initiative describes one cross-repository outcome. It links to repository-local issues that own implementation.
-
-An initiative should contain:
-
-- outcome and rationale;
-- affected repositories;
-- dependency graph;
-- acceptance evidence;
-- sequencing constraints;
-- risks and rollback;
-- linked local issues;
-- closure record.
-
-Do not use initiatives for single-repository work or as a second implementation tracker.
+An initiative describes one genuine cross-repository outcome with multiple owning issues, explicit sequencing, rollback, and closure evidence. It must not replace repository-local implementation tracking or duplicate live Project state.
 
 ## Active initiatives
 
-- [Provider-neutral repository automation](provider-neutral-repository-automation.md)
+None.
+
+## Closed initiatives
+
+- [Provider-neutral repository automation](provider-neutral-repository-automation.md) — cancelled by ADR 0003 before implementation or product adoption
