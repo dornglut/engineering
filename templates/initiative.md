@@ -1,9 +1,11 @@
-# Initiative: Title
+# Initiative title
 
 - Status: proposed
 - Owner:
-- Priority:
-- Target:
+- Opened: YYYY-MM-DD
+- Closed:
+- Owning issue:
+- Decision authority:
 
 ## Outcome
 
@@ -15,8 +17,12 @@
 
 ## Acceptance evidence
 
+## Sequencing constraints
+
 ## Linked local issues
 
 ## Risks and rollback
 
-## Closure
+## Closure record
+
+Open.
