@@ -1,6 +1,12 @@
 # Organization ADRs
 
-Accepted organization-level decisions are numbered sequentially and remain immutable except for factual corrections. Superseding decisions add a new ADR and link both directions.
+Organization-level decisions are numbered sequentially. Accepted ADRs remain immutable except for factual corrections and lifecycle metadata. A superseding decision adds a new ADR and links both directions.
+
+## Current
 
 - [ADR 0001 — Organization authority and repository boundaries](0001-organization-authority-and-repository-boundaries.md)
-- [ADR 0002 — Provider-neutral repository automation](0002-provider-neutral-repository-automation.md)
+- [ADR 0003 — Retire provider-neutral repository automation](0003-retire-provider-neutral-repository-automation.md)
+
+## Superseded
+
+- [ADR 0002 — Provider-neutral repository automation](0002-provider-neutral-repository-automation.md), superseded by ADR 0003
