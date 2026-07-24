@@ -92,15 +92,15 @@ Rejected. RICE, WSJF, story points, confidence, effort, and date fields create a
 
 ## Adoption or migration
 
-1. Configure the private Inbox and public Engineering Portfolio.
-2. Normalize `dornglut/engineering` around the accepted authority and profile model.
+1. Normalize `dornglut/engineering` and establish the Project semantic contract.
+2. Configure the private Inbox and public Engineering Portfolio through the native GitHub interface and record the evidence.
 3. Normalize `.github` defaults and issue intake.
 4. Harden `github-workflows`.
 5. Audit GitHub settings and apply repository properties.
 6. Correct active namespace and issue-template authority in RunenUI.
 7. Conform Runenwerk and RunenSDF without homogenizing their product documentation.
 8. Create a Rust framework template immediately before RunenGPU bootstrap.
-9. publish a dated organization-normalization audit.
+9. Publish a dated organization-normalization audit.
 
 Implementation is owned by [engineering issue #4](https://github.com/dornglut/engineering/issues/4).
 
