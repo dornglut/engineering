@@ -1,0 +1,172 @@
+# Repository standard
+
+This standard defines the minimum common shape of Dornglut repositories without forcing unrelated products into one physical layout.
+
+## Operating rule
+
+> Centralize organization policy, shared architecture, defaults, and CI orchestration. Localize implementation, validation semantics, public contracts, releases, local architecture, roadmaps, and issues.
+
+Consistency applies to the meaning of entrypoints and ownership boundaries. It does not require identical internal trees.
+
+## Repository profiles
+
+### Organization defaults
+
+Used by `dornglut/.github`.
+
+Owns:
+
+- the public organization profile;
+- inherited community-health files;
+- generic issue forms;
+- pull-request guidance;
+- workflow templates.
+
+Must not own product roadmaps, implementation architecture, release state, or product validation semantics.
+
+### Engineering
+
+Used by `dornglut/engineering`.
+
+Owns:
+
+- organization governance and standards;
+- cross-repository architecture;
+- organization ADRs;
+- qualifying initiatives;
+- dated cross-repository audits.
+
+Must not own product implementation, copied repository roadmaps, or live Project state.
+
+### Workflow library
+
+Used by `dornglut/github-workflows`.
+
+Owns reusable read-only CI orchestration and its compatibility contract.
+
+Must not recreate product validation logic, author source, or own product releases.
+
+### Rust framework
+
+Used by standalone framework repositories such as RunenUI, RunenSDF, and future RunenGPU, RunenRender, and RunenECS repositories.
+
+Expected root entrypoints:
+
+- `README.md`;
+- `AGENTS.md`;
+- `ARCHITECTURE.md`;
+- `TESTING.md`;
+- Cargo workspace or package metadata;
+- toolchain declaration;
+- license files;
+- one thin CI caller.
+
+A repository may omit an entrypoint only when the same information has one obvious canonical location and the omission is explicit.
+
+### Integration product
+
+Used by Runenwerk.
+
+It follows the same entrypoint semantics as a Rust framework but may contain applications, adapters, multiple domains, and a documentation site as the canonical long-form authority.
+
+### Template
+
+Used only for a repository that bootstraps new repositories.
+
+A template is a one-time starting point. It must not become an ongoing synchronization authority for repositories created from it.
+
+## Root documentation
+
+### README
+
+The public landing page states:
+
+- purpose and boundary;
+- maturity;
+- major capabilities and decisive limitations;
+- canonical validation;
+- links to architecture, testing, contribution, security, and license information.
+
+It must not contain current branch, PR, exact head, CI run, temporary blocker, or live priority state.
+
+### AGENTS
+
+`AGENTS.md` is an executor contract:
+
+- where to start;
+- ownership constraints;
+- prohibited operations;
+- canonical validation;
+- required delivery evidence.
+
+It must not duplicate the full architecture or roadmap.
+
+### ARCHITECTURE
+
+`ARCHITECTURE.md` is a concise root map of the system boundary, dependency direction, and canonical long-form architecture.
+
+### TESTING
+
+`TESTING.md` is a concise root map of focused checks, the canonical baseline, CI relationship, and evidence rules.
+
+### docs
+
+Use only directories that contain real material. Common semantic locations are:
+
+- `architecture/` for durable system contracts;
+- `adr/` for repository-local decisions;
+- `roadmap.md` for durable outcome sequence;
+- `status.md` for maturity;
+- `tooling/` for maintained procedures;
+- `reports/` for dated evidence;
+- `history/` for retired systems;
+- `provenance/` for extraction and origin evidence.
+
+Do not add empty taxonomy directories merely for symmetry.
+
+## Repository lifecycle
+
+### Create
+
+A new repository requires:
+
+- a named purpose and owning domain;
+- an explicit relationship to existing repositories;
+- a visibility decision;
+- default branch `main`;
+- one canonical read-only validation command;
+- a README and `AGENTS.md`;
+- ownership of issues, decisions, releases, and compatibility;
+- no duplicate source authority.
+
+Skeleton repositories may reserve a namespace but must not imply a completed extraction or public contract.
+
+### Develop
+
+Nontrivial work is issue-owned and based on the current accepted default branch. Pull requests remain bounded, validate exact heads, and document scope, non-scope, migration, and next action.
+
+Shared defaults and workflows do not replace repository-local authority.
+
+### Extract or transfer
+
+Before moving a subsystem into a standalone repository:
+
+1. correct the source boundary in the current owner;
+2. transfer one accepted implementation authority;
+3. prove standalone validation and downstream conformance;
+4. migrate real consumers;
+5. delete the old source and workspace authority;
+6. prove no forwarding package, alias, include, branch dependency, submodule, or duplicate implementation remains;
+7. close provenance and release policy.
+
+A planned repository name does not authorize source movement.
+
+### Archive
+
+Archive only when active consumers, issues, releases, security obligations, and replacement authority are documented. Archived repositories are historical evidence, not active dependencies.
+
+## Identity and history
+
+Active repository metadata and links use the `dornglut/*` namespace.
+
+Historical owners may remain only where they are necessary provenance or decision history. Validators should reject historical owner identities in active README, governance, standards, and architecture surfaces.
