@@ -11,4 +11,4 @@ permissions:
 
 jobs:
   validate:
-    uses: dornglut/github-workflows/.github/workflows/reusable-python-repository-validate.yml@b6caad377102ca73794efaf734a65903b8efa829
+    uses: dornglut/github-workflows/.github/workflows/reusable-python-repository-validate.yml@3cc9ad6c9bde3b970695baefa1cd815ff56111c7
