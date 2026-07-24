@@ -72,6 +72,10 @@ A source-writing workflow is not validation and requires a separately accepted a
 
 Temporary source-export or self-authoring workflows must not be introduced to compensate for an authoring-tool limitation. Select a suitable checked-out executor instead.
 
+## Adoption
+
+ADR 0004 adopts this document as the target standard. Existing repositories may remain temporarily nonconformant only during an explicit owning-repository migration. New changes must not increase divergence, and each exception closes through the corresponding normalization work.
+
 ## Failure behavior
 
 Validation fails closed when:
