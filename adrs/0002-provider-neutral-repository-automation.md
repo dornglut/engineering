@@ -1,6 +1,6 @@
 # ADR 0002: Provider-neutral repository automation
 
-- Status: accepted
+- Status: superseded
 - Date: 2026-07-22
 - Owner: Dornglut organization
 - Scope: organization-wide repository automation
@@ -118,4 +118,4 @@ None.
 
 ## Superseded by
 
-None.
+[ADR 0003 — Retire provider-neutral repository automation](0003-retire-provider-neutral-repository-automation.md)
