@@ -19,7 +19,7 @@ Dornglut adopts three organization repositories:
 
 Product repositories retain implementation, validation semantics, releases, compatibility, local decisions, and issue ownership.
 
-Dornglut will establish an Engineering Portfolio for live priority, status, sequencing, and dates. It becomes authoritative only after the GitHub Project exists and the activation criteria in `portfolio/README.md` are satisfied. It never replaces durable ADRs or repository-local issues.
+Dornglut will establish an Engineering Portfolio for live priority, status, sequencing, and dates. It becomes authoritative only after the GitHub Project exists and the activation criteria in [Authority and work](../governance/authority-and-work.md) are satisfied. It never replaces durable ADRs or repository-local issues.
 
 ## Consequences
 

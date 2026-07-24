@@ -1,10 +1,21 @@
 # Agent instructions
 
-Scope: cross-repository governance and architecture.
+Scope: cross-repository governance, organization standards, and shared architecture.
 
-- Do not implement product behavior in this repository.
-- Do not duplicate repository-local roadmaps, issue bodies, generated state, or validation output.
-- Separate durable decisions from dated reports and volatile portfolio data.
-- Cross-repository claims must identify the owning repository and evidence.
-- Historical paths remain historical; active links use the `dornglut/*` namespace.
-- Run `python scripts/validate.py` before proposing changes.
+Start with:
+
+1. `governance/authority-and-work.md`;
+2. the relevant file under `standards/`;
+3. `architecture/runen-family.md` when repository boundaries or extraction order are involved;
+4. the owning ADR, initiative, issue, and pull request.
+
+Rules:
+
+- do not implement product behavior in this repository;
+- do not duplicate repository-local roadmaps, issue bodies, generated state, or validation output;
+- do not mirror changing GitHub priority or branch state in durable Markdown;
+- separate durable decisions from dated reports and operational Project state;
+- cross-repository claims must identify the owning repository and evidence;
+- historical paths remain historical; active links use the `dornglut/*` namespace;
+- preserve bidirectional ADR supersession and initiative closure records;
+- run `python scripts/validate.py` before proposing changes.

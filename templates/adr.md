@@ -19,4 +19,8 @@
 
 ## Supersedes
 
+None.
+
 ## Superseded by
+
+None.
