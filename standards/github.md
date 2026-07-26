@@ -85,6 +85,60 @@ The private Inbox and public Engineering Portfolio follow the semantic contract 
 
 Projects own live operational state. They do not replace ADRs, repository issues, roadmaps, or source.
 
+## Program issues and sub-issues
+
+A program issue is an optional repository-local parent for one accepted multi-phase outcome. Use it only when:
+
+- the same repository owns the current behavior or migration boundary;
+- at least two accepted child issues or delivery phases are required;
+- sequencing or an explicit final gate matters;
+- one ordinary issue would either become unbounded or duplicate multiple child scopes.
+
+Create the parent when the first child phase is accepted, not merely to reserve a future framework or extraction name. Planned work with no accepted child phase remains in the roadmap or private Inbox.
+
+Use GitHub's native parent and sub-issue relationship as the phase inventory. Do not use a Markdown tasklist as a second issue hierarchy. A parent body may summarize the intended phase sequence, but the native relationship owns membership and completion progress.
+
+The parent issue owns:
+
+- the program outcome and repository boundary;
+- durable links to the roadmap and accepted decisions;
+- sequencing constraints and major gates;
+- explicit non-goals;
+- the final closure condition.
+
+Child issues own exact investigation or implementation scope, acceptance criteria, validation, migration evidence, and closeout. The parent must not copy child acceptance criteria, current priority or status, pull-request inventories, workflow runs, temporary blockers, or exact-head evidence.
+
+Close the parent only after its final accepted gate. Do not close it merely because one milestone or early phase completes.
+
+## Milestones
+
+A milestone represents one coherent completion gate within one repository. Its description states the outcome and exit criteria; GitHub owns the associated issue and pull-request inventory, counts, ordering, and completion percentage.
+
+Use milestones when several accepted issues or pull requests must complete before one repository-local outcome is achieved. Do not use a milestone as a topic label, indefinite backlog, roadmap replacement, or cross-repository program container.
+
+For staged extraction work, use separate gates:
+
+```text
+<Framework> — Internal Extraction Readiness
+<Framework> — External Extraction and Cutover
+```
+
+Create the external milestone only when internal readiness is approaching completion and cross-repository transfer work is accepted. Do not pre-create inactive future milestones for RunenRender, RunenECS, or another planned framework.
+
+Assign child delivery issues and, where useful, their pull requests to the relevant milestone. A parent program issue normally remains outside its child milestone so it does not add a permanently open item to the milestone denominator. A real due date may be set only when a genuine dated commitment exists.
+
+Do not repeat the milestone's issue list in its description or in durable Markdown. Do not create Project fields that duplicate milestone, parent, sub-issue, dependency, or relationship data.
+
+Completed historical extractions do not receive retrospective program issues or milestones unless an unresolved operational need requires them.
+
+## Cross-repository programs
+
+A repository-local program may begin before an extraction crosses repository boundaries. Once work requires coordinated delivery in two or more repositories, apply the initiative criteria in [Authority and work](../governance/authority-and-work.md).
+
+A qualifying engineering initiative provides the durable cross-repository charter, sequencing, rollback, and closure evidence. It links repository-local parent and child issues; it does not replace their milestones, roadmaps, implementation scope, or pull requests.
+
+Native cross-repository sub-issue links may support navigation, but they do not remove the requirement for an initiative when the accepted initiative criteria are met.
+
 ## Repository properties
 
 When GitHub custom properties are available, use only:
