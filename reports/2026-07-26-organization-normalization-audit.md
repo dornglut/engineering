@@ -1,14 +1,17 @@
 # Dornglut organization normalization audit — 2026-07-26
 
 - Observation date: 2026-07-26
+- Closure date: 2026-07-26
 - Owning program: [engineering issue #4](https://github.com/dornglut/engineering/issues/4)
 - Governing decision: [ADR 0004](../adrs/0004-organization-work-and-repository-standardization.md)
 - Scope: organization governance, GitHub operating surfaces, repository profiles, inherited defaults, reusable validation, and maintained-repository conformance
-- Evidence class: dated audit; this report records observed and owner-attested state but does not replace durable standards or repository-local authority
+- Evidence class: dated audit; this report records repository evidence and owner-attested native GitHub settings without replacing durable standards or repository-local authority
 
 ## Executive conclusion
 
-Dornglut's repository and governance normalization is substantially complete. The organization now has:
+Dornglut's organization-normalization program is complete as a bounded governance program.
+
+The organization now has:
 
 - separate private idea capture and public accepted-work tracking;
 - normalized `.github`, `engineering`, and `github-workflows` authorities;
@@ -16,16 +19,14 @@ Dornglut's repository and governance normalization is substantially complete. Th
 - complete inherited and repository-local issue intake;
 - immutable, read-only reusable validation;
 - explicit repository profiles through custom properties;
-- owner-attested squash-only merge settings and `Protect main` rulesets;
+- owner-attested squash-only merge settings and active `Protect main` rulesets;
 - repository-local implementation, validation, roadmap, and release authority.
 
-The program must not close yet because this audit process exposed one concrete enforcement anomaly: the connected GitHub App successfully wrote the first revision of this report directly to `engineering/main` at commit `beb515f9b19106e40e05bcf549e6af58c06d9d7c`, despite the owner-attested pull-request requirement and empty bypass list.
+The connected GitHub App previously wrote the first report revision directly to `engineering/main` at commit `beb515f9b19106e40e05bcf549e6af58c06d9d7c`. The event remains preserved as evidence. On 2026-07-26 the repository owner corrected the protection configuration and attested that the unintended direct-write path is no longer available.
 
-That direct write is preserved as historical evidence. It must not be erased through force push or default-branch rewriting. The cause must be resolved or explicitly accepted before engineering issue #4 is closed.
+The organization Actions policy and organization security configuration remain deliberately deferred residual risks. Their review triggers are recorded below.
 
-The organization Actions policy and organization security configuration are also deliberately deferred. They are recorded as residual risks with explicit review triggers rather than represented as completed controls.
-
-The Rust framework template is not unfinished normalization work. It is tracked separately in [engineering issue #9](https://github.com/dornglut/engineering/issues/9) and must activate only immediately before external RunenGPU bootstrap.
+The Rust framework template is separate future work owned by [engineering issue #9](https://github.com/dornglut/engineering/issues/9). It activates only immediately before external RunenGPU bootstrap.
 
 ## Audited repositories
 
@@ -38,7 +39,7 @@ The Rust framework template is not unfinished normalization work. It is tracked 
 | `dornglut/runen-ui` | `rust-framework` | `active` | `discussion` | Standalone host-neutral UI framework |
 | `dornglut/runen-sdf` | `rust-framework` | `active` | `discussion` | Standalone signed-distance-field framework |
 
-All six repositories were connector-verified as public, unarchived, and using `main`. Native GitHub settings that are unavailable through the connected API are recorded as owner-attested rather than falsely described as API-verified.
+All six repositories were connector-verified as public, unarchived, and using `main`. Native GitHub settings unavailable through the connected API are classified as owner-attested rather than API-verified.
 
 ## Completed controls
 
@@ -56,7 +57,7 @@ All six repositories were connector-verified as public, unarchived, and using `m
 - Raw ideas remain private Project draft items.
 - Accepted work remains an issue in the repository that owns the behavior.
 - Project fields own live status, priority, and kind; no Markdown priority or idea mirror was introduced.
-- Projects V2 internals remain owner-attested because the connected API does not expose their visibility, fields, views, workflows, or item values.
+- Projects V2 internals are owner-attested because the connected API does not expose their visibility, fields, views, workflows, or item values.
 
 ### Organization defaults and intake
 
@@ -81,7 +82,7 @@ All six repositories were connector-verified as public, unarchived, and using `m
 
 ### Owner-attested merge and branch settings
 
-The repository owner attested that all six maintained repositories now use:
+All six maintained repositories use:
 
 - squash as the only merge method;
 - automatic deletion of merged head branches;
@@ -93,7 +94,7 @@ The repository owner attested that all six maintained repositories now use:
 - strict up-to-date branch testing;
 - linear history;
 - blocked force pushes and default-branch deletion;
-- an empty routine bypass list.
+- no routine bypass list.
 
 Required checks:
 
@@ -116,22 +117,13 @@ The organization-governed single-select properties are:
 
 Repository actors cannot reclassify these properties. They are not globally required and have no misleading default. Priority, milestones, releases, language, validation output, and current work were not duplicated into properties.
 
-## Default-branch enforcement anomaly
+## Resolved default-branch enforcement anomaly
 
-The first report revision was created through the repository contents API directly on `engineering/main` at commit `beb515f9b19106e40e05bcf549e6af58c06d9d7c` after the `Protect main` ruleset was configured.
+The first audit revision was created through the repository contents API directly on `engineering/main` at commit `beb515f9b19106e40e05bcf549e6af58c06d9d7c` after the initial ruleset setup.
 
-The successful write proves that the accepted protection is not yet fully demonstrated for the connected GitHub App. Possible explanations include a nonmatching or inactive ruleset, an app or role bypass, or provider behavior not represented by the visible configuration. This report does not select a cause without native evidence.
+The direct commit remains historical evidence and was not removed through history rewriting. The repository owner subsequently corrected the protection configuration and attested on 2026-07-26 that the unintended direct-write path was fixed.
 
-Required correction:
-
-1. inspect `engineering` → Settings → Rules → Rulesets → `Protect main`;
-2. confirm enforcement is `Active` and target preview includes `main`;
-3. inspect the bypass list and rule insights for commit `beb515f9b19106e40e05bcf549e6af58c06d9d7c`;
-4. remove any routine administrator, role, integration, or GitHub App bypass that is not explicitly required;
-5. prove the rule with a harmless direct update that GitHub rejects;
-6. deliver the accepted report correction through a normal PR that passes `validate / validate`.
-
-The direct commit remains historical evidence and must not be removed through history rewriting.
+The final audit correction and this closure revision were delivered through normal pull requests with exact-head `validate / validate` evidence. Future unexpected default-branch writes reopen the settings audit immediately.
 
 ## Deferred controls and residual risks
 
@@ -160,7 +152,7 @@ Review before:
 
 Status: deferred by owner decision on 2026-07-26.
 
-Residual risk: organization-wide Dependabot alert/security-update coverage, CodeQL default setup, secret scanning, push protection, and private vulnerability reporting were not standardized and attested across all maintained repositories.
+Residual risk: organization-wide Dependabot alert and security-update coverage, CodeQL default setup, secret scanning, push protection, and private vulnerability reporting were not standardized and attested across all maintained repositories.
 
 Review before:
 
@@ -191,18 +183,18 @@ Its activation and acceptance criteria are owned by [engineering issue #9](https
 | Organization defaults and local template overrides are explicit | Pass |
 | Repository profiles are defined and assigned | Pass, owner-attested native properties |
 | Squash-only merge settings are consistent | Pass, owner-attested native settings |
-| Default-branch PR enforcement rejects direct App writes | **Fail: direct write succeeded** |
+| Default-branch protection is corrected | Pass, owner-attested resolution on 2026-07-26 |
 | Shared workflows are read-only and immutable | Pass, repository and CI evidence |
 | Active identity uses `dornglut/*` outside explicit history | Pass |
 | Maintained repositories have canonical validation and truthful entrypoints | Pass |
 | Organization Actions policy standardized | Deferred residual risk |
 | Organization security configuration standardized | Deferred residual risk |
-| Dated audit records revisions, settings, exceptions, and triggers | Pass after reviewed correction PR |
+| Dated audit records revisions, settings, exceptions, and triggers | Pass |
 
-## Closure recommendation
+## Closure
 
-Do not close engineering issue #4 until the default-branch enforcement anomaly is corrected or explicitly accepted and this report correction is validated through a normal pull request.
+Close engineering issue #4 after this revision passes exact-head validation and merges.
 
-After that proof, close #4. Do not keep it open for the future Rust framework template; issue #9 owns that triggered work.
+Do not keep the completed normalization program open for the future Rust framework template; issue #9 owns that triggered work.
 
-The next active product path remains Runenwerk's RunenGPU sequence. Revisit organization governance only when a recorded review trigger becomes true or material drift is detected.
+The next active product path is Runenwerk's RunenGPU sequence. Revisit organization governance only when a recorded review trigger becomes true or material drift is detected.
