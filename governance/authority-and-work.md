@@ -10,7 +10,7 @@ Dornglut uses explicit authorities so ideas, plans, GitHub state, automation, an
 | What must pass before merge? | The owning repository's canonical validation command |
 | Where does an undeveloped idea go? | A draft item in the private Dornglut Inbox |
 | What investigation or implementation work is accepted? | An issue in the repository that owns the behavior |
-| What coordinates a roadmap milestone or multi-phase outcome within one repository? | An optional parent issue with native sub-issues |
+| What coordinates a roadmap milestone or multi-phase outcome within one repository? | An optional parent issue with linked child issues |
 | What is currently prioritized or active? | The public Dornglut Engineering Portfolio |
 | What is the durable long-term sequence? | The owning repository's roadmap |
 | What is the current product maturity? | The owning repository's status document |
@@ -49,7 +49,9 @@ An idea becomes a repository issue only when it needs investigation, affects an 
 
 A repository-local parent issue is the optional operational representation of one accepted roadmap milestone or multi-phase outcome in the repository that owns the current behavior or migration boundary.
 
-Use native sub-issues for the slice inventory and completion progress. The parent issue owns the outcome, boundary, sequencing constraints, major gates, and final closure condition. Child issues own exact investigation or implementation scope. The repository roadmap owns durable sequence, and the Engineering Portfolio owns live priority and status.
+The parent body maintains one concise linked slice index, and each child issue links back to the parent. Native GitHub parent/sub-issue relationships may be added when the active tool can maintain them directly without extra owner work, but they are not required authority. The creator of a child issue must also update the parent index through the available tool.
+
+The parent issue owns the outcome, boundary, sequencing constraints, major gates, and final closure condition. Child issues own exact investigation or implementation scope. The repository roadmap owns durable sequence, and the Engineering Portfolio owns live priority and status.
 
 Do not create a parent issue merely to reserve a future name. Activate it when the first child slice is accepted. Do not copy child acceptance criteria, Project fields, pull-request state, or validation evidence into the parent body.
 
