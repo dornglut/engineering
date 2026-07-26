@@ -10,7 +10,7 @@ Dornglut uses explicit authorities so ideas, plans, GitHub state, automation, an
 | What must pass before merge? | The owning repository's canonical validation command |
 | Where does an undeveloped idea go? | A draft item in the private Dornglut Inbox |
 | What investigation or implementation work is accepted? | An issue in the repository that owns the behavior |
-| What coordinates a multi-phase outcome within one repository? | An optional parent program issue with native sub-issues and repository milestones |
+| What coordinates a roadmap milestone or multi-phase outcome within one repository? | An optional parent issue with native sub-issues |
 | What is currently prioritized or active? | The public Dornglut Engineering Portfolio |
 | What is the durable long-term sequence? | The owning repository's roadmap |
 | What is the current product maturity? | The owning repository's status document |
@@ -45,15 +45,15 @@ A raw idea requires only a useful title, a short statement of the possibility or
 
 An idea becomes a repository issue only when it needs investigation, affects an accepted roadmap, blocks a decision, has a plausible delivery horizon, or requires durable discussion and evidence.
 
-## Program issues and milestones
+## Parent issues and roadmap milestones
 
-A repository-local program issue is an optional operational parent for one accepted outcome that requires multiple issues or delivery phases in the same owning repository.
+A repository-local parent issue is the optional operational representation of one accepted roadmap milestone or multi-phase outcome in the repository that owns the current behavior or migration boundary.
 
-Use native sub-issues for the phase inventory and repository milestones for coherent completion gates. The parent issue owns the outcome, boundary, sequencing constraints, major gates, and final closure condition. Child issues own exact investigation or implementation scope. The repository roadmap owns durable sequence, and the Engineering Portfolio owns live priority and status.
+Use native sub-issues for the slice inventory and completion progress. The parent issue owns the outcome, boundary, sequencing constraints, major gates, and final closure condition. Child issues own exact investigation or implementation scope. The repository roadmap owns durable sequence, and the Engineering Portfolio owns live priority and status.
 
-Do not create a program issue merely to reserve a future name. Activate it when the first child phase is accepted. Do not copy child acceptance criteria, milestone inventories, Project fields, pull-request state, or validation evidence into the parent body.
+Do not create a parent issue merely to reserve a future name. Activate it when the first child slice is accepted. Do not copy child acceptance criteria, Project fields, pull-request state, or validation evidence into the parent body.
 
-A program issue normally remains outside its child milestone so it does not distort milestone completion. It closes only after its final accepted gate. Work that crosses repositories may require an engineering initiative under the criteria below; the initiative links repository-local issues rather than replacing them.
+The parent closes only after its final accepted gate. GitHub Milestone objects are not a second hierarchy for internal technical phases; Dornglut reserves them for real repository-local release or shipping targets. Work that crosses repositories may require an engineering initiative under the criteria below; the initiative links repository-local issues rather than replacing them.
 
 ## Projects
 
