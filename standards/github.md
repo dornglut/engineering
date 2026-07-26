@@ -85,7 +85,7 @@ The private Inbox and public Engineering Portfolio follow the semantic contract 
 
 Projects own live operational state. They do not replace ADRs, repository issues, roadmaps, or source.
 
-## Parent issues and sub-issues
+## Parent issues and child links
 
 A parent issue is the optional repository-local operational representation of one accepted roadmap milestone or multi-phase outcome. Use it only when:
 
@@ -96,11 +96,14 @@ A parent issue is the optional repository-local operational representation of on
 
 Create the parent when the first child slice is accepted, not merely to reserve a future framework or extraction name. Planned work with no accepted child slice remains in the roadmap or private Inbox.
 
-Use GitHub's native parent and sub-issue relationship as the slice inventory. Do not use a Markdown tasklist or GitHub Milestone object as a second issue hierarchy. A parent body may summarize the intended sequence, but the native relationship owns membership and completion progress.
+The parent body maintains one concise linked slice index. Each child issue links back to the parent. The agent or tool that creates a child issue must update the parent index in the same workflow so the owner is not left with recurring manual setup.
+
+GitHub's native parent/sub-issue relationship is optional. Use it when the active tool can create and maintain it directly without extra owner work. Do not make a manual native-linking operation a prerequisite for accepted work, and do not treat native relationship metadata as more authoritative than the linked parent and child issue bodies.
 
 The parent issue owns:
 
 - the roadmap milestone or program outcome and repository boundary;
+- the concise linked slice index;
 - durable links to the roadmap and accepted decisions;
 - sequencing constraints and major gates;
 - explicit non-goals;
@@ -126,7 +129,7 @@ website launch
 Do not create a GitHub milestone for:
 
 - an internal architecture phase;
-- a roadmap milestone already represented by a parent issue and native sub-issues;
+- a roadmap milestone already represented by a parent issue and linked child issues;
 - extraction readiness;
 - an indefinite backlog or topic;
 - a cross-repository program.
@@ -143,7 +146,7 @@ A repository-local parent may begin before an extraction crosses repository boun
 
 A qualifying engineering initiative provides the durable cross-repository charter, sequencing, rollback, and closure evidence. It links repository-local parent and child issues; it does not replace their roadmaps, implementation scope, Projects, or pull requests.
 
-Native cross-repository sub-issue links may support navigation, but they do not remove the requirement for an initiative when the accepted initiative criteria are met.
+Native cross-repository sub-issue links may support navigation when tooling can maintain them without extra owner work, but they do not remove the requirement for an initiative when the accepted initiative criteria are met.
 
 ## Repository properties
 
