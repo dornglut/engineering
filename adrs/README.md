@@ -9,6 +9,7 @@ Allowed statuses are `proposed`, `accepted`, `superseded`, and `rejected`.
 - [ADR 0001 — Organization authority and repository boundaries](0001-organization-authority-and-repository-boundaries.md)
 - [ADR 0003 — Retire provider-neutral repository automation](0003-retire-provider-neutral-repository-automation.md)
 - [ADR 0004 — Organization work and repository standardization](0004-organization-work-and-repository-standardization.md)
+- [ADR 0005 — Authorize the bounded Werkstatt pilot](0005-authorize-werkstatt-pilot.md)
 
 ## Proposed
 
