@@ -70,12 +70,14 @@ Maintainer delivery issues may use a structured body without appearing as a publ
 A pull request identifies:
 
 - owning issue or decision;
-- implementation base when relevant;
-- reviewed head or merge ref;
+- accepted base when relevant;
+- reviewed feature head;
+- exact-head validation run or status;
 - outcome;
 - included and excluded scope;
-- validation evidence;
 - API, security, migration, and documentation impact.
+
+When recording completed delivery, it also identifies the accepted squash merge and accepted-main push evidence when that repository requires it. A merge ref is reported only when intentionally describing merge-result validation; it must not be called the reviewed feature head. Moving the feature head invalidates prior exact-head evidence.
 
 Pull requests remain bounded. Merge uses exact-head evidence.
 

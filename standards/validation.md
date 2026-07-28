@@ -44,9 +44,17 @@ Third-party Actions are pinned to full commit SHAs with readable version comment
 
 ## Exact-head evidence
 
-Merge evidence identifies the exact reviewed head and the successful workflow run or status attached to it.
+An accepted base is the accepted default-branch revision from which pull-request work was prepared and reviewed. A reviewed feature head is the exact branch commit that contains the proposed change.
 
-A passing run on an earlier commit is not merge evidence for a moved head.
+Exact-head validation evidence is a successful validation of that reviewed feature head. For a `pull_request` event, the expected revision is `github.event.pull_request.head.sha`; for `push` and `workflow_dispatch`, it is `github.sha`. The workflow explicitly selects the expected revision for checkout and proves that `git rev-parse HEAD` equals the expected revision before the repository-owned canonical command runs.
+
+A moved feature head invalidates earlier exact-head evidence. A workflow definition may be loaded from a pull-request merge ref while the reusable workflow explicitly checks out feature-head repository content. These are separate facts: the definition ref is not the validated repository revision.
+
+Synthetic merge-result evidence validates GitHub's generated pull-request merge revision. It can be useful when intentionally requested, but it must be named merge-result evidence and must not be substituted for reviewed feature-head evidence. Exact feature-head validation does not require duplicating the complete canonical suite against the synthetic merge result by default; final review still checks the accepted base and current mergeability.
+
+An accepted squash merge is the immutable default-branch commit created after a pull request is accepted. It is neither the reviewed feature head nor a synthetic merge ref. Accepted-main push evidence is a successful default-branch push validation where `github.sha`, checkout ref, `git rev-parse HEAD`, and the accepted default-branch commit are equal.
+
+Successful validation presents compact repository, event, revision, command, and conclusion evidence. Failed validation preserves command status, prints bounded diagnostics, retains a complete short-lived artifact, and removes temporary diagnostic state.
 
 The authoring tool, local evidence, and model assessment do not replace independent CI. Local validation remains valuable preparation and should be reported honestly.
 

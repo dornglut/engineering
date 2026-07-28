@@ -34,6 +34,22 @@ LEGACY_ADR_SECTION_EXEMPTIONS = {
     1: {"Context", "Decision", "Consequences"},
 }
 
+EXPECTED_WORKFLOW_FILES = {Path(".github/workflows/validate.yml")}
+EXPECTED_REUSABLE_WORKFLOW = (
+    "dornglut/github-workflows/.github/workflows/"
+    "reusable-python-repository-validate.yml@"
+    "624cb41adeed21a6461eb838bc7330bd0a5079fd"
+)
+VERIFIED_HEAD_INITIATIVE = Path("initiatives/verified-head-validation.md")
+VERIFIED_HEAD_REPOSITORIES = {
+    "dornglut/github-workflows",
+    "dornglut/engineering",
+    "dornglut/runen-sdf",
+    "dornglut/runenwerk",
+    "dornglut/.github",
+    "dornglut/runen-ui",
+}
+
 FORBIDDEN_PATHS = {
     "governance/README.md",
     "governance/authority-model.md",
@@ -168,6 +184,161 @@ def validate_required_paths(failures: list[str]) -> None:
     for forbidden in sorted(FORBIDDEN_PATHS):
         if (ROOT / forbidden).exists():
             fail(f"{forbidden}: retired authority path must not exist", failures)
+
+
+def validate_workflow_inventory(failures: list[str]) -> None:
+    directory = ROOT / ".github/workflows"
+    actual = {
+        path.relative_to(ROOT)
+        for path in directory.glob("*")
+        if path.is_file() and path.suffix.lower() in {".yml", ".yaml"}
+    }
+    if actual != EXPECTED_WORKFLOW_FILES:
+        expected = ", ".join(sorted(path.as_posix() for path in EXPECTED_WORKFLOW_FILES))
+        found = ", ".join(sorted(path.as_posix() for path in actual)) or "none"
+        fail(f"workflow inventory must be {expected}; found {found}", failures)
+
+
+def validate_validation_workflow(failures: list[str]) -> None:
+    path = ROOT / ".github/workflows/validate.yml"
+    text = read(path, failures)
+    if text is None:
+        return
+
+    if not text.startswith("name: Validate\n"):
+        fail(".github/workflows/validate.yml: workflow name must be 'Validate'", failures)
+    if not re.search(r"^  pull_request:\s*$", text, re.MULTILINE):
+        fail(".github/workflows/validate.yml: pull_request trigger is required", failures)
+    if "  push:\n    branches:\n      - main\n" not in text:
+        fail(".github/workflows/validate.yml: push trigger must be restricted to main", failures)
+    if "permissions:\n  contents: read\n\njobs:\n" not in text:
+        fail(".github/workflows/validate.yml: permissions must be read-only contents", failures)
+
+    uses = re.findall(r"^\s*uses:\s*(\S+)\s*$", text, re.MULTILINE)
+    if uses != [EXPECTED_REUSABLE_WORKFLOW]:
+        fail(
+            ".github/workflows/validate.yml: must make exactly one call to the accepted "
+            "reusable workflow revision",
+            failures,
+        )
+
+    jobs_marker = "jobs:\n"
+    jobs_body = text.split(jobs_marker, maxsplit=1)[1] if jobs_marker in text else ""
+    jobs = re.findall(r"^  ([A-Za-z0-9_-]+):\s*$", jobs_body, re.MULTILINE)
+    if jobs != ["validate"]:
+        fail(".github/workflows/validate.yml: must define exactly one 'validate' job", failures)
+
+    forbidden = {
+        "workflow_dispatch:": "workflow_dispatch trigger",
+        "with:": "workflow inputs",
+        "secrets:": "workflow secrets",
+        "steps:": "local job steps",
+        "scripts/validate.py": "duplicated canonical validation command",
+    }
+    for token, label in forbidden.items():
+        if token in text:
+            fail(f".github/workflows/validate.yml: must not contain {label}", failures)
+
+
+def require_markers(
+    path: Path, markers: set[str], failures: list[str], description: str
+) -> None:
+    text = read(path, failures)
+    if text is None:
+        return
+    lowered = text.lower()
+    missing = sorted(marker for marker in markers if marker.lower() not in lowered)
+    if missing:
+        fail(f"{relative(path)}: missing {description}: {', '.join(missing)}", failures)
+
+
+def validate_verified_head_standards(failures: list[str]) -> None:
+    validate_path = ROOT / "standards/validation.md"
+    require_markers(
+        validate_path,
+        {
+            "reviewed feature head",
+            "synthetic merge-result evidence",
+            "github.event.pull_request.head.sha",
+            "explicitly selects the expected revision",
+            "git rev-parse head",
+            "accepted squash merge",
+            "accepted-main push evidence",
+            "repository-owned canonical command",
+            "compact",
+            "bounded diagnostics",
+        },
+        failures,
+        "verified-head evidence markers",
+    )
+
+    github_path = ROOT / "standards/github.md"
+    github_text = read(github_path, failures)
+    if github_text is not None:
+        if "reviewed head or merge ref" in github_text.lower():
+            fail(f"{relative(github_path)}: ambiguous reviewed-head wording is forbidden", failures)
+        missing = sorted(
+            marker
+            for marker in {
+                "accepted base",
+                "reviewed feature head",
+                "exact-head validation",
+                "accepted squash merge",
+            }
+            if marker not in github_text.lower()
+        )
+        if missing:
+            fail(
+                f"{relative(github_path)}: missing pull-request evidence markers: "
+                f"{', '.join(missing)}",
+                failures,
+            )
+
+    require_markers(
+        ROOT / "standards/repositories.md",
+        {"accepted base", "reviewed feature head", "exact feature head", "post-merge revision"},
+        failures,
+        "development lifecycle markers",
+    )
+
+
+def validate_verified_head_initiative(failures: list[str]) -> None:
+    path = ROOT / VERIFIED_HEAD_INITIATIVE
+    text = read(path, failures)
+    if text is None:
+        return
+
+    manifest = read(ROOT / "validation-required-files.txt", failures)
+    if manifest is not None and manifest.splitlines().count(VERIFIED_HEAD_INITIATIVE.as_posix()) != 1:
+        fail("validation-required-files.txt: verified-head initiative must be required once", failures)
+
+    index_text = read(ROOT / "initiatives/README.md", failures)
+    if index_text is not None:
+        active = markdown_sections(index_text).get("Active", "")
+        link = f"({VERIFIED_HEAD_INITIATIVE.name})"
+        if index_text.count(link) != 1 or active.count(link) != 1:
+            fail("initiatives/README.md: verified-head initiative must be indexed once under Active", failures)
+
+    values = metadata(text)
+    if values.get("Status", "").lower() != "active":
+        fail("initiatives/verified-head-validation.md: status must be active", failures)
+    if "engineering#20" not in values.get("Owning issue", "").lower():
+        fail("initiatives/verified-head-validation.md: owning issue must be engineering#20", failures)
+    if "624cb41adeed21a6461eb838bc7330bd0a5079fd" not in text:
+        fail("initiatives/verified-head-validation.md: accepted shared revision is required", failures)
+    missing_repositories = sorted(
+        repository for repository in VERIFIED_HEAD_REPOSITORIES if repository not in text
+    )
+    if missing_repositories:
+        fail(
+            "initiatives/verified-head-validation.md: missing affected repositories: "
+            f"{', '.join(missing_repositories)}",
+            failures,
+        )
+    if "engineering#21" not in text.lower():
+        fail("initiatives/verified-head-validation.md: engineering#21 link is required", failures)
+    if markdown_sections(text).get("Closure record", "").strip() != "Open.":
+        fail("initiatives/verified-head-validation.md: active closure record must be 'Open.'", failures)
 
 
 def under(path: Path, candidates: tuple[Path, ...]) -> bool:
@@ -379,6 +550,8 @@ def main() -> int:
     failures: list[str] = []
 
     validate_required_paths(failures)
+    validate_workflow_inventory(failures)
+    validate_validation_workflow(failures)
 
     for path in sorted(ROOT.rglob("*")):
         if not path.is_file() or ".git" in path.parts:
@@ -389,6 +562,8 @@ def main() -> int:
     validate_authority_content(failures)
     validate_adrs(failures)
     validate_initiatives(failures)
+    validate_verified_head_standards(failures)
+    validate_verified_head_initiative(failures)
 
     if failures:
         print("repository validation failed:", file=sys.stderr)

@@ -11,6 +11,7 @@ adrs/0002-provider-neutral-repository-automation.md
 adrs/0003-retire-provider-neutral-repository-automation.md
 adrs/0004-organization-work-and-repository-standardization.md
 initiatives/README.md
+initiatives/verified-head-validation.md
 initiatives/provider-neutral-repository-automation.md
 reports/README.md
 templates/adr.md
