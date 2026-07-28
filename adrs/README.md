@@ -12,7 +12,7 @@ Allowed statuses are `proposed`, `accepted`, `superseded`, and `rejected`.
 
 ## Proposed
 
-None.
+- [ADR 0005 — Authorize the bounded Werkstatt pilot](0005-authorize-werkstatt-pilot.md)
 
 ## Superseded
 
