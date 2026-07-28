@@ -1,6 +1,6 @@
 # ADR 0005: Authorize the bounded Werkstatt pilot
 
-- Status: proposed
+- Status: accepted
 - Date: 2026-07-28
 - Owner: Dornglut organization
 - Scope: human and automated engineering workbench experimentation
