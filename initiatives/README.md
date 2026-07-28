@@ -20,7 +20,7 @@ None.
 
 ## Active
 
-None.
+- [Verified-head validation adoption](verified-head-validation.md) — sequenced adoption of immutable, exact-head repository validation
 
 ## Closed
 
