@@ -199,45 +199,99 @@ def validate_workflow_inventory(failures: list[str]) -> None:
         fail(f"workflow inventory must be {expected}; found {found}", failures)
 
 
+def workflow_blocks(text: str, failures: list[str]) -> list[tuple[str, list[str]]]:
+    lines = [
+        line.rstrip()
+        for line in text.splitlines()
+        if line.strip() and not line.lstrip().startswith("#")
+    ]
+    blocks: list[tuple[str, list[str]]] = []
+
+    for line in lines:
+        if line.startswith((" ", "\t")):
+            if not blocks:
+                fail(
+                    ".github/workflows/validate.yml: indented content must follow a top-level key",
+                    failures,
+                )
+            else:
+                blocks[-1][1].append(line)
+            continue
+
+        match = re.fullmatch(r"([A-Za-z][A-Za-z0-9_-]*):(?:\s.*)?", line)
+        if match is None:
+            fail(
+                ".github/workflows/validate.yml: malformed top-level workflow content",
+                failures,
+            )
+            continue
+        blocks.append((match.group(1), [line]))
+
+    return blocks
+
+
 def validate_validation_workflow(failures: list[str]) -> None:
     path = ROOT / ".github/workflows/validate.yml"
     text = read(path, failures)
     if text is None:
         return
 
-    if not text.startswith("name: Validate\n"):
-        fail(".github/workflows/validate.yml: workflow name must be 'Validate'", failures)
-    if not re.search(r"^  pull_request:\s*$", text, re.MULTILINE):
-        fail(".github/workflows/validate.yml: pull_request trigger is required", failures)
-    if "  push:\n    branches:\n      - main\n" not in text:
-        fail(".github/workflows/validate.yml: push trigger must be restricted to main", failures)
-    if "permissions:\n  contents: read\n\njobs:\n" not in text:
-        fail(".github/workflows/validate.yml: permissions must be read-only contents", failures)
+    blocks = workflow_blocks(text, failures)
+    keys = [key for key, _ in blocks]
+    expected_keys = ["name", "on", "permissions", "jobs"]
+    if keys != expected_keys:
+        fail(
+            ".github/workflows/validate.yml: top-level keys must be exactly "
+            "name, on, permissions, jobs",
+            failures,
+        )
+    if len(keys) != len(set(keys)):
+        fail(".github/workflows/validate.yml: duplicate top-level keys are forbidden", failures)
 
-    uses = re.findall(r"^\s*uses:\s*(\S+)\s*$", text, re.MULTILINE)
-    if uses != [EXPECTED_REUSABLE_WORKFLOW]:
+    def block(key: str) -> list[str]:
+        return next((lines for block_key, lines in blocks if block_key == key), [])
+
+    if block("name") != ["name: Validate"]:
+        fail(".github/workflows/validate.yml: workflow name must be 'Validate'", failures)
+
+    expected_triggers = [
+        "on:",
+        "  pull_request:",
+        "  push:",
+        "    branches:",
+        "      - main",
+    ]
+    if block("on") != expected_triggers:
+        fail(
+            ".github/workflows/validate.yml: triggers must be exactly pull_request "
+            "and push restricted to main",
+            failures,
+        )
+
+    if block("permissions") != ["permissions:", "  contents: read"]:
+        fail(
+            ".github/workflows/validate.yml: permissions must be exactly read-only contents",
+            failures,
+        )
+
+    jobs = block("jobs")
+    if jobs[:2] != ["jobs:", "  validate:"]:
+        fail(".github/workflows/validate.yml: must define exactly one 'validate' job", failures)
+
+    expected_uses = f"    uses: {EXPECTED_REUSABLE_WORKFLOW}"
+    uses = [line for line in jobs[2:] if line.startswith("    uses:")]
+    if uses != [expected_uses]:
         fail(
             ".github/workflows/validate.yml: must make exactly one call to the accepted "
             "reusable workflow revision",
             failures,
         )
-
-    jobs_marker = "jobs:\n"
-    jobs_body = text.split(jobs_marker, maxsplit=1)[1] if jobs_marker in text else ""
-    jobs = re.findall(r"^  ([A-Za-z0-9_-]+):\s*$", jobs_body, re.MULTILINE)
-    if jobs != ["validate"]:
-        fail(".github/workflows/validate.yml: must define exactly one 'validate' job", failures)
-
-    forbidden = {
-        "workflow_dispatch:": "workflow_dispatch trigger",
-        "with:": "workflow inputs",
-        "secrets:": "workflow secrets",
-        "steps:": "local job steps",
-        "scripts/validate.py": "duplicated canonical validation command",
-    }
-    for token, label in forbidden.items():
-        if token in text:
-            fail(f".github/workflows/validate.yml: must not contain {label}", failures)
+    if jobs != ["jobs:", "  validate:", expected_uses]:
+        fail(
+            ".github/workflows/validate.yml: validate job may contain only the accepted "
+            "reusable-workflow uses field",
+            failures,
+        )
 
 
 def require_markers(
