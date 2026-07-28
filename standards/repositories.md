@@ -69,6 +69,32 @@ Used by Runenwerk.
 
 It follows the same entrypoint semantics as a Rust framework but may contain applications, adapters, multiple domains, and a documentation site as the canonical long-form authority.
 
+### Application
+
+Used by repositories that own a user-facing product such as Werkstatt.
+
+Owns:
+
+- application behavior, state, and user experience;
+- product-specific integrations and adapters;
+- releases and compatibility;
+- local architecture, roadmap, issues, and validation;
+- product documentation and operational requirements.
+
+Expected root entrypoints:
+
+- `README.md`;
+- `AGENTS.md`;
+- `ARCHITECTURE.md`;
+- `TESTING.md`;
+- product build or package metadata when implementation exists;
+- toolchain declarations required by the implementation;
+- license files;
+- one canonical read-only validation command;
+- one thin CI caller when executable validation exists.
+
+An application may provide headless libraries, command-line tools, graphical frontends, services, or adapters when they serve the product boundary. It must not own organization policy, copied repository roadmaps, copied live Project state, or implementation authority belonging to integrated repositories.
+
 ### Template
 
 Used only for a repository that bootstraps new repositories.
