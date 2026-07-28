@@ -229,7 +229,7 @@ Rejected. Human-only value, domain correctness, security policy, and workspace r
 - The pilot adds documentation, design, and later maintenance cost that must be justified through measured use.
 - Automatic delivery remains deliberately deferred.
 
-## Adoption and evidence gates
+## Adoption or migration
 
 1. Review and accept Werkstatt W0 through its owning pull request.
 2. Complete W1 as a separate decision-complete design issue and pull request.
