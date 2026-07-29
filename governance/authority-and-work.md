@@ -106,7 +106,28 @@ When priorities are equal, prefer work that:
 
 Do not introduce weighted scoring, story points, confidence percentages, or impact formulas without repeated evidence that the simpler model is insufficient.
 
-For the current single-maintainer operating mode, keep no more than two product or framework tracks and one organization-maintenance track active. Reassess this limit when contributor capacity changes.
+Dornglut has no organization-wide numeric cap on active product, framework, or maintenance tracks. The Engineering Portfolio owns live priority and status; concurrency is governed by explicit ownership, dependencies, write conflicts, validation, and review capacity.
+
+Parallel tracks are permitted only when each track:
+
+- is owned by an accepted issue with bounded scope and stop conditions;
+- has one clear repository, branch, workspace, and writer authority;
+- begins from an explicit accepted revision;
+- does not treat an unmerged branch as accepted dependency authority;
+- does not write the same files or durable authority surfaces as another track without an explicit rebase or serialization plan;
+- retains independent repository validation, review, and acceptance;
+- does not create duplicate implementation, roadmap, or decision authority.
+
+The following work remains serialized unless an accepted issue defines and proves a safe staged migration:
+
+- writes to the same branch, workspace, file set, or mutable runtime state;
+- shared root manifests and lockfiles;
+- organization policy and repository-family architecture;
+- protected workflow and validation changes;
+- source extraction, transfer, deletion, and consumer cutover;
+- dependency or public-contract transitions that require coordinated acceptance.
+
+When parallel tracks become difficult to review, repeatedly conflict, or obscure the critical path, reduce concurrency through Portfolio priority and explicit issue status rather than a universal count.
 
 ## Initiatives
 
