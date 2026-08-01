@@ -43,17 +43,28 @@ accepted issue
 
 ## Material review reconciliation
 
-Material findings receive stable IDs and bind to the exact reviewed revision. A moved
-feature head makes an earlier verdict stale for acceptance while preserving it as
-historical review evidence. Classify each material finding as correction inside the
-current issue, clarification of current acceptance criteria, separately owned
-follow-up, durable ADR or design correction, or historical observation only.
+A material finding records a stable finding ID, the exact reviewed revision, severity,
+owning issue or pull request, and its required correction or accepted disposition. The
+finding ID persists across corrected revisions. A moved feature head makes the earlier
+approval or rejection stale for acceptance, not historical evidence: record the same
+finding ID and disposition on the corrected head, then bind an independent re-review
+verdict to that new exact revision.
 
-Project active corrections concisely into the owning issue or pull request; full
-rationale may remain in the review or a dated report. Validate and independently
-re-review the corrected exact head. Reports do not silently become active work
-authority, material findings cannot be silently deferred, and this contract creates no
-generated task database or truth-certificate model.
+| Route | Observable trigger | Required record |
+|---|---|---|
+| Correct inside the current issue | The implementation misses accepted criteria, violates current scope or ownership, needs material acceptance-proof clarification, or remains necessary for the same authorized outcome. | Concisely project the correction into the issue when criteria, proof, or scope materially changes; do not copy the full review. |
+| Correct in the current PR only | The correction plainly fits unchanged issue criteria, changes no durable contract or scope interpretation, and creates no independently schedulable work. | Keep the finding ID and reviewed revision visible in review evidence. |
+| Create a separate follow-up issue | The finding is outside authorized scope, independently deliverable, owned by a distinguishable component or repository, and not required for truthful acceptance. | Record its relationship or dependency. A blocking correctness, ownership, security, or acceptance defect is never relabelled as follow-up to permit merge. |
+| Update ADR or durable design authority | The correction changes a durable architecture decision, public or cross-repository contract, ownership boundary, long-term tradeoff, or accepted invariant. | The current issue or PR still owns the active correction until that authority is accepted. |
+| Report-only | The observation needs no current correction, changes no acceptance criterion, creates no accepted follow-up, and exists only as historical or audit evidence. | Keep it historical; reports do not silently authorize work. |
+
+For example: a failed current acceptance criterion is corrected in its issue; a newly
+found architecture-boundary conflict also updates the ADR or accepted design; a useful
+non-blocking out-of-scope enhancement becomes a related follow-up; a corrected head
+keeps the same finding ID and receives a new exact-head verdict; and an observation
+with no required action remains report-only. This is routing guidance, not a generated
+task database, truth certificate, mandatory closeout report, or duplicate exact-head
+ledger.
 
 ## Post-merge closure reconciliation
 

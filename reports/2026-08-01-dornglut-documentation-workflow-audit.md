@@ -54,9 +54,12 @@ policy, arbitrary commands, paths, secrets, or toolchain inputs.
 
 The fixed shared Rust workflow's `cargo +stable validate` invocation is compatible
 with Engineering's `stable` toolchain and `cargo validate` alias; it does not alter
-Engineering validation semantics. Its use changes the visible reusable-job check name,
-so required-status configuration must be reviewed through native repository settings
-before relying on that name operationally.
+Engineering validation semantics. The initial audit could not verify native ruleset
+state. Direct native Engineering repository administration subsequently verified only
+the active `Protect main` ruleset and migrated its required context from
+`validate / validate` to `validate / Repository baseline`, preserving its remaining
+rules. This is repository-specific migration evidence, not an organization-wide
+ruleset claim.
 
 No product or framework repository is modified here. Any repository-local adoption of
 the new Engineering documentation contracts, status naming, or validation interface is
@@ -64,7 +67,7 @@ separate work owned by that repository.
 
 ## Unavailable evidence
 
-This audit did not verify organization or repository rulesets, actual custom-property
-values, private Project configuration, secrets, local unpushed branches, or unexercised
-runtime behavior. It also does not claim accepted-main CI evidence for this unmerged
-Engineering change.
+This audit did not verify organization-wide rulesets, actual custom-property values,
+private Project configuration, secrets, local unpushed branches, or unexercised runtime
+behavior. It also does not claim accepted-main CI evidence for this unmerged Engineering
+change.

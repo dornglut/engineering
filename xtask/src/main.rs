@@ -1,4 +1,4 @@
-use std::path::PathBuf;
+use std::path::Path;
 use std::process::Command;
 
 fn main() {
@@ -8,22 +8,38 @@ fn main() {
         std::process::exit(2);
     }
 
-    let root = std::env::current_dir().unwrap_or_else(|error| {
-        eprintln!("failed to resolve repository root: {error}");
-        std::process::exit(2);
-    });
-    let tests = Command::new("cargo")
-        .args(["test", "--locked", "--package", "xtask"])
-        .current_dir(&root)
-        .status()
-        .unwrap_or_else(|error| {
-            eprintln!("failed to run validator tests: {error}");
-            std::process::exit(2);
-        });
-    if !tests.success() {
-        std::process::exit(tests.code().unwrap_or(1));
+    let root = Path::new(env!("CARGO_MANIFEST_DIR"))
+        .parent()
+        .expect("xtask manifest must have a repository root");
+    for (label, arguments) in [
+        ("format check", &["+stable", "fmt", "--all", "--check"][..]),
+        (
+            "Clippy",
+            &[
+                "+stable",
+                "clippy",
+                "--workspace",
+                "--all-targets",
+                "--locked",
+                "--",
+                "-D",
+                "warnings",
+            ][..],
+        ),
+        (
+            "locked tests",
+            &[
+                "+stable",
+                "test",
+                "--workspace",
+                "--all-targets",
+                "--locked",
+            ][..],
+        ),
+    ] {
+        run_cargo(root, label, arguments);
     }
-    match xtask::validate(&PathBuf::from(root)) {
+    match xtask::validate(root) {
         Ok(()) => println!("repository validation passed"),
         Err(findings) => {
             eprintln!("repository validation failed:");
@@ -32,5 +48,20 @@ fn main() {
             }
             std::process::exit(1);
         }
+    }
+}
+
+fn run_cargo(root: &Path, label: &str, arguments: &[&str]) {
+    let status = Command::new("cargo")
+        .args(arguments)
+        .current_dir(root)
+        .status()
+        .unwrap_or_else(|error| {
+            eprintln!("failed to run {label}: {error}");
+            std::process::exit(2);
+        });
+    if !status.success() {
+        eprintln!("{label} failed");
+        std::process::exit(status.code().unwrap_or(1));
     }
 }

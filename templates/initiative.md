@@ -28,6 +28,7 @@
 Open.
 
 For `active` initiatives, leave `Closed` empty and retain an open closure state. For
-`completed` or `cancelled` initiatives, record a close date and concise non-open
-closure record, then index it under Closed. Status is one of `proposed`, `active`,
-`completed`, or `cancelled`.
+`completed` or `cancelled` initiatives, record a valid `YYYY-MM-DD` close date and a
+concise substantive closure record; `Open`, `Open.`, `None`, and `None.` are not
+closure evidence. Index closed initiatives under Closed. Status is one of `proposed`,
+`active`, `completed`, or `cancelled`.

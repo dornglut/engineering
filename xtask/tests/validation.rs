@@ -30,12 +30,25 @@ impl Fixture {
         }
         fs::write(file, contents).unwrap();
     }
+    fn write_bytes(&self, path: &str, contents: &[u8]) {
+        let file = self.0.join(path);
+        if let Some(parent) = file.parent() {
+            fs::create_dir_all(parent).unwrap();
+        }
+        fs::write(file, contents).unwrap();
+    }
+    fn errors(&self) -> Vec<String> {
+        xtask::validate(&self.0).expect_err("fixture should fail")
+    }
     fn fails(self, expected: &str) {
-        let errors = xtask::validate(&self.0).expect_err("fixture should fail");
+        let errors = self.errors();
         assert!(
             errors.iter().any(|error| error.contains(expected)),
             "expected {expected:?} in {errors:#?}"
         );
+    }
+    fn passes(self) {
+        assert!(xtask::validate(&self.0).is_ok());
     }
 }
 impl Drop for Fixture {
@@ -89,7 +102,169 @@ fn copy_tracked(source: &Path, destination: &Path) {
 #[test]
 fn valid_repository_passes() {
     let fixture = Fixture::new();
+    assert!(
+        fixture
+            .0
+            .join("adrs/0005-authorize-werkstatt-pilot.md")
+            .exists()
+    );
+    assert!(
+        fixture
+            .0
+            .join("initiatives/provider-neutral-repository-automation.md")
+            .exists()
+    );
     assert!(xtask::validate(&fixture.0).is_ok());
+}
+
+#[test]
+fn strict_adr_and_initiative_filenames() {
+    for filename in ["0006-bad_name.md", "0006-Bad.md", "0006-bad name.md"] {
+        let fixture = Fixture::new();
+        fixture.write(&format!("adrs/{filename}"), "# invalid\n");
+        fixture.fails("invalid ADR filename");
+    }
+    for filename in [
+        "-pilot.md",
+        "_pilot.md",
+        "Pilot.md",
+        "bad_name.md",
+        "bad name.md",
+    ] {
+        let fixture = Fixture::new();
+        fixture.write(&format!("initiatives/{filename}"), "# invalid\n");
+        fixture.fails("invalid initiative filename");
+    }
+    let fixture = Fixture::new();
+    fixture.replace(
+        "adrs/README.md",
+        "(0005-authorize-werkstatt-pilot.md)",
+        "(0005-bad_name.md)",
+    );
+    fixture.fails("adrs/README.md: invalid ADR index target: 0005-bad_name.md");
+    let fixture = Fixture::new();
+    fixture.replace(
+        "adrs/0002-provider-neutral-repository-automation.md",
+        "(0003-retire-provider-neutral-repository-automation.md)",
+        "(0003-bad_name.md)",
+    );
+    fixture.fails("invalid ADR Superseded by target: 0003-bad_name.md");
+}
+
+#[test]
+fn text_and_workflow_suffixes_are_ascii_case_insensitive() {
+    let fixture = Fixture::new();
+    fs::remove_file(fixture.0.join("README.md")).unwrap();
+    fixture.write_bytes("README.MD", b"contains\0nul\n");
+    fixture.fails("README.MD: contains a NUL byte");
+    let fixture = Fixture::new();
+    fixture.write("document.Markdown", "[broken](missing.md)\n");
+    fixture.fails("document.Markdown: broken relative link");
+    let fixture = Fixture::new();
+    fixture.write_bytes("config.TOML", b"invalid \xff\n");
+    fixture.fails("config.TOML: is not valid UTF-8");
+    let fixture = Fixture::new();
+    fixture.write("data.JSON", "{\"ok\": true} \n");
+    fixture.fails("data.JSON:1: trailing whitespace");
+    let fixture = Fixture::new();
+    fixture.write("script.PY", "\tprint('tab')\n");
+    fixture.fails("script.PY:1: tab character");
+    for filename in ["workflow.YML", "workflow.YAML"] {
+        let fixture = Fixture::new();
+        fixture.write(&format!(".github/workflows/{filename}"), "name: extra\n");
+        fixture.fails("workflow inventory must be .github/workflows/validate.yml");
+    }
+}
+
+#[test]
+fn markdown_link_scanner_recovers_and_excludes_external_targets() {
+    let fixture = Fixture::new();
+    fixture.write(
+        "reports/unrelated-prefix.md",
+        "literal ]( prose before [missing](missing.md)\n",
+    );
+    fixture.fails("unrelated-prefix.md: broken relative link: missing.md");
+    let fixture = Fixture::new();
+    fixture.write(
+        "reports/malformed-then-valid.md",
+        "[malformed] text [missing](missing.md)\n",
+    );
+    fixture.fails("malformed-then-valid.md: broken relative link: missing.md");
+    let fixture = Fixture::new();
+    fixture.write("reports/multiple.md", "[one](one.md) and [two](two.md)\n");
+    let errors = fixture.errors();
+    assert!(
+        errors
+            .iter()
+            .any(|error| error.contains("multiple.md: broken relative link: one.md"))
+    );
+    assert!(
+        errors
+            .iter()
+            .any(|error| error.contains("multiple.md: broken relative link: two.md"))
+    );
+    let fixture = Fixture::new();
+    fixture.write("reports/escaping.md", "[escape](../../outside.md)\n");
+    fixture.fails("escaping.md: link escapes repository: ../../outside.md");
+    let fixture = Fixture::new();
+    fixture.write(
+        "reports/ordinary-prose.md",
+        "ordinary ]( prose and [fragment](#section) plus [external](https://example.invalid)\n",
+    );
+    fixture.write(
+        "reports/valid-fragment.md",
+        "[local fragment](../README.md#canonical-validation)\n",
+    );
+    fixture.passes();
+}
+
+fn closed_initiative(status: &str, closed: &str, closure: &str) -> String {
+    format!(
+        "# Fixture initiative\n\n- Status: {status}\n- Owner: Dornglut organization\n- Opened: 2026-08-01\n- Closed: {closed}\n- Owning issue: [engineering#27](https://github.com/dornglut/engineering/issues/27)\n- Decision authority: [Validation standard](../standards/validation.md)\n\n## Outcome\n\nFixture outcome.\n\n## Rationale\n\nFixture rationale.\n\n## Affected repositories\n\n- `dornglut/engineering`\n\n## Dependency graph\n\nNone.\n\n## Acceptance evidence\n\nFixture evidence.\n\n## Sequencing constraints\n\nNone.\n\n## Linked local issues\n\n- [engineering#27](https://github.com/dornglut/engineering/issues/27)\n\n## Risks and rollback\n\nNone.\n\n## Closure record\n\n{closure}\n"
+    )
+}
+
+fn add_closed_initiative(fixture: &Fixture, status: &str, closed: &str, closure: &str) {
+    fixture.write(
+        "initiatives/fixture-closure.md",
+        &closed_initiative(status, closed, closure),
+    );
+    fixture.replace(
+        "initiatives/README.md",
+        "## Closed",
+        "## Closed\n\n- [Fixture initiative](fixture-closure.md) — fixture lifecycle evidence",
+    );
+}
+
+#[test]
+fn closed_initiatives_require_dates_and_substantive_closure_records() {
+    let fixture = Fixture::new();
+    add_closed_initiative(
+        &fixture,
+        "completed",
+        "2026-08-02",
+        "Completed with reviewed evidence.",
+    );
+    fixture.passes();
+    let fixture = Fixture::new();
+    add_closed_initiative(
+        &fixture,
+        "cancelled",
+        "2026-08-02",
+        "Cancelled because the authorized outcome was no longer needed.",
+    );
+    fixture.passes();
+    for (status, closed, closure) in [
+        ("completed", "2026-08-02", "None."),
+        ("completed", "2026-08-02", "Open."),
+        ("cancelled", "2026-08-02", "None."),
+        ("cancelled", "2026-08-02", ""),
+        ("cancelled", "", "Cancelled with a recorded rationale."),
+    ] {
+        let fixture = Fixture::new();
+        add_closed_initiative(&fixture, status, closed, closure);
+        fixture.fails("closed initiative requires");
+    }
 }
 #[test]
 fn initiative_lifecycle_rejections() {

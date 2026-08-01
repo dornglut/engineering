@@ -2,7 +2,7 @@ use std::collections::{BTreeMap, BTreeSet};
 use std::fs;
 use std::path::{Component, Path, PathBuf};
 
-const TEXT_SUFFIXES: &[&str] = &["md", "yml", "yaml", "txt", "py", "toml"];
+const TEXT_SUFFIXES: &[&str] = &["md", "markdown", "yml", "yaml", "txt", "py", "toml", "json"];
 const ADR_STATUSES: &[&str] = &["proposed", "accepted", "superseded", "rejected"];
 const INITIATIVE_STATUSES: &[&str] = &["proposed", "active", "completed", "cancelled"];
 const RUST_WORKFLOW: &str = "dornglut/github-workflows/.github/workflows/reusable-rust-cargo-validate.yml@624cb41adeed21a6461eb838bc7330bd0a5079fd";
@@ -29,10 +29,33 @@ fn fail(failures: &mut BTreeSet<String>, message: impl Into<String>) {
     failures.insert(message.into());
 }
 fn rel(root: &Path, path: &Path) -> String {
-    path.strip_prefix(root)
-        .unwrap_or(path)
-        .to_string_lossy()
-        .replace('\\', "/")
+    let relative = path.strip_prefix(root).unwrap_or(path);
+    relative
+        .to_str()
+        .map(|value| value.replace('\\', "/"))
+        .unwrap_or_else(|| format!("{relative:?}"))
+}
+fn require_utf8_path(root: &Path, path: &Path, failures: &mut BTreeSet<String>) -> bool {
+    if path.strip_prefix(root).unwrap_or(path).to_str().is_some() {
+        true
+    } else {
+        fail(
+            failures,
+            format!(
+                "{}: validator-supported paths must be valid UTF-8",
+                rel(root, path)
+            ),
+        );
+        false
+    }
+}
+fn extension_is(path: &Path, expected: &str) -> bool {
+    path.extension()
+        .and_then(|value| value.to_str())
+        .is_some_and(|value| value.eq_ignore_ascii_case(expected))
+}
+fn is_markdown(path: &Path) -> bool {
+    extension_is(path, "md") || extension_is(path, "markdown")
 }
 
 fn files(root: &Path, failures: &mut BTreeSet<String>) -> Vec<PathBuf> {
@@ -56,7 +79,9 @@ fn collect(
     };
     for entry in entries.flatten() {
         let path = entry.path();
-        if path.file_name().and_then(|name| name.to_str()) == Some(".git") {
+        if path.file_name().and_then(|name| name.to_str()) == Some(".git")
+            || path == root.join("target")
+        {
             continue;
         }
         let Ok(kind) = entry.file_type() else {
@@ -66,6 +91,9 @@ fn collect(
             );
             continue;
         };
+        if !require_utf8_path(root, &path, failures) {
+            continue;
+        }
         if kind.is_symlink() {
             fail(
                 failures,
@@ -125,17 +153,38 @@ fn required_paths(root: &Path, failures: &mut BTreeSet<String>) {
 
 fn workflow(root: &Path, failures: &mut BTreeSet<String>) {
     let directory = root.join(".github/workflows");
-    let actual: BTreeSet<_> = fs::read_dir(&directory)
-        .ok()
-        .into_iter()
-        .flatten()
-        .flatten()
-        .filter_map(|entry| {
-            let path = entry.path();
-            let ext = path.extension()?.to_str()?;
-            (ext == "yml" || ext == "yaml").then(|| rel(root, &path))
-        })
-        .collect();
+    let mut actual = BTreeSet::new();
+    match fs::read_dir(&directory) {
+        Ok(entries) => {
+            for entry in entries {
+                match entry {
+                    Ok(entry) => {
+                        let path = entry.path();
+                        if !require_utf8_path(root, &path, failures) {
+                            continue;
+                        }
+                        if extension_is(&path, "yml") || extension_is(&path, "yaml") {
+                            actual.insert(rel(root, &path));
+                        }
+                    }
+                    Err(error) => fail(
+                        failures,
+                        format!(
+                            "{}: failed to read workflow entry: {error}",
+                            rel(root, &directory)
+                        ),
+                    ),
+                }
+            }
+        }
+        Err(error) => fail(
+            failures,
+            format!(
+                "{}: failed to read workflow directory: {error}",
+                rel(root, &directory)
+            ),
+        ),
+    }
     let expected = BTreeSet::from([".github/workflows/validate.yml".to_owned()]);
     if actual != expected {
         fail(
@@ -170,7 +219,11 @@ fn text_file(root: &Path, path: &Path, failures: &mut BTreeSet<String>) {
     let text = path
         .extension()
         .and_then(|value| value.to_str())
-        .is_some_and(|value| TEXT_SUFFIXES.contains(&value))
+        .is_some_and(|value| {
+            TEXT_SUFFIXES
+                .iter()
+                .any(|suffix| value.eq_ignore_ascii_case(suffix))
+        })
         || path.file_name().and_then(|value| value.to_str()) == Some("CODEOWNERS");
     if !text {
         return;
@@ -210,19 +263,13 @@ fn text_file(root: &Path, path: &Path, failures: &mut BTreeSet<String>) {
             );
         }
     }
-    if path.extension().and_then(|value| value.to_str()) == Some("md") {
+    if is_markdown(path) {
         links(root, path, &contents, failures);
     }
 }
 fn links(root: &Path, path: &Path, contents: &str, failures: &mut BTreeSet<String>) {
-    let mut remaining = contents;
-    while let Some(position) = remaining.find("](") {
-        remaining = &remaining[position + 2..];
-        let Some(end) = remaining.find(')') else {
-            break;
-        };
-        let raw = remaining[..end].trim();
-        remaining = &remaining[end + 1..];
+    for raw in markdown_link_targets(contents) {
+        let raw = raw.trim();
         let target = raw
             .split_whitespace()
             .next()
@@ -237,12 +284,29 @@ fn links(root: &Path, path: &Path, contents: &str, failures: &mut BTreeSet<Strin
             continue;
         }
         let target = target.split(['#', '?']).next().unwrap_or("");
+        if target.contains('\\') {
+            fail(
+                failures,
+                format!(
+                    "{}: link uses a non-portable path separator: {raw}",
+                    rel(root, path)
+                ),
+            );
+            continue;
+        }
+        let Some(target) = percent_decode(target) else {
+            fail(
+                failures,
+                format!("{}: link target is not valid UTF-8: {raw}", rel(root, path)),
+            );
+            continue;
+        };
         let base = path
             .parent()
             .unwrap_or(root)
             .strip_prefix(root)
             .unwrap_or(Path::new(""));
-        let Some(joined) = normalize_relative(&base.join(percent_decode(target))) else {
+        let Some(joined) = normalize_relative(&base.join(target)) else {
             fail(
                 failures,
                 format!("{}: link escapes repository: {raw}", rel(root, path)),
@@ -257,22 +321,83 @@ fn links(root: &Path, path: &Path, contents: &str, failures: &mut BTreeSet<Strin
         }
     }
 }
-fn percent_decode(value: &str) -> String {
+fn markdown_link_targets(contents: &str) -> Vec<&str> {
+    let mut targets = Vec::new();
+    let mut offset = 0;
+    while let Some(opening) = contents[offset..].find('[') {
+        let opening = offset + opening;
+        let label_start = opening + 1;
+        let mut nested_opening = None;
+        let mut closing = None;
+        for (index, character) in contents[label_start..].char_indices() {
+            match character {
+                '[' => {
+                    nested_opening = Some(label_start + index);
+                    break;
+                }
+                ']' => {
+                    closing = Some(label_start + index);
+                    break;
+                }
+                _ => {}
+            }
+        }
+        if let Some(nested_opening) = nested_opening {
+            offset = nested_opening;
+            continue;
+        }
+        let Some(closing) = closing else {
+            break;
+        };
+        let target_start = closing + 2;
+        if !contents[closing..].starts_with("](") {
+            offset = closing + 1;
+            continue;
+        }
+        let mut nested_opening = None;
+        let mut closing_parenthesis = None;
+        for (index, character) in contents[target_start..].char_indices() {
+            match character {
+                '[' => {
+                    nested_opening = Some(target_start + index);
+                    break;
+                }
+                ')' => {
+                    closing_parenthesis = Some(target_start + index);
+                    break;
+                }
+                _ => {}
+            }
+        }
+        if let Some(nested_opening) = nested_opening {
+            offset = nested_opening;
+            continue;
+        }
+        let Some(closing_parenthesis) = closing_parenthesis else {
+            break;
+        };
+        targets.push(&contents[target_start..closing_parenthesis]);
+        offset = closing_parenthesis + 1;
+    }
+    targets
+}
+fn percent_decode(value: &str) -> Option<String> {
     let bytes = value.as_bytes();
     let mut output = Vec::new();
     let mut index = 0;
     while index < bytes.len() {
-        if bytes[index] == b'%' && index + 2 < bytes.len() {
-            if let (Some(a), Some(b)) = (hex(bytes[index + 1]), hex(bytes[index + 2])) {
-                output.push(a * 16 + b);
-                index += 3;
-                continue;
-            }
+        if bytes[index] == b'%'
+            && index + 2 < bytes.len()
+            && let (Some(a), Some(b)) = (hex(bytes[index + 1]), hex(bytes[index + 2]))
+        {
+            output.push(a * 16 + b);
+            index += 3;
+            continue;
         }
         output.push(bytes[index]);
         index += 1;
     }
-    String::from_utf8_lossy(&output).into_owned()
+    String::from_utf8(output).ok()
 }
 fn hex(value: u8) -> Option<u8> {
     match value {
@@ -330,7 +455,7 @@ fn metadata(contents: &str) -> BTreeMap<String, String> {
 
 fn authority_content(root: &Path, failures: &mut BTreeSet<String>) {
     for path in files(root, failures) {
-        if path.extension().and_then(|value| value.to_str()) != Some("md") {
+        if !is_markdown(&path) {
             continue;
         }
         let relative = rel(root, &path);
@@ -395,9 +520,7 @@ fn adrs(root: &Path, failures: &mut BTreeSet<String>) {
             .file_name()
             .and_then(|value| value.to_str())
             .unwrap_or("");
-        if filename == "README.md"
-            || path.extension().and_then(|value| value.to_str()) != Some("md")
-        {
+        if filename == "README.md" || !extension_is(&path, "md") {
             continue;
         }
         let Some(number) = adr_number(filename) else {
@@ -481,6 +604,15 @@ fn adrs(root: &Path, failures: &mut BTreeSet<String>) {
         }
         records.insert(filename.to_owned(), (status, document_sections));
     }
+    for target in markdown_link_targets(&index) {
+        let target = target.split_whitespace().next().unwrap_or("");
+        if looks_like_adr_filename(target) && adr_number(target).is_none() {
+            fail(
+                failures,
+                format!("adrs/README.md: invalid ADR index target: {target}"),
+            );
+        }
+    }
     numbers.sort_unstable();
     if let Some(maximum) = numbers.last().copied() {
         let expected: Vec<_> = (1..=maximum).collect();
@@ -495,16 +627,22 @@ fn adrs(root: &Path, failures: &mut BTreeSet<String>) {
     }
     for (filename, (status, document_sections)) in &records {
         let supersedes = adr_links(
+            filename,
+            "Supersedes",
             document_sections
                 .get("Supersedes")
                 .map(String::as_str)
                 .unwrap_or(""),
+            failures,
         );
         let superseded_by = adr_links(
+            filename,
+            "Superseded by",
             document_sections
                 .get("Superseded by")
                 .map(String::as_str)
                 .unwrap_or(""),
+            failures,
         );
         if status == "superseded" && superseded_by.is_empty() {
             fail(
@@ -521,41 +659,41 @@ fn adrs(root: &Path, failures: &mut BTreeSet<String>) {
             }
         }
         for target in supersedes {
-            if let Some((_, target_sections)) = records.get(&target) {
-                if !adr_links(
+            if let Some((_, target_sections)) = records.get(&target)
+                && !adr_links(
+                    filename,
+                    "Superseded by",
                     target_sections
                         .get("Superseded by")
                         .map(String::as_str)
                         .unwrap_or(""),
+                    failures,
                 )
                 .contains(filename)
-                {
-                    fail(
-                        failures,
-                        format!(
-                            "adrs/{filename}: supersession link to {target} is not bidirectional"
-                        ),
-                    );
-                }
+            {
+                fail(
+                    failures,
+                    format!("adrs/{filename}: supersession link to {target} is not bidirectional"),
+                );
             }
         }
         for target in superseded_by {
-            if let Some((_, target_sections)) = records.get(&target) {
-                if !adr_links(
+            if let Some((_, target_sections)) = records.get(&target)
+                && !adr_links(
+                    filename,
+                    "Supersedes",
                     target_sections
                         .get("Supersedes")
                         .map(String::as_str)
                         .unwrap_or(""),
+                    failures,
                 )
                 .contains(filename)
-                {
-                    fail(
-                        failures,
-                        format!(
-                            "adrs/{filename}: replacement link to {target} is not bidirectional"
-                        ),
-                    );
-                }
+            {
+                fail(
+                    failures,
+                    format!("adrs/{filename}: replacement link to {target} is not bidirectional"),
+                );
             }
         }
     }
@@ -564,18 +702,43 @@ fn adr_number(filename: &str) -> Option<u32> {
     let (number, rest) = filename.split_once('-')?;
     (number.len() == 4
         && number.bytes().all(|value| value.is_ascii_digit())
-        && rest
-            .strip_suffix(".md")
-            .is_some_and(|value| !value.is_empty()))
+        && rest.strip_suffix(".md").is_some_and(valid_slug))
     .then(|| number.parse().ok())
     .flatten()
 }
-fn adr_links(text: &str) -> BTreeSet<String> {
-    text.split('(')
-        .filter_map(|value| value.split_once(')').map(|(candidate, _)| candidate))
-        .filter(|candidate| adr_number(candidate).is_some())
-        .map(str::to_owned)
-        .collect()
+fn valid_slug(value: &str) -> bool {
+    let mut characters = value.chars();
+    characters
+        .next()
+        .is_some_and(|value| value.is_ascii_lowercase() || value.is_ascii_digit())
+        && characters
+            .all(|value| value.is_ascii_lowercase() || value.is_ascii_digit() || value == '-')
+}
+fn looks_like_adr_filename(value: &str) -> bool {
+    value.as_bytes().first().is_some_and(u8::is_ascii_digit)
+        && value.to_ascii_lowercase().ends_with(".md")
+}
+fn adr_links(
+    filename: &str,
+    section: &str,
+    text: &str,
+    failures: &mut BTreeSet<String>,
+) -> BTreeSet<String> {
+    let mut links = BTreeSet::new();
+    for target in markdown_link_targets(text) {
+        let target = target.split_whitespace().next().unwrap_or("");
+        if looks_like_adr_filename(target) {
+            if adr_number(target).is_some() {
+                links.insert(target.to_owned());
+            } else {
+                fail(
+                    failures,
+                    format!("adrs/{filename}: invalid ADR {section} target: {target}"),
+                );
+            }
+        }
+    }
+    links
 }
 
 fn initiatives(root: &Path, failures: &mut BTreeSet<String>) {
@@ -593,9 +756,7 @@ fn initiatives(root: &Path, failures: &mut BTreeSet<String>) {
             .file_name()
             .and_then(|value| value.to_str())
             .unwrap_or("");
-        if filename == "README.md"
-            || path.extension().and_then(|value| value.to_str()) != Some("md")
-        {
+        if filename == "README.md" || !extension_is(&path, "md") {
             continue;
         }
         if !valid_initiative_filename(filename) {
@@ -715,7 +876,12 @@ fn initiatives(root: &Path, failures: &mut BTreeSet<String>) {
                         ),
                     );
                 }
-                if closure.is_empty() || closure.to_lowercase().starts_with("open") {
+                if closure.is_empty()
+                    || matches!(
+                        closure.to_lowercase().as_str(),
+                        "open" | "open." | "none" | "none."
+                    )
+                {
                     fail(
                         failures,
                         format!(
@@ -747,12 +913,7 @@ fn initiatives(root: &Path, failures: &mut BTreeSet<String>) {
     }
 }
 fn valid_initiative_filename(filename: &str) -> bool {
-    filename.strip_suffix(".md").is_some_and(|stem| {
-        !stem.is_empty()
-            && stem
-                .chars()
-                .all(|value| value.is_ascii_lowercase() || value.is_ascii_digit() || value == '-')
-    })
+    filename.strip_suffix(".md").is_some_and(valid_slug)
 }
 fn date(value: &str) -> bool {
     let bytes = value.as_bytes();
