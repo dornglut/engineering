@@ -41,6 +41,33 @@ accepted issue
     -> closed issue and completed Project item
 ```
 
+## Material review reconciliation
+
+Material findings receive stable IDs and bind to the exact reviewed revision. A moved
+feature head makes an earlier verdict stale for acceptance while preserving it as
+historical review evidence. Classify each material finding as correction inside the
+current issue, clarification of current acceptance criteria, separately owned
+follow-up, durable ADR or design correction, or historical observation only.
+
+Project active corrections concisely into the owning issue or pull request; full
+rationale may remain in the review or a dated report. Validate and independently
+re-review the corrected exact head. Reports do not silently become active work
+authority, material findings cannot be silently deferred, and this contract creates no
+generated task database or truth-certificate model.
+
+## Post-merge closure reconciliation
+
+After accepted merge, check whether delivery changed current behavior or capability,
+maturity or support status, architecture or ownership, roadmap sequence or dependency,
+parent or current-child state, acceptance criteria discovered during review, initiative
+lifecycle, repository-family membership, or compatibility and deletion obligations.
+Update only affected authority.
+
+Normal closure requires neither a separate closeout pull request, copied exact-head
+ledgers in durable Markdown, process-only activation artifacts, generated prompts, nor
+a second workflow-state database. A separate authority-reconciliation pull request is
+permitted when it contains independently reviewable authority changes.
+
 A raw idea requires only a useful title, a short statement of the possibility or problem, and an optional area or link. It must not require acceptance criteria, implementation scope, architecture, estimates, or priority.
 
 An idea becomes a repository issue only when it needs investigation, affects an accepted roadmap, blocks a decision, has a plausible delivery horizon, or requires durable discussion and evidence.

@@ -4,6 +4,10 @@ Every Dornglut repository owns the meaning of its canonical validation command.
 
 Shared automation may invoke that command. It must not recreate or redefine the repository's validation semantics.
 
+Engineering exposes its repository-owned validation through `cargo validate`, backed
+by a local `xtask`. This removes Python-launcher choice from the Engineering interface;
+the shared workflow remains a read-only caller and does not own these checks.
+
 ## Canonical command
 
 A maintained repository exposes one documented command that represents merge readiness.

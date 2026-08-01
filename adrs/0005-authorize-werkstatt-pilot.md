@@ -158,6 +158,16 @@ contribution: maintainer-led
 
 GitHub custom-property configuration remains an operational administration action and is not duplicated in Markdown.
 
+### Operational classification clarification
+
+The `experimental` lifecycle and `maintainer-led` contribution wording above records
+the vocabulary used when this decision was accepted. Current organization operations
+use the canonical lifecycle and contribution vocabularies in the repository and GitHub
+standards. Werkstatt therefore maps to `profile: application`, `lifecycle: active`,
+and `contribution: owner-only`; experimental maturity remains a Werkstatt status
+document concern. This clarification adopts current vocabulary without rewriting the
+historical decision text.
+
 ### Relationship to ADR 0003
 
 This ADR does not supersede ADR 0003.

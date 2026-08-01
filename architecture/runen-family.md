@@ -12,6 +12,8 @@ dornglut
 ├── runenwerk
 ├── runen-ui
 ├── runen-sdf
+├── runen-spatial
+├── werkstatt
 ├── runen-gpu       planned
 ├── runen-render    planned
 └── runen-ecs       planned
@@ -31,7 +33,9 @@ dornglut
 |---|---|---|
 | `dornglut/runenwerk` | Integration platform and reference engine | Current integration authority |
 | `dornglut/runen-ui` | Host-neutral UI framework | Standalone; adoption remains repository-owned |
-| `dornglut/runen-sdf` | Signed-distance-field framework | Standalone; Runenwerk duplicate-source retirement remains the consumer cutover gate |
+| `dornglut/runen-sdf` | Signed-distance-field framework | Standalone; Runenwerk duplicate-source retirement is complete |
+| `dornglut/runen-spatial` | Host-neutral spatial mechanics framework | Standalone; Runenwerk cutover remains separately owned |
+| `dornglut/werkstatt` | Human-first engineering-workbench application and bounded product pilot | Application boundary; product adoption is not required by other repositories |
 
 ## Planned repositories
 
@@ -58,6 +62,12 @@ standalone frameworks
 ```
 
 The diagram records intended dependency direction, not current package adoption.
+
+RunenSDF is the standalone authority for reusable signed-field mathematics. Current
+accepted Runenwerk source contains no tracked `domain/sdf` package, workspace member,
+or duplicate implementation; Runenwerk retains only product/world integration.
+RunenGPU, RunenRender, and RunenECS remain planned standalone repositories, not
+implemented external frameworks.
 
 A planned repository name does not authorize source movement. Each extraction requires:
 

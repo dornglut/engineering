@@ -10,6 +10,11 @@ Consistency applies to the meaning of entrypoints and ownership boundaries. It d
 
 ## Repository profiles
 
+The canonical profile vocabulary is `organization-defaults`, `engineering`,
+`workflow-library`, `rust-framework`, `integration-product`, `application`, and
+`template`. Lifecycle values are `planned`, `active`, `maintenance`, and `archived`;
+contribution values are `owner-only`, `discussion`, and `open`.
+
 ### Organization defaults
 
 Used by `dornglut/.github`.
@@ -190,6 +195,19 @@ A planned repository name does not authorize source movement.
 ### Archive
 
 Archive only when active consumers, issues, releases, security obligations, and replacement authority are documented. Archived repositories are historical evidence, not active dependencies.
+
+## Maintained-repository admission and reconciliation
+
+When a maintained repository is created, transferred, or changes profile, reconcile
+its purpose and ownership boundary; README and AGENTS; profile-required architecture
+and testing entrypoints; canonical read-only validation and a thin immutable CI caller;
+profile, lifecycle, and contribution classification; public organization profile where
+relevant; repository-family architecture; Project area vocabulary only when genuinely
+needed; initiative inclusion or explicit exclusion; security and contribution routing;
+and source-transfer and duplicate-authority status.
+
+This is a bounded reconciliation checklist, not a repository generator, bootstrap
+platform, or second lifecycle database.
 
 ## Identity and history
 

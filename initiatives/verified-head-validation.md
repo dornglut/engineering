@@ -1,9 +1,9 @@
 # Verified-head validation adoption
 
-- Status: active
+- Status: completed
 - Owner: Dornglut organization
 - Opened: 2026-07-28
-- Closed:
+- Closed: 2026-07-29
 - Owning issue: [engineering#20](https://github.com/dornglut/engineering/issues/20)
 - Decision authority: [Validation standard](../standards/validation.md)
 
@@ -62,4 +62,7 @@ Callers pin immutable revisions and remain on their prior accepted pin until an 
 
 ## Closure record
 
-Open.
+Verified-head validation adoption completed after accepted delivery across the affected
+callers and reusable-workflow contract. The immutable shared revision and accepted
+delivery records above remain historical evidence; no active adoption work remains in
+this initiative.

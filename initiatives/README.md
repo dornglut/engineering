@@ -18,10 +18,7 @@ Allowed statuses are `proposed`, `active`, `completed`, and `cancelled`.
 
 None.
 
-## Active
-
-- [Verified-head validation adoption](verified-head-validation.md) — sequenced adoption of immutable, exact-head repository validation
-
 ## Closed
 
+- [Verified-head validation adoption](verified-head-validation.md) — completed immutable, exact-head repository validation adoption
 - [Provider-neutral repository automation](provider-neutral-repository-automation.md) — cancelled by ADR 0003

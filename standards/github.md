@@ -154,11 +154,17 @@ Native cross-repository sub-issue links may support navigation when tooling can 
 
 When GitHub custom properties are available, use only:
 
-- `profile`: organization-defaults, engineering, workflow-library, rust-framework, integration-product, template;
+- `profile`: organization-defaults, engineering, workflow-library, rust-framework, integration-product, application, template;
 - `lifecycle`: planned, active, maintenance, archived;
 - `contribution`: owner-only, discussion, open.
 
 Do not copy priority, milestones, current work, validation results, or release state into custom properties.
+
+Werkstatt uses profile `application`. Experimental product maturity belongs in its
+repository status documentation, not the organization lifecycle property.
+`maintainer-led` maps to `owner-only` unless a separate operational contract is
+accepted later; the current intended classification is `application`, `active`, and
+`owner-only`.
 
 ## Repository settings target
 
