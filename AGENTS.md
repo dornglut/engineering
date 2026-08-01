@@ -18,4 +18,4 @@ Rules:
 - cross-repository claims must identify the owning repository and evidence;
 - historical paths remain historical; active links use the `dornglut/*` namespace;
 - preserve bidirectional ADR supersession and initiative closure records;
-- run `python scripts/validate.py` before proposing changes.
+- run `cargo validate` before proposing changes.

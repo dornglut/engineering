@@ -5,17 +5,18 @@
 - Opened: 2026-07-22
 - Closed: 2026-07-24
 - Owning issue: [engineering#2](https://github.com/dornglut/engineering/issues/2)
+- Decision authority: [ADR 0003](../adrs/0003-retire-provider-neutral-repository-automation.md)
 - Original decision: [ADR 0002](../adrs/0002-provider-neutral-repository-automation.md)
 - Superseding decision: [ADR 0003](../adrs/0003-retire-provider-neutral-repository-automation.md)
 - Successor program: [organization normalization issue #4](https://github.com/dornglut/engineering/issues/4)
 
-## Original outcome
+## Outcome
 
 The initiative proposed a dedicated `dornglut/forgeops` repository containing a provider-neutral work-order, change-bundle, execution, publication, and conformance platform. Product adoption would have been blocked until that platform and a canary were complete.
 
 The detailed original initiative remains available in repository history at commit [`289706d8a4aa498239399b6109da7fada4290e4d`](https://github.com/dornglut/engineering/commit/289706d8a4aa498239399b6109da7fada4290e4d).
 
-## Cancellation decision
+## Rationale
 
 ADR 0003 retired the program before implementation or product adoption.
 
@@ -48,6 +49,36 @@ Cancellation does not authorize weaker delivery controls. The following remain r
 - direct pushes to protected default branches are not part of the normal workflow;
 - issue text or model output does not grant arbitrary command authority;
 - temporary source-export or self-authoring workflows are not introduced as tool workarounds.
+
+## Affected repositories
+
+- `dornglut/engineering` retains the historical decision and initiative closure.
+- `dornglut/github-workflows` retains read-only reusable CI orchestration.
+
+## Dependency graph
+
+None. The proposed program was cancelled before implementation, repository creation, or
+product adoption.
+
+## Acceptance evidence
+
+ADR 0003 superseded ADR 0002, and engineering issue #2 was reclassified as not
+planned. The original initiative revision remains in Git history as historical evidence.
+
+## Sequencing constraints
+
+No implementation, migration, or follow-on work is authorized by this cancelled
+initiative.
+
+## Linked local issues
+
+- [engineering#2](https://github.com/dornglut/engineering/issues/2)
+- [organization normalization issue #4](https://github.com/dornglut/engineering/issues/4)
+
+## Risks and rollback
+
+No repository, consumer, release, credential, package, branch, or runtime asset was
+created by the cancelled program, so no migration or rollback is required.
 
 ## Closure record
 

@@ -18,5 +18,5 @@ It does not own product implementation. Each product or framework repository ret
 Canonical validation:
 
 ```text
-python scripts/validate.py
+cargo validate
 ```

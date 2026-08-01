@@ -41,6 +41,44 @@ accepted issue
     -> closed issue and completed Project item
 ```
 
+## Material review reconciliation
+
+A material finding records a stable finding ID, the exact reviewed revision, severity,
+owning issue or pull request, and its required correction or accepted disposition. The
+finding ID persists across corrected revisions. A moved feature head makes the earlier
+approval or rejection stale for acceptance, not historical evidence: record the same
+finding ID and disposition on the corrected head, then bind an independent re-review
+verdict to that new exact revision.
+
+| Route | Observable trigger | Required record |
+|---|---|---|
+| Correct inside the current issue | The implementation misses accepted criteria, violates current scope or ownership, needs material acceptance-proof clarification, or remains necessary for the same authorized outcome. | Concisely project the correction into the issue when criteria, proof, or scope materially changes; do not copy the full review. |
+| Correct in the current PR only | The correction plainly fits unchanged issue criteria, changes no durable contract or scope interpretation, and creates no independently schedulable work. | Keep the finding ID and reviewed revision visible in review evidence. |
+| Create a separate follow-up issue | The finding is outside authorized scope, independently deliverable, owned by a distinguishable component or repository, and not required for truthful acceptance. | Record its relationship or dependency. A blocking correctness, ownership, security, or acceptance defect is never relabelled as follow-up to permit merge. |
+| Update ADR or durable design authority | The correction changes a durable architecture decision, public or cross-repository contract, ownership boundary, long-term tradeoff, or accepted invariant. | The current issue or PR still owns the active correction until that authority is accepted. |
+| Report-only | The observation needs no current correction, changes no acceptance criterion, creates no accepted follow-up, and exists only as historical or audit evidence. | Keep it historical; reports do not silently authorize work. |
+
+For example: a failed current acceptance criterion is corrected in its issue; a newly
+found architecture-boundary conflict also updates the ADR or accepted design; a useful
+non-blocking out-of-scope enhancement becomes a related follow-up; a corrected head
+keeps the same finding ID and receives a new exact-head verdict; and an observation
+with no required action remains report-only. This is routing guidance, not a generated
+task database, truth certificate, mandatory closeout report, or duplicate exact-head
+ledger.
+
+## Post-merge closure reconciliation
+
+After accepted merge, check whether delivery changed current behavior or capability,
+maturity or support status, architecture or ownership, roadmap sequence or dependency,
+parent or current-child state, acceptance criteria discovered during review, initiative
+lifecycle, repository-family membership, or compatibility and deletion obligations.
+Update only affected authority.
+
+Normal closure requires neither a separate closeout pull request, copied exact-head
+ledgers in durable Markdown, process-only activation artifacts, generated prompts, nor
+a second workflow-state database. A separate authority-reconciliation pull request is
+permitted when it contains independently reviewable authority changes.
+
 A raw idea requires only a useful title, a short statement of the possibility or problem, and an optional area or link. It must not require acceptance criteria, implementation scope, architecture, estimates, or priority.
 
 An idea becomes a repository issue only when it needs investigation, affects an accepted roadmap, blocks a decision, has a plausible delivery horizon, or requires durable discussion and evidence.
