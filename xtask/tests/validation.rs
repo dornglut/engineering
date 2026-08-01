@@ -1,5 +1,6 @@
 use std::fs;
 use std::path::{Path, PathBuf};
+use std::process::Command;
 use std::sync::atomic::{AtomicUsize, Ordering};
 
 static NEXT: AtomicUsize = AtomicUsize::new(0);
@@ -13,7 +14,7 @@ impl Fixture {
             NEXT.fetch_add(1, Ordering::Relaxed)
         ));
         let _ = fs::remove_dir_all(&path);
-        copy(source, &path);
+        copy_tracked(source, &path);
         Self(path)
     }
     fn replace(&self, path: &str, from: &str, to: &str) {
@@ -21,6 +22,13 @@ impl Fixture {
         let text = fs::read_to_string(&file).unwrap();
         assert!(text.contains(from));
         fs::write(file, text.replacen(from, to, 1)).unwrap();
+    }
+    fn write(&self, path: &str, contents: &str) {
+        let file = self.0.join(path);
+        if let Some(parent) = file.parent() {
+            fs::create_dir_all(parent).unwrap();
+        }
+        fs::write(file, contents).unwrap();
     }
     fn fails(self, expected: &str) {
         let errors = xtask::validate(&self.0).expect_err("fixture should fail");
@@ -35,20 +43,46 @@ impl Drop for Fixture {
         let _ = fs::remove_dir_all(&self.0);
     }
 }
-fn copy(source: &Path, destination: &Path) {
+fn copy_tracked(source: &Path, destination: &Path) {
     fs::create_dir_all(destination).unwrap();
-    for entry in fs::read_dir(source).unwrap().flatten() {
-        let name = entry.file_name();
-        if name == ".git" || name == "target" {
-            continue;
-        }
-        let from = entry.path();
-        let to = destination.join(name);
-        if entry.file_type().unwrap().is_dir() {
-            copy(&from, &to);
-        } else {
-            fs::copy(from, to).unwrap();
-        }
+    let output = Command::new("git")
+        .args(["-C"])
+        .arg(source)
+        .args(["ls-files", "-z"])
+        .output()
+        .unwrap_or_else(|error| panic!("fixture requires Git-tracked source: {error}"));
+    assert!(
+        output.status.success(),
+        "fixture could not list Git-tracked source: {}",
+        String::from_utf8_lossy(&output.stderr)
+    );
+    let mut paths: Vec<_> = output
+        .stdout
+        .split(|byte| *byte == 0)
+        .filter(|path| !path.is_empty())
+        .map(|path| String::from_utf8(path.to_vec()).expect("fixture path must be UTF-8"))
+        .collect();
+    paths.sort();
+    for path in paths {
+        let relative = Path::new(&path);
+        assert!(
+            relative.is_relative()
+                && !relative
+                    .components()
+                    .any(|component| matches!(component, std::path::Component::ParentDir)),
+            "fixture rejected non-relative tracked path: {path}"
+        );
+        let from = source.join(relative);
+        assert!(
+            fs::symlink_metadata(&from)
+                .unwrap_or_else(|error| panic!("fixture source is unavailable at {path}: {error}"))
+                .is_file(),
+            "fixture source is not a regular file: {path}"
+        );
+        let to = destination.join(relative);
+        fs::create_dir_all(to.parent().unwrap()).unwrap();
+        fs::copy(&from, &to)
+            .unwrap_or_else(|error| panic!("fixture could not copy {path}: {error}"));
     }
 }
 
@@ -128,11 +162,7 @@ fn authority_rejections() {
     );
     fixture.fails("does not match index section");
     let fixture = Fixture::new();
-    fs::write(
-        fixture.0.join("reports/broken.md"),
-        "[broken](missing.md)\n",
-    )
-    .unwrap();
+    fixture.write("reports/broken.md", "[broken](missing.md)\n");
     fixture.fails("broken relative link");
     let fixture = Fixture::new();
     fixture.replace(
@@ -149,10 +179,7 @@ fn authority_rejections() {
     );
     fixture.fails("immutable Rust validation caller");
     let fixture = Fixture::new();
-    fs::write(
-        fixture.0.join("scripts/validate.py"),
-        "#!/usr/bin/env python3\n",
-    )
-    .unwrap();
+    assert!(!fixture.0.join("scripts").exists());
+    fixture.write("scripts/validate.py", "#!/usr/bin/env python3\n");
     fixture.fails("scripts/validate.py: retired authority path must not exist");
 }
