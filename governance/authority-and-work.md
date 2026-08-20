@@ -79,6 +79,42 @@ ledgers in durable Markdown, process-only activation artifacts, generated prompt
 a second workflow-state database. A separate authority-reconciliation pull request is
 permitted when it contains independently reviewable authority changes.
 
+## Continuation and work selection
+
+When a specific accepted issue has been selected for continuation, re-establish that
+issue and any pull request delivering it from current repository state. Continue it
+when its ownership, dependencies, assumptions, and acceptance boundary remain valid.
+Changes accepted since its recorded base require broader reconsideration only when they
+can affect those properties or current mergeability.
+
+When no specific accepted work has been selected and an executor must choose further
+nontrivial work, establish that choice from current accepted authority rather than
+automatically following a prior plan, report, review conclusion, handoff, or proposed
+sequence.
+
+Inspect only as broadly as necessary to establish the accepted implementation state,
+relevant accepted work, applicable roadmap or dependency constraints, canonical
+ownership and direct dependencies, and relevant implementation, validation,
+verification, or accepted-decision evidence. Consult Portfolio priority when choosing
+among otherwise eligible accepted work.
+
+A previously proposed next action is a hypothesis until current authority still
+demonstrates its need. An unresolved, incomplete, deferred, or potentially useful
+concern does not by itself justify immediate work.
+
+When current authority establishes a material question but not a decision-complete
+implementation boundary, route it to investigation rather than inventing a delivery
+slice.
+
+Work selection may resume existing accepted work, justify bounded new investigation or
+delivery work, leave a concern deferred in its existing authority, or establish that no
+further work is currently justified. In the latter case, stop autonomous continuation
+and report that result.
+
+Broaden the investigation only when necessary because of a phase-boundary question,
+ownership conflict, stale authority, migration dependency, or cross-repository
+consequence. Parallel work remains governed by the existing parallel-track rules.
+
 A raw idea requires only a useful title, a short statement of the possibility or problem, and an optional area or link. It must not require acceptance criteria, implementation scope, architecture, estimates, or priority.
 
 An idea becomes a repository issue only when it needs investigation, affects an accepted roadmap, blocks a decision, has a plausible delivery horizon, or requires durable discussion and evidence.
