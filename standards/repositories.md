@@ -176,6 +176,8 @@ Skeleton repositories may reserve a namespace but must not imply a completed ext
 
 Nontrivial work is issue-owned, begins from the current accepted default branch, records the accepted base and reviewed feature head, validates the exact feature head, and records the accepted post-merge revision when closing delivery. Pull requests remain bounded and document scope, non-scope, migration, and next action. [Validation standard](validation.md) defines the evidence contract; repositories retain ownership of validation semantics.
 
+When an executor must select follow-on work, selection follows the continuation and work-selection rules in [Authority and work](../governance/authority-and-work.md); a previously stated next action does not by itself authorize new work.
+
 Shared defaults and workflows do not replace repository-local authority.
 
 ### Extract or transfer
