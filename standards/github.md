@@ -81,6 +81,22 @@ When recording completed delivery, it also identifies the accepted squash merge 
 
 Pull requests remain bounded. Merge uses exact-head evidence.
 
+## Agent-mediated repository changes
+
+Agent-mediated repository changes are derived from an explicit immutable investigation revision and proposed through an isolated candidate, not incrementally authored on a trusted default branch.
+
+The authoring agent:
+
+- reads governing authority and relevant source and tests at the pinned investigation revision;
+- defines intended change scope and dependencies whose movement could invalidate the candidate;
+- constructs and reviews the candidate locally, using a checked-out worktree when available or an overlay of pinned source otherwise;
+- resolves the current target before publication; target drift is invalidating until shown irrelevant, while relevant or uncertain drift requires re-investigation and revalidation;
+- publishes one complete candidate commit on an isolated branch, inheriting unchanged repository content from the current base rather than reconstructing it;
+- independently verifies the base-to-candidate diff and keeps every changed path justified;
+- uses the repository's canonical validation and exact-head evidence defined in [Validation](validation.md), then reviews and accepts the exact candidate head against the current integration target.
+
+Blind rebasing of a stale candidate, sequential writes to a trusted branch, and model assessment presented as executable validation are not accepted substitutes for this flow.
+
 ## Projects
 
 The private Inbox and public Engineering Portfolio follow the semantic contract in [Authority and work](../governance/authority-and-work.md).
