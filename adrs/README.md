@@ -10,6 +10,7 @@ Allowed statuses are `proposed`, `accepted`, `superseded`, and `rejected`.
 - [ADR 0003 — Retire provider-neutral repository automation](0003-retire-provider-neutral-repository-automation.md)
 - [ADR 0004 — Organization work and repository standardization](0004-organization-work-and-repository-standardization.md)
 - [ADR 0005 — Authorize the bounded Werkstatt pilot](0005-authorize-werkstatt-pilot.md)
+- [ADR 0006 — Separate realtime networking from online control-plane authority](0006-separate-realtime-networking-from-online-control-plane.md)
 
 ## Proposed
 
