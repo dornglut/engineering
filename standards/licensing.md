@@ -102,16 +102,17 @@ Commercial license text, pricing, customer-specific rights, warranties, indemnit
 
 ## Contributions
 
-Commercial dual licensing requires relicensing authority over accepted code.
+Commercial dual licensing requires sufficient rights over accepted copyright-bearing repository content, not only source code.
 
 Until a reviewed inbound contribution mechanism is established, repositories in the AGPL-plus-commercial and GPL-plus-commercial classes:
 
-- must use `owner-only` or `discussion` contribution classification for code;
-- must not merge external code pull requests;
-- may accept issue reports, design discussion, reviews, reproducible cases, and other non-code participation according to local policy;
-- must not rely on an implicit assumption that a GitHub pull request automatically grants commercial relicensing rights.
+- must use `owner-only` or `discussion` contribution classification for repository-content changes;
+- must not merge external pull requests that contribute tracked repository content, including code, documentation, tests, examples, build scripts, or assets;
+- may accept issue reports, design discussion, reviews, reproducible cases supplied through discussion, and other participation that does not add third-party repository content, according to local policy;
+- must not rely on an implicit assumption that a GitHub pull request automatically grants commercial relicensing rights;
+- must not make normal merge workflow depend on ad-hoc judgments that an external patch is too small or insufficiently creative to carry copyright.
 
-A future CLA, copyright assignment, or other inbound license must be separately reviewed and accepted before it becomes required workflow.
+A future CLA, copyright assignment, or other inbound license must be separately reviewed and accepted before external repository-content pull requests are merged.
 
 ## Migration procedure
 
