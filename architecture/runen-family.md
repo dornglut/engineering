@@ -9,7 +9,9 @@ dornglut
 ├── .github
 ├── engineering
 ├── github-workflows
+├── runen
 ├── runenwerk
+├── runen-lab
 ├── runen-ui
 ├── runen-sdf
 ├── runen-spatial
@@ -29,11 +31,13 @@ dornglut
 | `dornglut/engineering` | Organization governance, standards, cross-repository architecture, ADRs, qualifying initiatives, dated audits | Product implementation, copied live state |
 | `dornglut/github-workflows` | Reusable read-only CI orchestration | Product validation semantics, source authorship, releases |
 
-## Current product and framework repositories
+## Current product, language, and framework repositories
 
 | Repository | Role | Current relationship |
 |---|---|---|
+| `dornglut/runen` | Runen programming-language specification, compiler, reference, and proving work | Independent language authority; consumers do not define Runen semantics implicitly |
 | `dornglut/runenwerk` | Integration platform and reference engine | Current integration authority; downstream of adopted standalone frameworks |
+| `dornglut/runen-lab` | Downstream experimental and showcase application collection | Consumes accepted public Runen-family surfaces or Runenwerk; owns no framework semantics or cross-framework integration authority |
 | `dornglut/runen-ui` | Host-neutral UI framework | Standalone; adoption remains repository-owned |
 | `dornglut/runen-sdf` | Signed-distance-field framework | Standalone; Runenwerk duplicate-source retirement is complete |
 | `dornglut/runen-spatial` | Host-neutral spatial mechanics framework | Standalone; Runenwerk cutover remains separately owned |
@@ -70,12 +74,24 @@ RunenOnline ──┼──> consumer game/server applications
 
 standalone frameworks
     -> Runenwerk integration
+
+accepted public Runen-family surfaces --+
+Runenwerk -------------------------------+-> Runen Lab applications
 ```
 
 The diagram records intended dependency direction, not current package adoption.
 RunenNet and RunenOnline are sibling standalone frameworks: neither depends on the
 other merely to define its semantic core. A consumer may depend on both and explicitly
 map their distinct identity and lifecycle domains.
+
+The Runen language repository remains its own semantic authority. A future consumer
+relationship does not transfer language semantics into that consumer.
+
+Runen Lab is downstream only. A Lab application may consume an independently usable
+framework directly or consume Runenwerk when it deliberately exercises canonical
+engine/product integration. Framework and Runenwerk production packages do not depend
+on Runen Lab, and successful Lab behavior does not itself redefine framework semantics,
+support claims, or compatibility policy.
 
 RunenSDF is the standalone authority for reusable signed-field mathematics. Current
 accepted Runenwerk source contains no tracked `domain/sdf` package, workspace member,
