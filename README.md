@@ -10,6 +10,7 @@ It does not own product implementation. Each product or framework repository ret
 - [Repository standard](standards/repositories.md) — repository profiles, lifecycle, root documentation, and extraction rules
 - [GitHub standard](standards/github.md) — organization defaults, intake, contribution modes, Projects, and repository settings
 - [Validation standard](standards/validation.md) — repository-owned validation, reusable orchestration, exact-head evidence, and security boundaries
+- [Licensing standard](standards/licensing.md) — organization license classes, commercial dual-license representation, historical grants, and contribution constraints
 - [Runen family](architecture/runen-family.md) — organization repositories, framework roles, and dependency direction
 - [Organization ADRs](adrs/README.md) — durable organization decisions
 - [Initiatives](initiatives/README.md) — optional programs that genuinely require cross-repository sequencing and closure evidence
