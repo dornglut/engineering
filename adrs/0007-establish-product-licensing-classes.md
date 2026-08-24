@@ -15,7 +15,7 @@ The organization must distinguish the public open-source license from any separa
 
 Existing permissions already granted under MIT, Apache-2.0, or another license on historical revisions are not revoked by adopting a different license prospectively.
 
-Commercial relicensing also requires sufficient rights over contributed code. Accepting external code under terms that do not preserve the necessary relicensing rights could prevent a complete dual-licensed product from being offered commercially.
+Commercial relicensing also requires sufficient rights over accepted copyright-bearing repository content. Accepting external code, documentation, tests, examples, build scripts, assets, or other repository content under terms that do not preserve the necessary relicensing rights could prevent a complete dual-licensed product from being offered commercially.
 
 ## Decision
 
@@ -83,9 +83,11 @@ Historical revisions remain available under the licenses granted on those revisi
 
 ### Contributions and relicensing authority
 
-A dual-licensed repository must not merge external code contributions under inbound terms that prevent the copyright holder(s) from granting the complete product under the commercial licensing path.
+A dual-licensed repository must not merge external repository content under inbound terms that prevent the copyright holder(s) from granting the complete product under the commercial licensing path.
 
-Until a reviewed inbound licensing mechanism is adopted, dual-licensed product repositories must use `owner-only` or `discussion` contribution policy for code and decline external code pull requests. Issue reports, design discussion, review, and other non-code participation may remain open according to repository policy.
+Until a reviewed inbound licensing mechanism is adopted, dual-licensed product repositories must use `owner-only` or `discussion` contribution policy for repository-content changes and decline external pull requests that contribute tracked repository content, including code, documentation, tests, examples, build scripts, or assets. Issue reports, design discussion, reviews, reproducible cases supplied through discussion, and other participation that does not add third-party repository content may remain open according to repository policy.
+
+Normal merge workflow must not depend on ad-hoc judgments that an external patch is too small or insufficiently creative to carry copyright. A future CLA, copyright assignment, or other inbound license must be separately reviewed and accepted before external repository-content pull requests are merged.
 
 This ADR does not draft a CLA, copyright assignment, commercial EULA, pricing schedule, or customer contract. Those instruments require separate review before use.
 
@@ -98,7 +100,7 @@ This ADR does not draft a CLA, copyright assignment, commercial EULA, pricing sc
 - Historical MIT and Apache-2.0 versions remain usable under their original grants.
 - A fork may continue from a previously permissive historical revision; future Dornglut development is not required to remain permissively licensed because of that history.
 - Package metadata remains valid SPDX rather than inventing a pseudo-license identifier for a private contract.
-- Contributor policy becomes a prerequisite to accepting external code in commercial dual-licensed products.
+- Contributor policy becomes a prerequisite to accepting external repository content in commercial dual-licensed products.
 - Repository-specific migrations remain separately reviewable and must pass each repository's canonical validation.
 
 ## Alternatives considered
@@ -152,8 +154,8 @@ Rejected. Those are legal instruments with consequences beyond repository archit
 3. Migrate the remaining existing product repositories through repository-owned issues and pull requests, preserving exact historical-license statements and canonical validation.
 4. Migrate `.github`, `engineering`, and `github-workflows` to Apache-2.0 without changing their non-product authority.
 5. Reconcile README license sections, license files, Cargo/package metadata, validation, and repository contribution classification for every affected repository.
-6. Do not accept external code into dual-licensed products until reviewed inbound contribution terms preserve the intended commercial relicensing path.
-7. Establish a reviewed commercial licensing agreement and inbound contribution mechanism before selling proprietary rights or accepting external code that would require those instruments.
+6. Do not accept external pull requests that add tracked repository content to dual-licensed products until reviewed inbound contribution terms preserve the intended commercial relicensing path.
+7. Establish a reviewed commercial licensing agreement and inbound contribution mechanism before selling proprietary rights or accepting external repository content that would require those instruments.
 
 No product semantic, API, package-topology, or runtime behavior change is authorized by this ADR.
 
