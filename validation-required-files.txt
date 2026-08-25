@@ -1,5 +1,6 @@
 README.md
 AGENTS.md
+LICENSE
 .cargo/config.toml
 Cargo.toml
 Cargo.lock
