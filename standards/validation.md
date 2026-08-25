@@ -64,6 +64,30 @@ Successful validation presents compact repository, event, revision, command, and
 
 The authoring tool, local evidence, and model assessment do not replace independent CI. Local validation remains valuable preparation and should be reported honestly.
 
+## GPT Web repository publication
+
+When GPT Web authors a bounded repository change, it follows the same repository authority and exact-head acceptance rules as a checked-out executor, with these publication requirements:
+
+1. Establish current repository authority and record the exact accepted base commit and tree.
+2. Read every modified existing file completely from the exact publication parent. Never reconstruct a file from truncated, partial, stale, or remembered output.
+3. Audit dependency closure before editing, including existing tests and assertions that encode the affected or former behavior.
+4. Do not edit an unauthorized path. Demonstrate the dependency and amend the owning authority before expanding scope.
+5. Construct all additions, modifications, deletions, and renames off-ref. Create the complete single-parent publication commit, or deliberate linear commit chain, before moving a branch reference.
+6. Use the accepted base as the first publication parent. Later corrections use the exact previous feature head as their parent.
+7. Re-resolve default-branch and feature-branch state before publication. Unexpected feature-branch movement is a stop condition. If default-branch movement materially changes authority, scope, dependencies, semantics, validation, merge behavior, or required tree identity, establish that default head as a new accepted base and reconstruct the feature on a new branch and pull-request lineage rather than rewriting the old one.
+8. Publish new work by creating the isolated branch directly at the completed head. Advance an existing feature branch only by non-force fast-forward from the verified previous head. Never write directly to the default branch or expose connector-induced partial-file states.
+9. Verify publication-parent-to-new-head for the current publication and accepted-base-to-feature-head for total scope. Reconcile every changed, added, deleted, or renamed path and every material semantic delta with authority.
+10. Use a draft pull request for independent execution validation. Repository-owned canonical validation remains authoritative; GitHub Actions may execute it for GPT Web when local execution is unavailable.
+11. Treat CI as falsification, not scope authority. Mechanical corrections remain inside existing authority. Semantic, baseline, dependency, or out-of-scope failures are investigated before behavior or scope changes.
+12. Any feature-head movement invalidates validation, review, and assurance tied to the previous head.
+13. Before acceptance, reconcile the exact final head with owning authority, dependency closure, the complete accepted-base-to-head diff, canonical exact-head validation, material pull-request discussion and reviews, unresolved review threads, and current default-branch state.
+14. Immediately before merge, re-resolve feature and default-branch heads, require the feature branch to equal the exact reviewed SHA, reconfirm current-base compatibility, and guard the merge by that exact SHA.
+15. Where tree identity is an acceptance requirement, verify that the accepted merge tree equals the reviewed feature tree and that the resulting default branch is the intended accepted state.
+
+Prefer one atomic publication commit for bounded GPT Web work. Multiple deliberate semantic commits are acceptable only when they are linear, single-parent, constructed off-ref, and published as one coherent head.
+
+Use a checked-out executor such as Codex when correctness materially depends on pre-publication compilation, generated-state updates, large or formatting-sensitive transformations, binary assets, or tooling unavailable to GPT Web.
+
 ## Documentation repositories
 
 Documentation-oriented repositories validate at least:
