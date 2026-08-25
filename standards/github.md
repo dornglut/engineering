@@ -83,19 +83,25 @@ Pull requests remain bounded. Merge uses exact-head evidence.
 
 ## Agent-mediated repository changes
 
-Agent-mediated repository changes are derived from an explicit immutable investigation revision and proposed through an isolated candidate, not incrementally authored on a trusted default branch.
+Agent-mediated changes use one exact accepted base, one complete isolated candidate, exact-head validation, and guarded acceptance. The publication parent is the accepted base for initial work and the exact previous feature head for a correction.
 
-The authoring agent:
+1. Read current repository authority and record the exact accepted default-branch commit and tree.
+2. Select an executor capable of the required inspection and pre-publication execution. If correctness depends on compilation, generation, broad semantic analysis, or other unavailable tooling before publication, use a checked-out executor.
+3. Treat exact revision-bound repository inventory and file contents as authoritative state. Search may aid discovery but does not prove absence or dependency closure.
+4. Read every modified existing file completely from the exact publication parent.
+5. Audit material dependency closure before editing. Do not modify unauthorized paths; amend the owning authority first when additional scope is proven necessary.
+6. Construct the complete candidate off-ref. Initial work parents the accepted base; corrections parent the exact previous feature head. Keep the lineage linear.
+7. Before publication, verify publication-parent-to-candidate and accepted-base-to-candidate diffs against authorized scope.
+8. Re-resolve default and feature refs immediately before publication. Material default-branch drift requires a new accepted base and new publication lineage. Unexpected feature-head movement is a stop condition.
+9. Publish new work by creating an isolated branch directly at the complete candidate. Update an existing lineage only by guarded non-force fast-forward. Never expose partial candidate state or force-overwrite unexpected branch state.
+10. Use a draft pull request and repository-owned exact-head validation. CI may falsify a candidate but does not expand scope.
+11. Any feature-head change invalidates earlier validation, review, and assurance.
+12. Before merge, reconcile the exact final head with authority, dependency closure, complete diff, CI, review state, and current default branch. Merge only against the exact reviewed SHA.
+13. After merge, verify the resulting default-branch state where repository acceptance rules require it.
 
-- reads governing authority and relevant source and tests at the pinned investigation revision;
-- defines intended change scope and dependencies whose movement could invalidate the candidate;
-- constructs and reviews the candidate locally, using a checked-out worktree when available or an overlay of pinned source otherwise;
-- resolves the current target before publication; target drift is invalidating until shown irrelevant, while relevant or uncertain drift requires re-investigation and revalidation;
-- publishes one complete candidate commit on an isolated branch, inheriting unchanged repository content from the current base rather than reconstructing it;
-- independently verifies the base-to-candidate diff and keeps every changed path justified;
-- uses the repository's canonical validation and exact-head evidence defined in [Validation](validation.md), then reviews and accepts the exact candidate head against the current integration target.
+Executor-specific procedures may define how these invariants are implemented but may not weaken them.
 
-Blind rebasing of a stale candidate, sequential writes to a trusted branch, and model assessment presented as executable validation are not accepted substitutes for this flow.
+Blind rebasing of stale candidates, sequential writes that expose partial candidate state, search results presented as completeness proof, force-overwriting unexpected feature state, and model assessment presented as executable validation are not accepted substitutes for this workflow.
 
 ## Projects
 

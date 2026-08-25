@@ -64,6 +64,8 @@ Successful validation presents compact repository, event, revision, command, and
 
 The authoring tool, local evidence, and model assessment do not replace independent CI. Local validation remains valuable preparation and should be reported honestly.
 
+Agent-mediated publication and acceptance follow the [GitHub standard](github.md#agent-mediated-repository-changes). Executor-specific procedures may select exact-head CI when local execution is unavailable, but they do not redefine this validation contract.
+
 ## Documentation repositories
 
 Documentation-oriented repositories validate at least:

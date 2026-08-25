@@ -18,4 +18,6 @@ Rules:
 - cross-repository claims must identify the owning repository and evidence;
 - historical paths remain historical; active links use the `dornglut/*` namespace;
 - preserve bidirectional ADR supersession and initiative closure records;
-- run `cargo validate` before proposing changes.
+- for agent-mediated repository changes, follow `standards/github.md`;
+- when operating through GPT Web with the GitHub connector, also follow `tooling/gpt-web-github.md`;
+- run `cargo validate` before proposing changes from a checked-out executor; when the selected procedure lacks local execution, use the exact-head CI path in `standards/validation.md`.
