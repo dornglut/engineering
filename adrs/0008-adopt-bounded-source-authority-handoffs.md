@@ -39,17 +39,19 @@ The canonical sequence is:
 
 The downstream dependency pins the **accepted successor revision** created by repository acceptance, not the previously reviewed feature-head revision. Squash merge therefore remains compatible with this handoff. A tag, pre-release, or repository-specific merge-mode exception is optional only when independently required for release policy; it is not required merely to make the transfer reachable.
 
-### Frozen predecessor rules
+### Publication-overlap rules
 
 After successor acceptance and before downstream cutover acceptance:
 
 - no new semantic or implementation work may be accepted against the predecessor copy;
 - predecessor changes are limited to consumer migration, integration adaptation, source deletion, and evidence required to complete the cutover;
 - a missing reusable contract or extraction defect is corrected in the successor repository, accepted there, and the downstream cutover is repinned to the new exact accepted successor revision;
+- successor changes to the transferred boundary are limited to cutover-blocking extraction corrections, urgent security/correctness fixes to the accepted contract, or validation/release corrections required to finish the transfer;
+- unrelated successor feature or capability evolution for the transferred boundary waits until predecessor deletion is accepted;
 - unrelated predecessor work may continue only when it does not modify the frozen transferred source or undermine the cutover assumptions;
 - the cutover remains the next source-authority transition for that transferred boundary.
 
-This bounded publication overlap lasts only from successor acceptance until downstream cutover acceptance or an explicit transfer reversal. It must not become a maintenance mode or mirror.
+This bounded publication overlap is one transfer interval: successor acceptance to downstream cutover acceptance or explicit transfer reversal. It may not span ordinary feature evolution of the transferred boundary and must not become a maintenance mode or mirror.
 
 ### Failure and rollback
 
@@ -89,6 +91,7 @@ Rejected. That is genuine dual authority and creates semantic drift, review ambi
 
 - Cross-repository transfers become implementable with ordinary GitHub pull-request and squash-merge workflow.
 - A short accepted interval may contain both the new implementation and a frozen predecessor copy, but only the successor is writable semantic authority.
+- The transferred boundary is serialized during the publication-overlap interval; ordinary successor feature evolution resumes only after predecessor deletion.
 - The predecessor cutover is intentionally serialized with successor acceptance and may not be deferred into ordinary feature maintenance.
 - Missing contracts discovered during migration are fixed in the successor rather than preserving or evolving the predecessor implementation.
 - Final-state clean-cutover guarantees remain unchanged.
