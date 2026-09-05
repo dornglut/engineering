@@ -3,6 +3,7 @@
 - Status: active
 - Owner: Dornglut organization
 - Opened: 2026-09-06
+- Closed:
 - Owning issue: [engineering#51](https://github.com/dornglut/engineering/issues/51)
 - Decision authority: [ADR 0008](../adrs/0008-adopt-bounded-source-authority-handoffs.md), [ADR 0004](../adrs/0004-organization-work-and-repository-standardization.md)
 
@@ -11,6 +12,10 @@
 Move RunenGPU semantic source authority from the Runenwerk predecessor into the standalone `dornglut/runen-gpu` framework, then cut Runenwerk over to one immutable accepted successor revision and delete the predecessor implementation without mirrors, forwarding compatibility, moving dependencies, or duplicate writable authority.
 
 This initiative owns only cross-repository sequencing, rollback/reversal, authority handoff, and final coordination closure. Repository-local issues retain implementation, validation, public-contract, release, and consumer-migration authority.
+
+## Rationale
+
+GX now satisfies the organization initiative criteria: it spans multiple repositories, requires multiple repository-local delivery phases, has order-sensitive source-authority transitions, and needs explicit rollback/reversal and final closure evidence. A Runenwerk-local issue cannot truthfully own successor bootstrap, successor acceptance, and cross-repository authority handoff, while a broader implementation tracker here would duplicate repository-local authority. This charter therefore coordinates only the cross-repository lifecycle.
 
 ## Affected repositories
 
@@ -53,6 +58,10 @@ final cross-repository proof and closure
 
 The bootstrap-input re-audit is an activation prerequisite for Engineering #9. The template is one-time bootstrap authority only and never becomes synchronization authority for `runen-gpu`.
 
+## Acceptance evidence
+
+Runenwerk #449 owns and records the accepted predecessor census that activated this cross-repository phase. Engineering #9 will own template/bootstrap acceptance; the future `runen-gpu` local issue will own successor implementation and standalone validation; Runenwerk #449 will own downstream cutover/deletion acceptance. Pull requests in each owning repository retain exact-head and accepted-revision evidence. This charter links those authorities without copying volatile SHAs, workflow runs, branch state, or child acceptance criteria.
+
 ## Sequencing constraints
 
 - Do not transfer RunenGPU implementation source or create successor implementation authority before Engineering #9 completes the accepted template/canary/bootstrap boundary.
@@ -80,9 +89,9 @@ After successor acceptance, `runen-gpu` remains semantic authority. Correct bloc
 
 Material Runenwerk drift that changes the accepted census boundary, or organization-policy drift that changes bootstrap/handoff requirements, must be reconciled in the owning authority before dependent work continues.
 
-## Closure
+## Closure record
 
-Complete this initiative only when:
+Open. Complete this initiative only when:
 
 - `dornglut/runen-gpu` is the accepted sole RunenGPU semantic source authority;
 - Runenwerk consumes one immutable accepted successor revision or release;
