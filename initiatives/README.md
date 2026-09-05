@@ -14,6 +14,10 @@ An initiative links repository-local issues. It does not replace ADRs, the Engin
 
 Allowed statuses are `proposed`, `active`, `completed`, and `cancelled`.
 
+## Active
+
+- [RunenGPU GX standalone authority cutover](runengpu-gx-standalone-authority-cutover.md) — coordinates the standalone RunenGPU source-authority handoff and Runenwerk cutover
+
 ## Proposed
 
 None.
