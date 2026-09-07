@@ -39,7 +39,7 @@ Engineering #9 activation
     ↓
 rust-framework-template + disposable canary proof
     ↓
-bootstrap still-empty runen-gpu shell from accepted template baseline
+accepted runen-gpu repository bootstrap
     ↓
 runen-gpu repository-local extraction authority
     ↓
@@ -60,7 +60,7 @@ The bootstrap-input re-audit is an activation prerequisite for Engineering #9. T
 
 ## Acceptance evidence
 
-Runenwerk #449 owns and records the accepted predecessor census that activated this cross-repository phase. Engineering #9 will own template/bootstrap acceptance; the future `runen-gpu` local issue will own successor implementation and standalone validation; Runenwerk #449 will own downstream cutover/deletion acceptance. Pull requests in each owning repository retain exact-head and accepted-revision evidence. This charter links those authorities without copying volatile SHAs, workflow runs, branch state, or child acceptance criteria.
+Runenwerk #449 owns and records the accepted predecessor census that activated this cross-repository phase. Engineering #9 owns the accepted template/canary/bootstrap boundary; [runen-gpu#2](https://github.com/dornglut/runen-gpu/issues/2) owns successor extraction, implementation, and standalone validation; Runenwerk #449 owns downstream cutover/deletion acceptance. Pull requests in each owning repository retain exact-head and accepted-revision evidence. This charter links those authorities without copying volatile SHAs, workflow runs, branch state, or child acceptance criteria.
 
 ## Sequencing constraints
 
@@ -75,11 +75,12 @@ Runenwerk #449 owns and records the accepted predecessor census that activated t
 ## Linked local issues
 
 - [engineering#51](https://github.com/dornglut/engineering/issues/51) — initiative delivery and coordination ownership
-- [engineering#9](https://github.com/dornglut/engineering/issues/9) — framework template, canary, and existing-shell bootstrap
+- [engineering#9](https://github.com/dornglut/engineering/issues/9) — framework template, canary, and repository bootstrap
+- [runen-gpu#2](https://github.com/dornglut/runen-gpu/issues/2) — successor extraction, implementation, and standalone acceptance
 - [runenwerk#449](https://github.com/dornglut/runenwerk/issues/449) — predecessor census, Runenwerk cutover, deletion, and GX closure
 - [runenwerk#167](https://github.com/dornglut/runenwerk/issues/167) — RunenGPU repository-local program parent
 
-Add the future `runen-gpu` repository-local extraction/delivery issue only when the shell has been bootstrapped and that local work is authorized. Do not copy its acceptance criteria into this charter.
+Do not copy repository-local acceptance criteria into this charter.
 
 ## Risks and rollback
 
