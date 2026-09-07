@@ -1,9 +1,9 @@
 # RunenGPU GX standalone authority cutover
 
-- Status: active
+- Status: completed
 - Owner: Dornglut organization
 - Opened: 2026-09-06
-- Closed:
+- Closed: 2026-09-07
 - Owning issue: [engineering#51](https://github.com/dornglut/engineering/issues/51)
 - Decision authority: [ADR 0008](../adrs/0008-adopt-bounded-source-authority-handoffs.md), [ADR 0004](../adrs/0004-organization-work-and-repository-standardization.md)
 
@@ -92,11 +92,4 @@ Material Runenwerk drift that changes the accepted census boundary, or organizat
 
 ## Closure record
 
-Open. Complete this initiative only when:
-
-- `dornglut/runen-gpu` is the accepted sole RunenGPU semantic source authority;
-- Runenwerk consumes one immutable accepted successor revision or release;
-- the Runenwerk predecessor implementation and forwarding namespace are deleted;
-- no mirror, include, submodule, moving branch, compatibility authority, duplicate runtime, frozen predecessor copy, or private WGPU reach-through remains;
-- bootstrap, licensing, provenance, release, and cross-repository coordination obligations are reconciled in their owning repositories;
-- every linked repository-local delivery issue is accepted or explicitly dispositioned.
+The RunenGPU GX authority cutover completed after standalone successor acceptance and the accepted Runenwerk exact-revision consumer migration and predecessor deletion. `dornglut/runen-gpu` is the sole RunenGPU semantic source authority; Runenwerk retains only its downstream integration boundary and no predecessor, forwarding, mirror, moving-dependency, duplicate-runtime, or private-backend compatibility authority remains. Repository-local delivery and validation evidence remains in the linked issues and pull requests; no active GX migration work remains in this initiative.

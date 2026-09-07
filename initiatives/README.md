@@ -16,7 +16,7 @@ Allowed statuses are `proposed`, `active`, `completed`, and `cancelled`.
 
 ## Active
 
-- [RunenGPU GX standalone authority cutover](runengpu-gx-standalone-authority-cutover.md) — coordinates the standalone RunenGPU source-authority handoff and Runenwerk cutover
+None.
 
 ## Proposed
 
@@ -24,5 +24,6 @@ None.
 
 ## Closed
 
+- [RunenGPU GX standalone authority cutover](runengpu-gx-standalone-authority-cutover.md) — completed standalone RunenGPU authority handoff and Runenwerk exact-revision cutover
 - [Verified-head validation adoption](verified-head-validation.md) — completed immutable, exact-head repository validation adoption
 - [Provider-neutral repository automation](provider-neutral-repository-automation.md) — cancelled by ADR 0003
