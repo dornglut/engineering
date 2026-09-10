@@ -53,7 +53,8 @@ Must not recreate product validation logic, author source, or own product releas
 
 ### Rust framework
 
-Used by standalone framework repositories such as RunenUI, RunenSDF, and future RunenGPU, RunenRender, and RunenECS repositories.
+Used by standalone framework repositories such as RunenUI, RunenSDF, and RunenGPU.
+Future RunenRender and RunenECS repositories will use the same profile when created.
 
 Expected root entrypoints:
 
