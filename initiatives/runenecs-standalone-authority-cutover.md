@@ -3,6 +3,7 @@
 - Status: active
 - Owner: Dornglut organization
 - Opened: 2026-09-10
+- Closed:
 - Owning issue: [engineering#60](https://github.com/dornglut/engineering/issues/60)
 - Decision authority: [ADR 0008](../adrs/0008-adopt-bounded-source-authority-handoffs.md), [ADR 0004](../adrs/0004-organization-work-and-repository-standardization.md)
 
@@ -79,7 +80,7 @@ initiative closure
 
 Do not copy repository-local acceptance criteria into this charter.
 
-## Risks and reversal
+## Risks and rollback
 
 Before successor acceptance, reversal is ordinary abandonment of the unmerged successor candidate; Runenwerk remains semantic authority and no dependency may point at the abandoned candidate.
 
@@ -87,9 +88,9 @@ After successor acceptance, `runen-ecs` remains semantic authority. Correct bloc
 
 Material predecessor-boundary drift before successor acceptance, organization-policy drift affecting handoff/profile requirements, licensing/provenance ambiguity, or a discovered need for a new public capability must be reconciled in the owning authority before dependent work continues.
 
-## Closure criteria
+## Closure record
 
-Close this initiative only after repository-local evidence establishes all of the following:
+Open. Close this initiative only after repository-local evidence establishes all of the following:
 
 - an accepted `runen-ecs` default-branch revision is the sole RunenECS semantic source authority;
 - Runenwerk consumes an immutable exact accepted successor revision or accepted release through final public package identities;
