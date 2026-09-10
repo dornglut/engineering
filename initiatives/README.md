@@ -16,7 +16,7 @@ Allowed statuses are `proposed`, `active`, `completed`, and `cancelled`.
 
 ## Active
 
-None.
+- [RunenECS standalone authority cutover](runenecs-standalone-authority-cutover.md) — active transfer from corrected Runenwerk authority to standalone RunenECS followed by exact-revision predecessor retirement
 
 ## Proposed
 
