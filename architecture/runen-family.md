@@ -18,7 +18,7 @@ dornglut
 ├── runen-net
 ├── runen-online
 ├── werkstatt
-├── runen-gpu       planned
+├── runen-gpu
 ├── runen-render    planned
 └── runen-ecs       planned
 ```
@@ -41,6 +41,7 @@ dornglut
 | `dornglut/runen-ui` | Host-neutral UI framework | Standalone; adoption remains repository-owned |
 | `dornglut/runen-sdf` | Signed-distance-field framework | Standalone; Runenwerk duplicate-source retirement is complete |
 | `dornglut/runen-spatial` | Host-neutral spatial mechanics framework | Standalone; Runenwerk cutover remains separately owned |
+| `dornglut/runen-gpu` | Backend-neutral GPU resource, execution, and device framework | Standalone semantic implementation authority; Runenwerk is a downstream integration consumer |
 | `dornglut/runen-net` | Host- and transport-independent realtime multiplayer networking framework | Standalone; Runenwerk is a downstream consumer, and RunenOnline does not redefine its semantics |
 | `dornglut/runen-online` | Provider-neutral online-game control-plane framework | Standalone sibling of RunenNet; game/server applications may compose both through explicit integration |
 | `dornglut/werkstatt` | Human-first engineering-workbench application and bounded product pilot | Application boundary; product adoption is not required by other repositories |
@@ -52,7 +53,6 @@ The durable RunenNet/RunenOnline ownership and composition boundary is defined b
 
 | Repository | Intended role | Dependency direction |
 |---|---|---|
-| `dornglut/runen-gpu` | GPU resource, execution, and device abstraction | Lower-level dependency |
 | `dornglut/runen-render` | Rendering framework built on RunenGPU | Depends on RunenGPU |
 | `dornglut/runen-ecs` | Standalone ECS framework | Independent extraction after higher-priority boundaries stabilize |
 
@@ -96,8 +96,10 @@ support claims, or compatibility policy.
 RunenSDF is the standalone authority for reusable signed-field mathematics. Current
 accepted Runenwerk source contains no tracked `domain/sdf` package, workspace member,
 or duplicate implementation; Runenwerk retains only product/world integration.
-RunenGPU, RunenRender, and RunenECS remain planned standalone repositories, not
-implemented external frameworks.
+RunenGPU is the standalone authority for reusable GPU execution semantics after the
+completed GX source-authority transfer; Runenwerk consumes the accepted standalone
+framework and retains only downstream integration. RunenRender and RunenECS remain
+planned standalone repositories, not implemented external frameworks.
 
 A planned repository name does not authorize source movement. Each extraction requires:
 
