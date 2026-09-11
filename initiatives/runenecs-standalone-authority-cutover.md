@@ -1,9 +1,9 @@
 # RunenECS standalone authority cutover
 
-- Status: active
+- Status: completed
 - Owner: Dornglut organization
 - Opened: 2026-09-10
-- Closed:
+- Closed: 2026-09-11
 - Owning issue: [engineering#60](https://github.com/dornglut/engineering/issues/60)
 - Decision authority: [ADR 0008](../adrs/0008-adopt-bounded-source-authority-handoffs.md), [ADR 0004](../adrs/0004-organization-work-and-repository-standardization.md)
 
@@ -75,6 +75,7 @@ initiative closure
 - [runenwerk#197](https://github.com/dornglut/runenwerk/issues/197) — RunenECS repository-local program parent
 - [runenwerk#530](https://github.com/dornglut/runenwerk/issues/530) — completed corrected C9 predecessor/conformance boundary
 - [runen-ecs#2](https://github.com/dornglut/runen-ecs/issues/2) — successor repository reconciliation, source transfer, validation, and acceptance
+- [runen-ecs#4](https://github.com/dornglut/runen-ecs/issues/4) — transferred implementation and standalone topology
 - [runenwerk#551](https://github.com/dornglut/runenwerk/issues/551) — downstream exact-pin consumer cutover and predecessor deletion
 - [runen-ecs#1](https://github.com/dornglut/runen-ecs/issues/1) — blocked post-extraction audit; activates only after successor authority and predecessor deletion are both accepted
 
@@ -90,7 +91,7 @@ Material predecessor-boundary drift before successor acceptance, organization-po
 
 ## Closure record
 
-Open. Close this initiative only after repository-local evidence establishes all of the following:
+Closed after repository-local evidence established all of the following:
 
 - an accepted `runen-ecs` default-branch revision is the sole RunenECS semantic source authority;
 - Runenwerk consumes an immutable exact accepted successor revision or accepted release through final public package identities;
@@ -100,3 +101,12 @@ Open. Close this initiative only after repository-local evidence establishes all
 - [runen-ecs#2](https://github.com/dornglut/runen-ecs/issues/2) and [runenwerk#551](https://github.com/dornglut/runenwerk/issues/551) are accepted or explicitly dispositioned consistently with ADR 0008;
 - [runen-ecs#1](https://github.com/dornglut/runen-ecs/issues/1) is eligible to activate as the post-extraction audit;
 - no active RunenECS transfer/cutover work remains in this initiative.
+
+The semantic authority switch occurred when `dornglut/runen-ecs/main` accepted
+`fed4f080abd4a2124dac10b80518469dd678d9f0` via PR #11. Runenwerk then pinned
+that exact revision and deleted its predecessor implementation, macro package,
+conformance fixture, safety harness, and duplicate safety workflows in accepted
+main `ca8c3c73a2c86d0b1b77ef127489cedd3aa3f95e` via PR #559. The final state has
+one implementation authority, no dual writable authority, no moving dependency,
+and no forwarding or private reach-through path. Successor #2/#4 and Runenwerk
+#551 are dispositioned; #1 is activation-eligible but its audit has not started.

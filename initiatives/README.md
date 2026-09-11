@@ -16,7 +16,7 @@ Allowed statuses are `proposed`, `active`, `completed`, and `cancelled`.
 
 ## Active
 
-- [RunenECS standalone authority cutover](runenecs-standalone-authority-cutover.md) — active transfer from corrected Runenwerk authority to standalone RunenECS followed by exact-revision predecessor retirement
+None.
 
 ## Proposed
 
@@ -24,6 +24,7 @@ None.
 
 ## Closed
 
+- [RunenECS standalone authority cutover](runenecs-standalone-authority-cutover.md) — completed standalone RunenECS authority handoff and Runenwerk exact-revision predecessor retirement
 - [RunenGPU GX standalone authority cutover](runengpu-gx-standalone-authority-cutover.md) — completed standalone RunenGPU authority handoff and Runenwerk exact-revision cutover
 - [Verified-head validation adoption](verified-head-validation.md) — completed immutable, exact-head repository validation adoption
 - [Provider-neutral repository automation](provider-neutral-repository-automation.md) — cancelled by ADR 0003
