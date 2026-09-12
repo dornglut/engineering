@@ -4,8 +4,8 @@
 - Owner: Dornglut organization
 - Opened: 2026-09-12
 - Closed:
-- Owning issue: engineering#67
-- Decision authority: governance/authority-and-work.md; runen-ecs ADR 0001; runenwerk ADR 0022
+- Owning issue: [engineering#67](https://github.com/dornglut/engineering/issues/67)
+- Decision authority: [Authority and work](../governance/authority-and-work.md), [RunenECS ADR 0001](https://github.com/dornglut/runen-ecs/blob/main/docs/adr/0001-normalize-schedule-diagnostics-and-ordering-references.md), [Runenwerk ADR 0022](https://github.com/dornglut/runenwerk/blob/main/docs-site/src/content/docs/adr/accepted/0022-runenwerk-owned-product-and-query-publication-phases.md)
 
 ## Outcome
 
@@ -43,7 +43,7 @@ runen-ecs#33
     -> runen-ecs#28 normalized schedule inspection
 ```
 
-Repository-local parent `runen-ecs#26` owns the RunenECS-internal slice relationship. This initiative does not duplicate child acceptance criteria.
+Repository-local parent [runen-ecs#26](https://github.com/dornglut/runen-ecs/issues/26) owns the RunenECS-internal slice relationship. This initiative does not duplicate child acceptance criteria.
 
 ## Acceptance evidence
 
@@ -64,7 +64,7 @@ A provisional downstream candidate may consume an immutable upstream feature SHA
 
 Final Runenwerk acceptance must use an immutable accepted RunenECS revision. If upstream squash acceptance changes the commit identity while preserving the reviewed tree, the downstream dependency and lockfile are regenerated for the accepted revision and validation is rerun on the final downstream head.
 
-Runenwerk already consumes RunenECS through an immutable revision. Accepting a new RunenECS revision therefore does not silently mutate the accepted Runenwerk build. The downstream repository may remain on its previous accepted pin until its own migration is ready.
+Runenwerk consumes RunenECS through an immutable revision. Accepting a new RunenECS revision therefore does not silently mutate the accepted Runenwerk build. The downstream repository may remain on its previous accepted pin until its own migration is ready.
 
 The ordering-presence pair precedes the runtime publication pair. RunenECS inspection follows the normalized ordering/publication model and does not import Runenwerk product lifecycle policy.
 
@@ -72,16 +72,16 @@ The ordering-presence pair precedes the runtime publication pair. RunenECS inspe
 
 RunenECS:
 
-- `dornglut/runen-ecs#26` — ADR 0001 implementation parent
-- `dornglut/runen-ecs#27` — explicit required and optional ordering references
-- `dornglut/runen-ecs#52` — canonical semantic publication-frontier derivation
-- `dornglut/runen-ecs#33` — semantic deferred-publication runtime cutover
-- `dornglut/runen-ecs#28` — normalized reason-carrying schedule inspection
+- [runen-ecs#26](https://github.com/dornglut/runen-ecs/issues/26) — ADR 0001 implementation parent
+- [runen-ecs#27](https://github.com/dornglut/runen-ecs/issues/27) — explicit required and optional ordering references
+- [runen-ecs#52](https://github.com/dornglut/runen-ecs/issues/52) — canonical semantic publication-frontier derivation
+- [runen-ecs#33](https://github.com/dornglut/runen-ecs/issues/33) — semantic deferred-publication runtime cutover
+- [runen-ecs#28](https://github.com/dornglut/runen-ecs/issues/28) — normalized reason-carrying schedule inspection
 
 Runenwerk:
 
-- `dornglut/runenwerk#580` — ordering-reference presence migration
-- `dornglut/runenwerk#591` — product/query publication lifecycle cutover
+- [runenwerk#580](https://github.com/dornglut/runenwerk/issues/580) — ordering-reference presence migration
+- [runenwerk#591](https://github.com/dornglut/runenwerk/issues/591) — product/query publication lifecycle cutover
 
 ## Risks and rollback
 
