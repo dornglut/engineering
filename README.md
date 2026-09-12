@@ -7,6 +7,7 @@ It does not own product implementation. Each product or framework repository ret
 ## Authority entrypoints
 
 - [Authority and work](governance/authority-and-work.md) — where ideas, accepted work, priorities, decisions, and evidence belong
+- [Software design standard](standards/software-design.md) — organization-wide project-neutral defaults for authority, boundaries, contracts, state, failure, evolution, and abstraction cost
 - [Repository standard](standards/repositories.md) — repository profiles, lifecycle, root documentation, and extraction rules
 - [GitHub standard](standards/github.md) — organization defaults, intake, contribution modes, Projects, and repository settings
 - [Validation standard](standards/validation.md) — repository-owned validation, reusable orchestration, exact-head evidence, and security boundaries
