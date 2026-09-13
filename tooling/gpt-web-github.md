@@ -8,8 +8,8 @@ For the current GPT Web + GitHub connector environment:
 
 - use exact commit, tree, and file reads for repository state;
 - do not attempt local `git clone`, worktrees, or `cargo validate` unless a checked-out execution environment is explicitly available;
-- use draft-PR exact-head CI for bounded changes safe to publish before execution;
-- prefer a normal checked-out executor when correctness requires execution before publication; when none is available, use the exact source-snapshot fallback below only if its fidelity requirements can be satisfied.
+- use repository-owned exact-head hosted workflows as the execution environment for a complete published candidate, including its first compilation, test, or runtime execution;
+- require pre-publication execution only when a specific correctness or evidence requirement must be established before publication; when required, prefer a normal checked-out executor and use the exact source-snapshot fallback below only if no normal checked-out executor is available and its fidelity requirements can be satisfied.
 
 Do not repeatedly probe unavailable capabilities merely to rediscover these defaults.
 
@@ -56,4 +56,4 @@ Do not claim compare-and-swap semantics unless the connector explicitly provides
 
 Normal bounded path: complete candidate → draft PR → exact-head CI → assurance → guarded merge. Do not simulate local canonical validation when no local executor exists. Any feature-head change requires fresh CI and assurance.
 
-Use a normal checked-out executor for compile-driven implementation, generated or formatter-owned state, large mechanical refactors, binary/LFS/submodule/file-mode-sensitive work, broad semantic repository analysis, required files that cannot be read completely, or repositories without suitable exact-head CI whenever the exact source-snapshot fallback cannot faithfully satisfy the same required inspection and pre-publication execution.
+Use a normal checked-out executor for work whose correctness or evidence requires pre-publication execution, generated or formatter-owned state, large mechanical refactors, binary/LFS/submodule/file-mode-sensitive work, broad semantic repository analysis, required files that cannot be read completely, or repositories without suitable exact-head hosted execution whenever the exact source-snapshot fallback cannot faithfully satisfy the same required inspection and pre-publication execution.
