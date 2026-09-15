@@ -13,6 +13,7 @@ Allowed statuses are `proposed`, `accepted`, `superseded`, and `rejected`.
 - [ADR 0006 — Separate realtime networking from online control-plane authority](0006-separate-realtime-networking-from-online-control-plane.md)
 - [ADR 0007 — Establish organization-wide product licensing classes](0007-establish-product-licensing-classes.md)
 - [ADR 0008 — Adopt bounded source-authority handoffs for cross-repository transfers](0008-adopt-bounded-source-authority-handoffs.md)
+- [ADR 0009 — Establish RunenShader as standalone shader-toolchain authority](0009-establish-runen-shader-boundary.md)
 
 ## Proposed
 
