@@ -20,6 +20,7 @@ dornglut
 ├── werkstatt
 ├── runen-gpu
 ├── runen-ecs
+├── runen-shader    planned
 └── runen-render    planned
 ```
 
@@ -54,7 +55,11 @@ The durable RunenNet/RunenOnline ownership and composition boundary is defined b
 
 | Repository | Intended role | Dependency direction |
 |---|---|---|
-| `dornglut/runen-render` | Rendering framework built on RunenGPU | Depends on RunenGPU |
+| `dornglut/runen-shader` | Shader-source and shader-toolchain framework producing canonical shader artifacts | Standalone sibling of RunenGPU; future RunenRender may depend on both |
+| `dornglut/runen-render` | Rendering framework built on RunenGPU and RunenShader | Depends on RunenGPU and RunenShader |
+
+The durable RunenShader/RunenGPU/RunenRender ownership and composition boundary is defined by
+[ADR 0009](../adrs/0009-establish-runen-shader-boundary.md).
 
 ## Dependency and extraction rule
 
@@ -62,8 +67,11 @@ The intended direction is:
 
 ```text
 RunenSDF
-RunenGPU
-    -> RunenRender
+
+RunenShader ──┐
+RunenGPU ─────┼──> RunenRender
+              │
+              └──> other explicit consumers may use either or both
 
 RunenECS
 RunenUI
@@ -84,8 +92,17 @@ RunenNet and RunenOnline are sibling standalone frameworks: neither depends on t
 other merely to define its semantic core. A consumer may depend on both and explicitly
 map their distinct identity and lifecycle domains.
 
+RunenShader and RunenGPU are likewise sibling standalone frameworks. RunenShader owns
+reusable shader-source and shader-compilation semantics and canonical shader-artifact
+formation; RunenGPU owns canonical WGSL program admission and generic GPU execution.
+Neither depends on the other merely to define its semantic core. A consumer such as
+future RunenRender may depend on both and own the explicit artifact-to-program-admission
+bridge without transferring either framework's authority.
+
 The Runen language repository remains its own semantic authority. A future consumer
-relationship does not transfer language semantics into that consumer.
+relationship does not transfer language semantics into that consumer. RunenShader does
+not acquire Runen language semantics merely because its architecture follows compatible
+semantic-design principles.
 
 Runen Lab is downstream only. A Lab application may consume an independently usable
 framework directly or consume Runenwerk when it deliberately exercises canonical
@@ -101,8 +118,8 @@ completed GX source-authority transfer; Runenwerk consumes the accepted standalo
 framework and retains only downstream integration. RunenECS is the standalone authority
 for reusable ECS semantics and conformance after its completed source-authority transfer;
 Runenwerk consumes the accepted standalone framework and retains only downstream
-integration. RunenRender remains a planned standalone repository, not an implemented
-external framework.
+integration. RunenShader and RunenRender remain planned standalone repositories, not
+implemented external frameworks.
 
 A planned repository name does not authorize source movement. Each extraction requires:
 
