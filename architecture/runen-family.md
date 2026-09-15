@@ -119,8 +119,9 @@ framework and retains only downstream integration. RunenECS is the standalone au
 for reusable ECS semantics and conformance after its completed source-authority transfer;
 Runenwerk consumes the accepted standalone framework and retains only downstream
 integration. RunenShader is an active standalone framework with accepted repository-local
-source/toolchain semantics and validation authority; concrete frontend realization remains
-repository-owned future work. RunenRender remains a planned standalone repository.
+source/toolchain semantics, validation authority, and a concrete exact-WGSL frontend
+realization; additional frontend and composition support remains repository-owned.
+RunenRender remains a planned standalone repository.
 
 A planned repository name does not authorize source movement. Each extraction requires:
 
