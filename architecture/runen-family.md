@@ -20,7 +20,7 @@ dornglut
 ├── werkstatt
 ├── runen-gpu
 ├── runen-ecs
-├── runen-shader    planned
+├── runen-shader
 └── runen-render    planned
 ```
 
@@ -44,6 +44,7 @@ dornglut
 | `dornglut/runen-spatial` | Host-neutral spatial mechanics framework | Standalone; Runenwerk cutover remains separately owned |
 | `dornglut/runen-gpu` | Backend-neutral GPU resource, execution, and device framework | Standalone semantic implementation authority; Runenwerk is a downstream integration consumer |
 | `dornglut/runen-ecs` | Reusable entity-component-system framework | Standalone semantic implementation and conformance authority; Runenwerk is a downstream integration consumer |
+| `dornglut/runen-shader` | Shader-source and shader-toolchain framework producing canonical shader artifacts | Standalone semantic authority; sibling of RunenGPU; concrete frontend implementation remains repository-owned |
 | `dornglut/runen-net` | Host- and transport-independent realtime multiplayer networking framework | Standalone; Runenwerk is a downstream consumer, and RunenOnline does not redefine its semantics |
 | `dornglut/runen-online` | Provider-neutral online-game control-plane framework | Standalone sibling of RunenNet; game/server applications may compose both through explicit integration |
 | `dornglut/werkstatt` | Human-first engineering-workbench application and bounded product pilot | Application boundary; product adoption is not required by other repositories |
@@ -55,7 +56,6 @@ The durable RunenNet/RunenOnline ownership and composition boundary is defined b
 
 | Repository | Intended role | Dependency direction |
 |---|---|---|
-| `dornglut/runen-shader` | Shader-source and shader-toolchain framework producing canonical shader artifacts | Standalone sibling of RunenGPU; future RunenRender may depend on both |
 | `dornglut/runen-render` | Rendering framework built on RunenGPU and RunenShader | Depends on RunenGPU and RunenShader |
 
 The durable RunenShader/RunenGPU/RunenRender ownership and composition boundary is defined by
@@ -118,8 +118,9 @@ completed GX source-authority transfer; Runenwerk consumes the accepted standalo
 framework and retains only downstream integration. RunenECS is the standalone authority
 for reusable ECS semantics and conformance after its completed source-authority transfer;
 Runenwerk consumes the accepted standalone framework and retains only downstream
-integration. RunenShader and RunenRender remain planned standalone repositories, not
-implemented external frameworks.
+integration. RunenShader is an active standalone framework with accepted repository-local
+source/toolchain semantics and validation authority; concrete frontend realization remains
+repository-owned future work. RunenRender remains a planned standalone repository.
 
 A planned repository name does not authorize source movement. Each extraction requires:
 
