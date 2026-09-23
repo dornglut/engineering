@@ -21,6 +21,7 @@ dornglut
 ├── runen-gpu
 ├── runen-ecs
 ├── runen-shader
+├── runen-graph
 └── runen-render    planned
 ```
 
@@ -45,6 +46,7 @@ dornglut
 | `dornglut/runen-gpu` | Backend-neutral GPU resource, execution, and device framework | Standalone semantic implementation authority; Runenwerk is a downstream integration consumer |
 | `dornglut/runen-ecs` | Reusable entity-component-system framework | Standalone semantic implementation and conformance authority; Runenwerk is a downstream integration consumer |
 | `dornglut/runen-shader` | Shader-source and shader-toolchain framework producing canonical shader artifacts | Standalone semantic authority; sibling of RunenGPU; concrete frontend implementation remains repository-owned |
+| `dornglut/runen-graph` | Reusable graph and relationship framework over caller-owned identities | Standalone foundational framework authority; adoption remains repository-owned |
 | `dornglut/runen-net` | Host- and transport-independent realtime multiplayer networking framework | Standalone; Runenwerk is a downstream consumer, and RunenOnline does not redefine its semantics |
 | `dornglut/runen-online` | Provider-neutral online-game control-plane framework | Standalone sibling of RunenNet; game/server applications may compose both through explicit integration |
 | `dornglut/werkstatt` | Human-first engineering-workbench application and bounded product pilot | Application boundary; product adoption is not required by other repositories |
@@ -75,6 +77,8 @@ RunenGPU ─────┼──> RunenRender
 
 RunenECS
 RunenUI
+
+RunenGraph ──> explicit consumers
 
 RunenNet ─────┐
 RunenOnline ──┼──> consumer game/server applications
@@ -122,6 +126,10 @@ integration. RunenShader is an active standalone framework with accepted reposit
 source/toolchain semantics, validation authority, and concrete exact-WGSL and bounded
 closed-WESL composition realizations; frontend coverage and any further composition
 support remain repository-owned.
+RunenGraph is a standalone foundational framework authority for reusable graph and
+relationship semantics over caller-owned identities. RunenGraph must not depend upward
+on RunenECS, RunenUI, Runenwerk, RunenRender, or any future RunenKnowledge repository;
+consumer adoption and any explicit integration remain separately owned by the consumer.
 RunenRender remains a planned standalone repository.
 
 A planned repository name does not authorize source movement. Each extraction requires:
