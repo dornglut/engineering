@@ -16,6 +16,7 @@ Allowed statuses are `proposed`, `active`, `completed`, and `cancelled`.
 
 ## Active
 
+- [RunenInput standalone authority cutover](runeninput-standalone-authority-cutover.md) — coordinate successor authority acceptance and Runenwerk exact-revision predecessor retirement
 - [RunenECS schedule semantics and Runenwerk lifecycle cutover](runenecs-schedule-semantics-and-runenwerk-lifecycle-cutover.md) — coordinate ordering-presence and publication-frontier migrations across RunenECS and Runenwerk
 
 ## Proposed
