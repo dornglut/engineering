@@ -24,7 +24,7 @@ consumer-migration, adapter, and deletion authority.
 
 The accepted Runenwerk I3 decision proves that the reusable input boundary now satisfies
 the organization initiative criteria for extraction: the outcome spans Runenwerk and
-the future RunenInput repository, requires multiple repository-local phases, has an
+the standalone RunenInput repository, requires multiple repository-local phases, has an
 order-sensitive semantic authority switch, and needs explicit rollback and final
 duplicate-authority closure. No repository-local issue can truthfully own both
 successor acceptance and predecessor cutover.
@@ -36,8 +36,8 @@ successor acceptance and predecessor cutover.
 - `dornglut/runenwerk` owns the predecessor source boundary before the switch,
   pre-transfer correction/census, backend and product integration, downstream consumer
   migration, predecessor deletion, and Runenwerk-side closure.
-- future `dornglut/runen-input` owns successor repository bootstrap, transferred
-  reusable input implementation/public contract, standalone conformance and validation,
+- `dornglut/runen-input` owns successor repository bootstrap, transferred reusable
+  input implementation/public contract, standalone conformance and validation,
   provenance, release policy, and successor acceptance.
 - `dornglut/runen-ui` remains a neighboring downstream semantic owner. No RunenUI
   source transfer or adoption change is part of this initiative.
@@ -75,10 +75,14 @@ initiative closure
 ## Acceptance evidence
 
 [runenwerk#771](https://github.com/dornglut/runenwerk/issues/771) owns the completed I3
-source/consumer census and the `EXTRACTION_DESIGN_JUSTIFIED` decision. Future
-Runenwerk pre-transfer, RunenInput successor, and Runenwerk downstream-cutover issues
-own their repository-local implementation and validation evidence when created. Pull
-requests in each owning repository retain exact-head and accepted-revision evidence.
+source/consumer census and the `EXTRACTION_DESIGN_JUSTIFIED` decision.
+[runenwerk#774](https://github.com/dornglut/runenwerk/issues/774) owns the completed
+pre-transfer source-boundary correction, [engineering#84](https://github.com/dornglut/engineering/issues/84)
+owns successor repository bootstrap/profile reconciliation, and
+[runen-input#2](https://github.com/dornglut/runen-input/issues/2) owns the active
+successor transfer/public-contract acceptance. The future Runenwerk downstream-cutover
+issue will own consumer migration and predecessor deletion when created. Pull requests
+in each owning repository retain exact-head and accepted-revision evidence.
 
 This charter links those authorities without copying branch heads, workflow runs,
 temporary blockers, or child acceptance matrices.
@@ -123,10 +127,15 @@ temporary blockers, or child acceptance matrices.
   boundary and initiative activation
 - [runenwerk#771](https://github.com/dornglut/runenwerk/issues/771) — completed I3
   extraction decision
+- [runenwerk#774](https://github.com/dornglut/runenwerk/issues/774) — completed
+  pre-transfer source-boundary correction and transfer census
+- [engineering#84](https://github.com/dornglut/engineering/issues/84) — successor
+  repository bootstrap/profile reconciliation
+- [runen-input#2](https://github.com/dornglut/runen-input/issues/2) — active successor
+  transfer/public-contract acceptance
 
-Add the bounded Runenwerk pre-transfer issue, successor transfer issue, and Runenwerk
-consumer-cutover issue here when those repository-local authorities are created. Do not
-invent issue numbers or duplicate their acceptance criteria in this charter.
+Add the Runenwerk consumer-cutover issue here when created. Do not invent issue numbers
+or duplicate repository-local acceptance criteria in this charter.
 
 ## Risks and rollback
 
