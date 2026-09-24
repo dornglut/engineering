@@ -22,6 +22,7 @@ dornglut
 ├── runen-ecs
 ├── runen-shader
 ├── runen-graph
+├── runen-input     planned
 └── runen-render    planned
 ```
 
@@ -58,10 +59,13 @@ The durable RunenNet/RunenOnline ownership and composition boundary is defined b
 
 | Repository | Intended role | Dependency direction |
 |---|---|---|
+| `dornglut/runen-input` | Host/backend-neutral device-input observation and deterministic confirmed-state framework | Independent foundational framework; backend/product integration depends on it, not vice versa |
 | `dornglut/runen-render` | Rendering framework built on RunenGPU and RunenShader | Depends on RunenGPU and RunenShader |
 
 The durable RunenShader/RunenGPU/RunenRender ownership and composition boundary is defined by
-[ADR 0009](../adrs/0009-establish-runen-shader-boundary.md).
+[ADR 0009](../adrs/0009-establish-runen-shader-boundary.md). The planned RunenInput
+ownership and source-authority handoff direction is defined by
+[ADR 0011](../adrs/0011-establish-runen-input-boundary.md).
 
 ## Dependency and extraction rule
 
@@ -77,6 +81,7 @@ RunenGPU ─────┼──> RunenRender
 
 RunenECS
 RunenUI
+RunenInput ──> explicit consumers
 
 RunenGraph ──> explicit consumers
 
@@ -130,6 +135,9 @@ RunenGraph is a standalone foundational framework authority for reusable graph a
 relationship semantics over caller-owned identities. RunenGraph must not depend upward
 on RunenECS, RunenUI, Runenwerk, RunenRender, or any future RunenKnowledge repository;
 consumer adoption and any explicit integration remain separately owned by the consumer.
+RunenInput remains a planned standalone repository. Until ADR 0011's accepted
+successor handoff, reusable device-input source authority remains in Runenwerk; planned
+family membership does not itself authorize source movement or an external dependency.
 RunenRender remains a planned standalone repository.
 
 A planned repository name does not authorize source movement. Each extraction requires:

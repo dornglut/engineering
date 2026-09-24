@@ -15,6 +15,7 @@ Allowed statuses are `proposed`, `accepted`, `superseded`, and `rejected`.
 - [ADR 0008 — Adopt bounded source-authority handoffs for cross-repository transfers](0008-adopt-bounded-source-authority-handoffs.md)
 - [ADR 0009 — Establish RunenShader as standalone shader-toolchain authority](0009-establish-runen-shader-boundary.md)
 - [ADR 0010 — Establish RunenGraph as standalone graph-framework authority](0010-establish-runen-graph-boundary.md)
+- [ADR 0011 — Establish RunenInput as standalone device-input framework authority](0011-establish-runen-input-boundary.md)
 
 ## Proposed
 
