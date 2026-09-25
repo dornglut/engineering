@@ -1,9 +1,9 @@
 # RunenInput standalone authority cutover
 
-- Status: active
+- Status: completed
 - Owner: Dornglut organization
 - Opened: 2026-09-24
-- Closed:
+- Closed: 2026-09-25
 - Owning issue: [engineering#82](https://github.com/dornglut/engineering/issues/82)
 - Decision authority: [ADR 0011](../adrs/0011-establish-runen-input-boundary.md), [ADR 0008](../adrs/0008-adopt-bounded-source-authority-handoffs.md)
 
@@ -79,10 +79,11 @@ source/consumer census and the `EXTRACTION_DESIGN_JUSTIFIED` decision.
 [runenwerk#774](https://github.com/dornglut/runenwerk/issues/774) owns the completed
 pre-transfer source-boundary correction, [engineering#84](https://github.com/dornglut/engineering/issues/84)
 owns successor repository bootstrap/profile reconciliation, and
-[runen-input#2](https://github.com/dornglut/runen-input/issues/2) owns the active
-successor transfer/public-contract acceptance. The future Runenwerk downstream-cutover
-issue will own consumer migration and predecessor deletion when created. Pull requests
-in each owning repository retain exact-head and accepted-revision evidence.
+[runen-input#2](https://github.com/dornglut/runen-input/issues/2) owns the completed
+successor transfer/public-contract acceptance, and
+[runenwerk#792](https://github.com/dornglut/runenwerk/issues/792) owns the completed
+exact-revision consumer cutover and predecessor deletion. Pull requests in each owning
+repository retain exact-head and accepted-revision evidence.
 
 This charter links those authorities without copying branch heads, workflow runs,
 temporary blockers, or child acceptance matrices.
@@ -131,11 +132,10 @@ temporary blockers, or child acceptance matrices.
   pre-transfer source-boundary correction and transfer census
 - [engineering#84](https://github.com/dornglut/engineering/issues/84) — successor
   repository bootstrap/profile reconciliation
-- [runen-input#2](https://github.com/dornglut/runen-input/issues/2) — active successor
+- [runen-input#2](https://github.com/dornglut/runen-input/issues/2) — completed successor
   transfer/public-contract acceptance
-
-Add the Runenwerk consumer-cutover issue here when created. Do not invent issue numbers
-or duplicate repository-local acceptance criteria in this charter.
+- [runenwerk#792](https://github.com/dornglut/runenwerk/issues/792) — completed exact-revision
+  consumer cutover and predecessor deletion
 
 ## Risks and rollback
 
@@ -157,4 +157,15 @@ the owning authority before dependent work continues.
 
 ## Closure record
 
-Open.
+Closed 2026-09-25.
+
+The accepted RunenInput successor became sole semantic source authority under ADR 0008.
+Runenwerk subsequently cut all maintained consumers to the accepted standalone
+framework and deleted the predecessor reusable implementation in the same bounded
+cutover. No forwarding namespace, source mirror, compatibility alias, source include,
+submodule, moving dependency, duplicate reducer authority, or predecessor private
+reach-through remains in the accepted cutover state.
+
+RunenInput is reconciled from planned/transitioning status to a current standalone
+Runen-family framework in `architecture/runen-family.md`. Repository-local issues and
+pull requests retain the implementation and exact acceptance evidence.

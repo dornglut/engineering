@@ -16,7 +16,6 @@ Allowed statuses are `proposed`, `active`, `completed`, and `cancelled`.
 
 ## Active
 
-- [RunenInput standalone authority cutover](runeninput-standalone-authority-cutover.md) — coordinate successor authority acceptance and Runenwerk exact-revision predecessor retirement
 - [RunenECS schedule semantics and Runenwerk lifecycle cutover](runenecs-schedule-semantics-and-runenwerk-lifecycle-cutover.md) — coordinate ordering-presence and publication-frontier migrations across RunenECS and Runenwerk
 
 ## Proposed
@@ -25,6 +24,7 @@ None.
 
 ## Closed
 
+- [RunenInput standalone authority cutover](runeninput-standalone-authority-cutover.md) — completed standalone RunenInput authority handoff and Runenwerk exact-revision predecessor retirement
 - [RunenECS standalone authority cutover](runenecs-standalone-authority-cutover.md) — completed standalone RunenECS authority handoff and Runenwerk exact-revision predecessor retirement
 - [RunenGPU GX standalone authority cutover](runengpu-gx-standalone-authority-cutover.md) — completed standalone RunenGPU authority handoff and Runenwerk exact-revision cutover
 - [Verified-head validation adoption](verified-head-validation.md) — completed immutable, exact-head repository validation adoption
