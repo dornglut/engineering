@@ -1,6 +1,6 @@
 # RunenInput standalone authority cutover
 
-- Status: closed
+- Status: completed
 - Owner: Dornglut organization
 - Opened: 2026-09-24
 - Closed: 2026-09-25
