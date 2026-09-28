@@ -77,7 +77,7 @@ A pull request identifies:
 - included and excluded scope;
 - API, security, migration, and documentation impact.
 
-When recording completed delivery, it also identifies the accepted squash merge and accepted-main push evidence when that repository requires it. A merge ref is reported only when intentionally describing merge-result validation; it must not be called the reviewed feature head. Moving the feature head invalidates prior exact-head evidence.
+When recording completed delivery, it also identifies the accepted squash merge and accepted-main push evidence when that repository requires it. An ordinary pull-request merge ref is reported only when intentionally describing synthetic merge-result validation; it must not be called the reviewed feature head. A merge-queue integration revision is reported as `merge_group` evidence and likewise must not be called the reviewed feature head. Moving the feature head invalidates prior exact-head evidence.
 
 Pull requests remain bounded. Merge uses exact-head evidence.
 
@@ -96,8 +96,9 @@ Agent-mediated changes use one exact accepted base, one complete isolated candid
 9. Publish new work by creating an isolated branch directly at the complete candidate. Update an existing lineage only by guarded non-force fast-forward. Never expose partial candidate state or force-overwrite unexpected branch state.
 10. Use a draft pull request and repository-owned exact-head validation. CI may falsify a candidate but does not expand scope.
 11. Any feature-head change invalidates earlier validation, review, and assurance.
-12. Before merge, reconcile the exact final head with authority, dependency closure, complete diff, CI, review state, and current default branch. Merge only against the exact reviewed SHA.
-13. After merge, verify the resulting default-branch state where repository acceptance rules require it.
+12. Before direct merge or queue enqueue, reconcile the exact final feature head with authority, dependency closure, complete diff, CI, review state, and current default branch. Accept or enqueue only that exact reviewed feature-head SHA.
+13. In a merge-queue-enabled repository, require the queue's exact `merge_group` integration revision to satisfy the repository's required queue checks before merge. Treat feature-head and merge-group results as separate evidence stages even if the queue later promotes the validated integration commit directly.
+14. After merge, verify the resulting default-branch state where repository acceptance rules require it.
 
 Executor-specific procedures may define how these invariants are implemented but may not weaken them.
 
