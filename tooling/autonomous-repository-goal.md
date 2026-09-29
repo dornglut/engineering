@@ -31,7 +31,7 @@ Before acceptance:
 
 Use the repository's accepted merge method. Never infer new implementation, merge, or acceptance authority from stale context, a previous unrelated acceptance, a stale plan, or an unaccepted issue/roadmap item. A current accepted issue may authorize implementation within its bounded scope.
 
-If this goal is invoked by the repository owner or another authority permitted to grant merge/acceptance permission, treat the invocation as standing authorization for routine implementation, acceptance, merge, issue closure, required authority reconciliation, and continued work across the bounded autonomous sequence, provided every repository governance and exact-head gate still passes. Do not pause for repeated routine approval after each PR or roadmap slice.
+By invoking this goal as the repository owner or another authority permitted to grant merge/acceptance permission, I explicitly grant standing authorization for routine implementation, acceptance, merge, issue closure, required authority reconciliation, and continued work across the bounded autonomous sequence, provided every repository governance and exact-head gate still passes. Do not pause for repeated routine approval after each PR or roadmap slice.
 
 Standing authorization does not cover a new architecture/public-contract/ownership decision not already accepted, material scope expansion beyond current authority, unresolved authority conflict, failed or unavailable required evidence, an unsafe/destructive action outside the accepted scope, or any boundary that current authority explicitly reserves for a separate human decision. At such a boundary, leave the current candidate clean and evidence-complete and stop only that transition.
 
@@ -42,4 +42,4 @@ Do not stop merely because one investigation, issue, PR, or merge completed. Sto
 Do not create generated handoff prompts, work-state ledgers, truth certificates, temporary process authority, or other parallel sources of truth unless accepted repository authority explicitly requires them.
 ```
 
-Executor-specific procedures may add environment mechanics but must not weaken normative Engineering standards or repository-local authority. The template text alone is not authority; standing authorization exists only when an actor with the required repository authority actually invokes it. For GPT Web + GitHub connector work, also use [the GPT Web GitHub procedure](gpt-web-github.md).
+Executor-specific procedures may add environment mechanics but must not weaken normative Engineering standards or repository-local authority. The standing grant is effective only when the person invoking the goal actually has the repository authority it claims; otherwise it grants nothing. For GPT Web + GitHub connector work, also use [the GPT Web GitHub procedure](gpt-web-github.md).
