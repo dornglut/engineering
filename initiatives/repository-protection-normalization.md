@@ -128,6 +128,6 @@ Chimera Signal:
 
 ## Closure record
 
-Close this initiative only when every linked local issue is completed or has an explicit accepted exception or terminal disposition, Engineering #53 is reconciled, and a final native re-audit confirms the maintained-repository protection target without overlapping writers or undocumented drift.
-
 Open.
+
+Close this initiative only when every linked local issue is completed or has an explicit accepted exception or terminal disposition, Engineering #53 is reconciled, and a final native re-audit confirms the maintained-repository protection target without overlapping writers or undocumented drift.
