@@ -64,7 +64,7 @@ Completed Engineering investigations and policy decisions remain historical inpu
 
 ## Sequencing constraints
 
-A repository-local issue remains the sole authority for its exact native settings mutation.
+Each linked delivery issue remains the sole authority for its exact native settings mutation. Repository-local issues own their listed protection or classification fields; Engineering #53 owns only its separately scoped merge-method fields.
 
 Do not write the same live ruleset from two issues concurrently. For repositories that also need Engineering #53 merge-method normalization, complete and verify the repository-local protection delivery first, then re-read live state before the #53 step.
 
