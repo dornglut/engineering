@@ -199,6 +199,8 @@ For maintained repositories:
 - merged head branches deleted automatically;
 - normal changes require pull requests;
 - canonical validation is required;
+- repositories without a required merge queue require the canonical status check in strict/up-to-date mode so merge eligibility is tested against the current default-branch state;
+- a merge-queue repository may disable strict required-status checking only when its required `merge_group` checks validate the exact latest-base integration revision before merge; the queue does not waive required checks or exact-revision evidence;
 - conversations are resolved before merge;
 - force pushes and default-branch deletion are blocked;
 - linear history is preferred;
