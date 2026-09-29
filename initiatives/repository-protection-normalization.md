@@ -62,6 +62,14 @@ all completed local/admin work
 
 Completed Engineering investigations and policy decisions remain historical inputs; they are not reopened or duplicated by this charter.
 
+## Acceptance evidence
+
+Cross-repository completion requires repository-local evidence for every authorized native mutation or accepted exception, including a fresh pre-change read, the exact bounded setting change, and a post-change read proving the resulting state.
+
+The final Engineering audit confirms that maintained repositories satisfy the accepted GitHub protection target or identify an explicit durable exception, that merge-method ownership is reconciled, that required validation and review protections are enforced where supported, and that Chimera Signal has a truthful terminal capability or visibility disposition.
+
+Native admin changes must not move repository source revisions merely to establish settings compliance. Detailed live payloads, run identifiers, and per-repository acceptance evidence remain in the linked issues rather than this charter.
+
 ## Sequencing constraints
 
 Each linked delivery issue remains the sole authority for its exact native settings mutation. Repository-local issues own their listed protection or classification fields; Engineering #53 owns only its separately scoped merge-method fields.
@@ -78,7 +86,7 @@ Independent repositories may proceed in parallel only when their live mutable se
 
 Every native action re-resolves the target repository and ruleset immediately before mutation and verifies the resulting live state afterward. Repository source revisions must not move merely because an admin setting changed.
 
-## Rollback
+## Risks and rollback
 
 Repository-local delivery evidence records the pre-change native state needed to identify an unintended mutation.
 
