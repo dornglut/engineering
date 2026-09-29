@@ -19,7 +19,7 @@ It does not own product implementation. Each product or framework repository ret
 
 ## Tooling procedures
 
-- [Autonomous repository goal template](tooling/autonomous-repository-goal.md) — reusable executor-neutral goal that delegates to current Engineering and repository-local authority
+- [Autonomous repository goal template](tooling/autonomous-repository-goal.md) — dependency-aware, parallel-capable executor-neutral goal that delegates to current Engineering and repository-local authority
 - [GPT Web GitHub procedure](tooling/gpt-web-github.md) — connector-specific procedure for exact inspection, publication, and validation
 
 Canonical validation:
