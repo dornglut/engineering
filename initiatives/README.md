@@ -16,7 +16,6 @@ Allowed statuses are `proposed`, `active`, `completed`, and `cancelled`.
 
 ## Active
 
-- [Maintained-repository GitHub protection normalization](repository-protection-normalization.md) — coordinate native protection and merge-setting normalization across maintained repositories
 - [RunenECS schedule semantics and Runenwerk lifecycle cutover](runenecs-schedule-semantics-and-runenwerk-lifecycle-cutover.md) — coordinate ordering-presence and publication-frontier migrations across RunenECS and Runenwerk
 
 ## Proposed
@@ -25,6 +24,7 @@ None.
 
 ## Closed
 
+- [Maintained-repository GitHub protection normalization](repository-protection-normalization.md) — completed maintained-repository protection and merge-setting normalization with an explicit private-repository capability exception for Chimera Signal
 - [RunenInput standalone authority cutover](runeninput-standalone-authority-cutover.md) — completed standalone RunenInput authority handoff and Runenwerk exact-revision predecessor retirement
 - [RunenECS standalone authority cutover](runenecs-standalone-authority-cutover.md) — completed standalone RunenECS authority handoff and Runenwerk exact-revision predecessor retirement
 - [RunenGPU GX standalone authority cutover](runengpu-gx-standalone-authority-cutover.md) — completed standalone RunenGPU authority handoff and Runenwerk exact-revision cutover
