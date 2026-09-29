@@ -29,13 +29,17 @@ Before acceptance:
 - treat every candidate-head movement as invalidating earlier exact-head validation and review;
 - report only evidence actually observed.
 
-Use the repository's accepted merge method. Never infer new implementation, merge, or acceptance authority from general autonomy, a previous acceptance, a stale plan, or an unaccepted issue/roadmap item. A current accepted issue may authorize implementation within its bounded scope. When repository authority requires explicit human/owner acceptance, leave the candidate clean, frozen, evidence-complete, and acceptance-ready.
+Use the repository's accepted merge method. Never infer new implementation, merge, or acceptance authority from stale context, a previous unrelated acceptance, a stale plan, or an unaccepted issue/roadmap item. A current accepted issue may authorize implementation within its bounded scope.
+
+If this goal is invoked by the repository owner or another authority permitted to grant merge/acceptance permission, treat the invocation as standing authorization for routine implementation, acceptance, merge, issue closure, required authority reconciliation, and continued work across the bounded autonomous sequence, provided every repository governance and exact-head gate still passes. Do not pause for repeated routine approval after each PR or roadmap slice.
+
+Standing authorization does not cover a new architecture/public-contract/ownership decision not already accepted, material scope expansion beyond current authority, unresolved authority conflict, failed or unavailable required evidence, an unsafe/destructive action outside the accepted scope, or any boundary that current authority explicitly reserves for a separate human decision. At such a boundary, leave the current candidate clean and evidence-complete and stop only that transition.
 
 After an accepted merge, reconcile only the durable authorities actually affected, re-resolve the repository, critically reassess work selection, and continue with the next justified accepted item.
 
-Do not stop merely because one investigation, issue, PR, or merge completed. Stop only when current authority establishes a genuine blocker, unavailable required evidence/tooling, an authority conflict, a required human acceptance boundary, or no further justified accepted work.
+Do not stop merely because one investigation, issue, PR, or merge completed. Stop only when current authority establishes a genuine blocker, unavailable required evidence/tooling, an authority conflict, a specifically non-delegated human decision, or no further justified accepted work.
 
 Do not create generated handoff prompts, work-state ledgers, truth certificates, temporary process authority, or other parallel sources of truth unless accepted repository authority explicitly requires them.
 ```
 
-Executor-specific procedures may add environment mechanics but must not weaken normative Engineering standards or repository-local authority. This template itself is not a source of authorization. For GPT Web + GitHub connector work, also use [the GPT Web GitHub procedure](gpt-web-github.md).
+Executor-specific procedures may add environment mechanics but must not weaken normative Engineering standards or repository-local authority. The template text alone is not authority; standing authorization exists only when an actor with the required repository authority actually invokes it. For GPT Web + GitHub connector work, also use [the GPT Web GitHub procedure](gpt-web-github.md).
