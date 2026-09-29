@@ -16,6 +16,7 @@ Allowed statuses are `proposed`, `active`, `completed`, and `cancelled`.
 
 ## Active
 
+- [Maintained-repository GitHub protection normalization](repository-protection-normalization.md) — coordinate native protection and merge-setting normalization across maintained repositories
 - [RunenECS schedule semantics and Runenwerk lifecycle cutover](runenecs-schedule-semantics-and-runenwerk-lifecycle-cutover.md) — coordinate ordering-presence and publication-frontier migrations across RunenECS and Runenwerk
 
 ## Proposed
