@@ -1,9 +1,9 @@
 # Maintained-repository GitHub protection normalization
 
-- Status: active
+- Status: completed
 - Owner: Dornglut organization
 - Opened: 2026-09-29
-- Closed:
+- Closed: 2026-09-29
 - Owning issue: [engineering#94](https://github.com/dornglut/engineering/issues/94)
 - Decision authority: [Authority and work](../governance/authority-and-work.md), [GitHub standard](../standards/github.md), [Validation standard](../standards/validation.md)
 
@@ -128,6 +128,16 @@ Chimera Signal:
 
 ## Closure record
 
-Open.
+Completed 2026-09-29.
 
-Close this initiative only when every linked local issue is completed or has an explicit accepted exception or terminal disposition, Engineering #53 is reconciled, and a final native re-audit confirms the maintained-repository protection target without overlapping writers or undocumented drift.
+All linked repository-local deliveries completed, and Engineering #53 completed the maintained-repository merge-method reconciliation.
+
+The final native-state audit confirmed:
+
+- every maintained repository uses squash-only repository merge settings and automatic merged-head deletion;
+- all public maintained repositories retain active default-branch rulesets with required canonical validation, conversation resolution, deletion and non-fast-forward protection, linear history, zero meaningless approval requirements, and empty bypass;
+- non-queue public repositories require strict/up-to-date canonical status checks;
+- Runenwerk retains its accepted merge-queue exception, where exact merge-group integration evidence provides the latest-base gate instead of strict feature-branch status checking;
+- Chimera Signal remains private under the accepted temporary exception in [chimera-signal#21](https://github.com/dornglut/chimera-signal/issues/21): canonical CI remains evidence but is not represented as native protected-main enforcement until the repository plan or visibility changes.
+
+No overlapping settings writer or undocumented merge-method drift remains. Any future capability, plan, visibility, or policy change is new work under the normal authority process rather than continuation of this initiative.
