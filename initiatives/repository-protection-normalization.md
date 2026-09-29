@@ -11,7 +11,7 @@
 
 Coordinate the bounded native GitHub-settings normalization needed to bring maintained Dornglut repositories back to the accepted protection target without replacing repository-local issue authority or creating overlapping settings writers.
 
-The initiative owns only cross-repository sequencing, mutable-settings writer ownership, rollback discipline, and final coordination closure. Each repository-local issue owns its exact native settings delta and verification.
+The initiative owns only cross-repository sequencing, mutable-settings writer ownership, rollback discipline, and final coordination closure. Each linked delivery issue owns its exact native settings delta and verification.
 
 ## Rationale
 
