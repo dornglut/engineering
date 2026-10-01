@@ -141,6 +141,27 @@ source-authority handoff. Runenwerk consumes the accepted standalone framework a
 retains only integration, backend adaptation, and product projection ownership.
 RunenRender remains a planned standalone repository.
 
+For RunenRender, **readiness to begin the bounded source-authority handoff is distinct
+from later framework maturity**. A successor candidate may be built after the current
+owner has qualified the reusable boundary, proved an ordinary public consumer path
+without product/private reach-through, selected the exact accepted framework dependency
+revisions needed for transfer, and established the exact source/stay manifest plus
+standalone validation and cutover plan. Source authority itself moves only when the
+successor is accepted, following ADR 0008. Pre-1.0 transfer does not imply a stable API
+promise.
+
+Broader renderer-maturity evidence such as additional render methods, large-scene
+planning or acceleration characterization, GPU-produced semantic inputs,
+multi-observation/output sharing, reconstruction evolution, and performance
+characterization is not an organization-level reason to keep reusable renderer semantics
+owned by Runenwerk after the ownership boundary is otherwise qualified. During ADR
+0008's bounded publication overlap, ordinary successor feature evolution still waits
+until predecessor deletion; only the handoff's permitted cutover-blocking corrections
+may change the transferred boundary. After the clean cutover completes, further
+renderer-maturity work belongs to standalone RunenRender unless a repository-local
+accepted decision proves a specific item was necessary to determine the transfer
+boundary itself.
+
 A planned repository name does not authorize source movement. Each extraction requires:
 
 1. boundary correction in the current owner;
