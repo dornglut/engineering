@@ -141,6 +141,22 @@ source-authority handoff. Runenwerk consumes the accepted standalone framework a
 retains only integration, backend adaptation, and product projection ownership.
 RunenRender remains a planned standalone repository.
 
+For RunenRender, **source-authority transfer readiness is distinct from later framework
+maturity**. Transfer may begin after the current owner has qualified the reusable
+boundary, proved an ordinary public consumer path without product/private reach-through,
+selected the exact accepted framework dependency revisions needed for transfer, and
+established the exact source/stay manifest plus standalone validation and cutover plan.
+Pre-1.0 transfer does not imply a stable API promise.
+
+Broader renderer-maturity evidence such as additional render methods, large-scene
+planning or acceleration characterization, GPU-produced semantic inputs,
+multi-observation/output sharing, reconstruction evolution, and performance
+characterization remains owned by RunenRender once standalone unless a repository-local
+accepted decision proves a specific item is necessary to determine the transfer
+boundary itself. Such maturity work is not an organization-level reason to keep reusable
+renderer semantics owned by Runenwerk after the ownership boundary is otherwise
+qualified.
+
 A planned repository name does not authorize source movement. Each extraction requires:
 
 1. boundary correction in the current owner;
