@@ -23,7 +23,7 @@ dornglut
 ├── runen-shader
 ├── runen-graph
 ├── runen-input
-└── runen-render    planned
+└── runen-render
 ```
 
 ## Organization repositories
@@ -47,6 +47,7 @@ dornglut
 | `dornglut/runen-gpu` | Backend-neutral GPU resource, execution, and device framework | Standalone semantic implementation authority; Runenwerk is a downstream integration consumer |
 | `dornglut/runen-ecs` | Reusable entity-component-system framework | Standalone semantic implementation and conformance authority; Runenwerk is a downstream integration consumer |
 | `dornglut/runen-shader` | Shader-source and shader-toolchain framework producing canonical shader artifacts | Standalone semantic authority; sibling of RunenGPU; concrete frontend implementation remains repository-owned |
+| `dornglut/runen-render` | Reusable semantic rendering and maintained image-formation framework | Standalone semantic and conformance authority; Runenwerk predecessor retirement remains bounded by the active RX cutover |
 | `dornglut/runen-graph` | Reusable graph and relationship framework over caller-owned identities | Standalone foundational framework authority; adoption remains repository-owned |
 | `dornglut/runen-input` | Host/backend-neutral device-input observation and deterministic confirmed-state framework | Standalone semantic authority; Runenwerk is an exact-pinned downstream integration/product consumer |
 | `dornglut/runen-net` | Host- and transport-independent realtime multiplayer networking framework | Standalone; Runenwerk is a downstream consumer, and RunenOnline does not redefine its semantics |
@@ -55,12 +56,6 @@ dornglut
 
 The durable RunenNet/RunenOnline ownership and composition boundary is defined by
 [ADR 0006](../adrs/0006-separate-realtime-networking-from-online-control-plane.md).
-
-## Planned repositories
-
-| Repository | Intended role | Dependency direction |
-|---|---|---|
-| `dornglut/runen-render` | Rendering framework built on RunenGPU and RunenShader | Depends on RunenGPU and RunenShader |
 
 The durable RunenShader/RunenGPU/RunenRender ownership and composition boundary is defined by
 [ADR 0009](../adrs/0009-establish-runen-shader-boundary.md). RunenInput ownership and
@@ -104,9 +99,9 @@ map their distinct identity and lifecycle domains.
 RunenShader and RunenGPU are likewise sibling standalone frameworks. RunenShader owns
 reusable shader-source and shader-compilation semantics and canonical shader-artifact
 formation; RunenGPU owns canonical WGSL program admission and generic GPU execution.
-Neither depends on the other merely to define its semantic core. A consumer such as
-future RunenRender may depend on both and own the explicit artifact-to-program-admission
-bridge without transferring either framework's authority.
+Neither depends on the other merely to define its semantic core. RunenRender depends on
+both and owns the explicit artifact-to-program-admission bridge without transferring
+either framework's authority.
 
 The Runen language repository remains its own semantic authority. A future consumer
 relationship does not transfer language semantics into that consumer. RunenShader does
@@ -139,16 +134,14 @@ RunenInput is the standalone authority for reusable backend-neutral device-input
 observation and deterministic confirmed-state semantics after its completed ADR 0008
 source-authority handoff. Runenwerk consumes the accepted standalone framework and
 retains only integration, backend adaptation, and product projection ownership.
-RunenRender remains a planned standalone repository.
-
-For RunenRender, **readiness to begin the bounded source-authority handoff is distinct
-from later framework maturity**. A successor candidate may be built after the current
-owner has qualified the reusable boundary, proved an ordinary public consumer path
-without product/private reach-through, selected the exact accepted framework dependency
-revisions needed for transfer, and established the exact source/stay manifest plus
-standalone validation and cutover plan. Source authority itself moves only when the
-successor is accepted, following ADR 0008. Pre-1.0 transfer does not imply a stable API
-promise.
+RunenRender is the standalone semantic and conformance authority for reusable renderer
+semantics, maintained image formation, and the explicit RunenShader-artifact to RunenGPU
+program-admission bridge. Its ADR 0008 successor acceptance has occurred. During the
+remaining bounded RX overlap, the transferred Runenwerk predecessor boundary is frozen
+and deletion-bound; Runenwerk owns only direct consumer migration and predecessor
+retirement for that boundary. Ordinary standalone RunenRender feature and maturity
+evolution remains serialized after predecessor deletion. Pre-1.0 authority transfer does
+not imply a stable API promise.
 
 Broader renderer-maturity evidence such as additional render methods, large-scene
 planning or acceleration characterization, GPU-produced semantic inputs,
@@ -162,7 +155,7 @@ renderer-maturity work belongs to standalone RunenRender unless a repository-loc
 accepted decision proves a specific item was necessary to determine the transfer
 boundary itself.
 
-A planned repository name does not authorize source movement. Each extraction requires:
+A repository target does not authorize source movement. Each extraction requires:
 
 1. boundary correction in the current owner;
 2. one accepted transferred implementation;

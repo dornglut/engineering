@@ -15,14 +15,14 @@ This initiative owns only cross-repository sequencing, rollback/reversal, author
 
 ## Rationale
 
-Runenwerk has completed the bounded R8 extraction qualification required by the accepted Runen-family architecture. The transfer now spans Engineering, Runenwerk, the planned RunenRender successor, and the accepted RunenGPU/RunenShader sibling boundaries; requires multiple repository-local delivery phases; has an order-sensitive ADR-0008 authority switch; and needs explicit rollback and final no-duplicate-authority evidence.
+Runenwerk has completed the bounded R8 extraction qualification required by the accepted Runen-family architecture. The transfer now spans Engineering, Runenwerk, the accepted standalone RunenRender successor, and the accepted RunenGPU/RunenShader sibling boundaries; requires multiple repository-local delivery phases; has an order-sensitive ADR-0008 authority switch; and needs explicit rollback and final no-duplicate-authority evidence.
 
 A Runenwerk-local issue cannot truthfully own successor bootstrap, standalone acceptance, and the later downstream cutover. A successor-local issue cannot own the predecessor deletion. The initiative therefore coordinates only the cross-repository lifecycle.
 
 ## Affected repositories
 
-- `dornglut/runenwerk` remains the semantic source authority until standalone successor acceptance, then owns only the downstream consumer cutover and predecessor deletion.
-- `dornglut/runen-render` will own reusable renderer semantics, maintained renderer method/execution, renderer conformance, and the explicit RunenShader-artifact to RunenGPU-admission bridge after successor acceptance.
+- `dornglut/runenwerk` owns the downstream consumer cutover and predecessor deletion; its transferred predecessor boundary is frozen and deletion-bound after successor acceptance.
+- `dornglut/runen-render` is the standalone authority for reusable renderer semantics, maintained renderer method/execution, renderer conformance, and the explicit RunenShader-artifact to RunenGPU-admission bridge.
 - `dornglut/runen-gpu` remains the standalone GPU execution authority consumed through an immutable accepted revision.
 - `dornglut/runen-shader` remains the standalone shader source/compilation/artifact authority consumed through an immutable accepted revision.
 - `dornglut/engineering` owns only this coordination charter and the organization-level handoff rules.
@@ -47,6 +47,15 @@ accepted Runenwerk R8 extraction boundary
 ```
 
 Runenwerk [#906](https://github.com/dornglut/runenwerk/issues/906) owns the completed extraction-readiness outcome. Runenwerk [#1129](https://github.com/dornglut/runenwerk/issues/1129) owns the frozen predecessor transfer/stay/export/consumer/deletion inputs. Repository-local successor and downstream cutover issues own the implementation phases once created.
+
+## Current phase
+
+The ADR-0008 successor acceptance has occurred. `dornglut/runen-render` is now the sole
+RunenRender semantic source authority. The transferred Runenwerk predecessor boundary is
+frozen and deletion-bound. Runenwerk
+[#1134](https://github.com/dornglut/runenwerk/issues/1134) owns the remaining
+exact-revision consumer migration and predecessor deletion; this initiative remains
+active through final residue proof and cross-repository closure.
 
 ## Sequencing constraints
 
@@ -88,13 +97,13 @@ RunenRender:
 
 - [runen-render#1](https://github.com/dornglut/runen-render/issues/1) — successor repository acceptance and ADR-0008 semantic authority switch
 - [runen-render#2](https://github.com/dornglut/runen-render/issues/2) — source-free repository/profile bootstrap before semantic transfer
-- [runen-render#4](https://github.com/dornglut/runen-render/issues/4) — blocked frozen-R8 semantic/conformance transfer and standalone executable proof
+- [runen-render#4](https://github.com/dornglut/runen-render/issues/4) — completed frozen-R8 semantic/conformance transfer and standalone executable proof
 
 Runenwerk:
 
 - [runenwerk#906](https://github.com/dornglut/runenwerk/issues/906) — completed R8 extraction readiness
 - [runenwerk#1129](https://github.com/dornglut/runenwerk/issues/1129) — completed exact transfer/stay/export/consumer/deletion freeze
-- [runenwerk#1134](https://github.com/dornglut/runenwerk/issues/1134) — blocked downstream exact-revision consumer cutover and predecessor deletion after successor acceptance
+- [runenwerk#1134](https://github.com/dornglut/runenwerk/issues/1134) — downstream exact-revision consumer cutover and predecessor deletion
 
 ## Risks and rollback
 
