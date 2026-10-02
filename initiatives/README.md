@@ -16,6 +16,7 @@ Allowed statuses are `proposed`, `active`, `completed`, and `cancelled`.
 
 ## Active
 
+- [RunenRender RX standalone authority cutover](runenrender-rx-standalone-authority-cutover.md) — coordinate standalone RunenRender authority transfer and Runenwerk predecessor retirement
 - [RunenECS schedule semantics and Runenwerk lifecycle cutover](runenecs-schedule-semantics-and-runenwerk-lifecycle-cutover.md) — coordinate ordering-presence and publication-frontier migrations across RunenECS and Runenwerk
 
 ## Proposed
