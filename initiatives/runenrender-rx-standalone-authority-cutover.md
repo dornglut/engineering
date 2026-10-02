@@ -1,9 +1,9 @@
 # RunenRender RX standalone authority cutover
 
-- Status: active
+- Status: completed
 - Owner: Dornglut organization
 - Opened: 2026-10-02
-- Closed:
+- Closed: 2026-10-02
 - Owning issue: [engineering#105](https://github.com/dornglut/engineering/issues/105)
 - Decision authority: [ADR 0008](../adrs/0008-adopt-bounded-source-authority-handoffs.md), [ADR 0009](../adrs/0009-establish-runen-shader-boundary.md), [Runen family architecture](../architecture/runen-family.md), [runenwerk#906](https://github.com/dornglut/runenwerk/issues/906), [runenwerk#1129](https://github.com/dornglut/runenwerk/issues/1129)
 
@@ -48,14 +48,13 @@ accepted Runenwerk R8 extraction boundary
 
 Runenwerk [#906](https://github.com/dornglut/runenwerk/issues/906) owns the completed extraction-readiness outcome. Runenwerk [#1129](https://github.com/dornglut/runenwerk/issues/1129) owns the frozen predecessor transfer/stay/export/consumer/deletion inputs. Repository-local successor and downstream cutover issues own the implementation phases once created.
 
-## Current phase
+## Completed phase
 
-The ADR-0008 successor acceptance has occurred. `dornglut/runen-render` is now the sole
-RunenRender semantic source authority. The transferred Runenwerk predecessor boundary is
-frozen and deletion-bound. Runenwerk
-[#1134](https://github.com/dornglut/runenwerk/issues/1134) owns the remaining
-exact-revision consumer migration and predecessor deletion; this initiative remains
-active through final residue proof and cross-repository closure.
+The ADR-0008 successor acceptance established `dornglut/runen-render` as the sole
+RunenRender semantic source authority. Runenwerk
+[#1134](https://github.com/dornglut/runenwerk/issues/1134) completed the exact-revision
+consumer migration and predecessor deletion. The final residue proof and
+cross-repository closure are complete.
 
 ## Sequencing constraints
 
@@ -103,7 +102,7 @@ Runenwerk:
 
 - [runenwerk#906](https://github.com/dornglut/runenwerk/issues/906) — completed R8 extraction readiness
 - [runenwerk#1129](https://github.com/dornglut/runenwerk/issues/1129) — completed exact transfer/stay/export/consumer/deletion freeze
-- [runenwerk#1134](https://github.com/dornglut/runenwerk/issues/1134) — downstream exact-revision consumer cutover and predecessor deletion
+- [runenwerk#1134](https://github.com/dornglut/runenwerk/issues/1134) — completed downstream exact-revision consumer cutover and predecessor deletion
 
 ## Risks and rollback
 
@@ -115,4 +114,15 @@ Material predecessor-boundary drift before successor acceptance, organization-po
 
 ## Closure record
 
-Open.
+Closed 2026-10-02.
+
+Standalone `dornglut/runen-render` remains the sole reusable semantic, maintained-method,
+WGSL, and conformance authority. Runenwerk [#1134](https://github.com/dornglut/runenwerk/issues/1134)
+and [PR #1137](https://github.com/dornglut/runenwerk/pull/1137) accepted one immutable
+successor revision, migrated maintained consumers directly, and deleted the transferred
+predecessor source and private camera qualification bridge. The accepted cutover leaves
+no source mirror, forwarding namespace, compatibility alias, source include, submodule,
+moving dependency, duplicate runtime, mirrored WGSL, or private backend reach-through.
+RunenShader artifact formation and RunenGPU program admission remain separate sibling
+authorities composed by standalone RunenRender. Ordinary successor evolution is unblocked.
+Repository-local issues and pull requests retain exact revision and validation evidence.
