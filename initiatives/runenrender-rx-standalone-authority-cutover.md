@@ -82,13 +82,15 @@ Repository-local issues and pull requests retain exact SHAs, validation run IDs,
 Engineering:
 
 - [engineering#105](https://github.com/dornglut/engineering/issues/105) — RX initiative delivery and cross-repository coordination
+- [engineering#107](https://github.com/dornglut/engineering/issues/107) — generate the destination repository from the accepted framework template before repository-local bootstrap begins
 
 Runenwerk:
 
 - [runenwerk#906](https://github.com/dornglut/runenwerk/issues/906) — completed R8 extraction readiness
 - [runenwerk#1129](https://github.com/dornglut/runenwerk/issues/1129) — completed exact transfer/stay/export/consumer/deletion freeze
+- [runenwerk#1134](https://github.com/dornglut/runenwerk/issues/1134) — blocked downstream exact-revision consumer cutover and predecessor deletion after successor acceptance
 
-Successor transfer and Runenwerk downstream-cutover issues are linked here when their owning repositories activate them.
+The successor-local bootstrap and transfer issues are linked here after `dornglut/runen-render` exists and can own them directly.
 
 ## Risks and rollback
 
