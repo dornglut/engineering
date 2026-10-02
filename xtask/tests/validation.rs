@@ -20,8 +20,13 @@ impl Fixture {
     fn replace(&self, path: &str, from: &str, to: &str) {
         let file = self.0.join(path);
         let text = fs::read_to_string(&file).unwrap();
-        assert!(text.contains(from));
-        fs::write(file, text.replacen(from, to, 1)).unwrap();
+        let (from, to) = if text.contains(from) {
+            (from.to_owned(), to.to_owned())
+        } else {
+            (from.replace('\n', "\r\n"), to.replace('\n', "\r\n"))
+        };
+        assert!(text.contains(&from));
+        fs::write(file, text.replacen(&from, &to, 1)).unwrap();
     }
     fn write(&self, path: &str, contents: &str) {
         let file = self.0.join(path);

@@ -16,7 +16,6 @@ Allowed statuses are `proposed`, `active`, `completed`, and `cancelled`.
 
 ## Active
 
-- [RunenRender RX standalone authority cutover](runenrender-rx-standalone-authority-cutover.md) — coordinate standalone RunenRender authority transfer and Runenwerk predecessor retirement
 - [RunenECS schedule semantics and Runenwerk lifecycle cutover](runenecs-schedule-semantics-and-runenwerk-lifecycle-cutover.md) — coordinate ordering-presence and publication-frontier migrations across RunenECS and Runenwerk
 
 ## Proposed
@@ -25,6 +24,7 @@ None.
 
 ## Closed
 
+- [RunenRender RX standalone authority cutover](runenrender-rx-standalone-authority-cutover.md) — completed standalone RunenRender authority transfer and Runenwerk predecessor retirement
 - [Maintained-repository GitHub protection normalization](repository-protection-normalization.md) — completed maintained-repository protection and merge-setting normalization with an explicit private-repository capability exception for Chimera Signal
 - [RunenInput standalone authority cutover](runeninput-standalone-authority-cutover.md) — completed standalone RunenInput authority handoff and Runenwerk exact-revision predecessor retirement
 - [RunenECS standalone authority cutover](runenecs-standalone-authority-cutover.md) — completed standalone RunenECS authority handoff and Runenwerk exact-revision predecessor retirement
