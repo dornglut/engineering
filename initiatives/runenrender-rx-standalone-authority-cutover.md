@@ -82,15 +82,19 @@ Repository-local issues and pull requests retain exact SHAs, validation run IDs,
 Engineering:
 
 - [engineering#105](https://github.com/dornglut/engineering/issues/105) — RX initiative delivery and cross-repository coordination
-- [engineering#107](https://github.com/dornglut/engineering/issues/107) — generate the destination repository from the accepted framework template before repository-local bootstrap begins
+- [engineering#107](https://github.com/dornglut/engineering/issues/107) — completed exact-template generation of the standalone destination repository
+
+RunenRender:
+
+- [runen-render#1](https://github.com/dornglut/runen-render/issues/1) — successor repository acceptance and ADR-0008 semantic authority switch
+- [runen-render#2](https://github.com/dornglut/runen-render/issues/2) — source-free repository/profile bootstrap before semantic transfer
+- [runen-render#4](https://github.com/dornglut/runen-render/issues/4) — blocked frozen-R8 semantic/conformance transfer and standalone executable proof
 
 Runenwerk:
 
 - [runenwerk#906](https://github.com/dornglut/runenwerk/issues/906) — completed R8 extraction readiness
 - [runenwerk#1129](https://github.com/dornglut/runenwerk/issues/1129) — completed exact transfer/stay/export/consumer/deletion freeze
 - [runenwerk#1134](https://github.com/dornglut/runenwerk/issues/1134) — blocked downstream exact-revision consumer cutover and predecessor deletion after successor acceptance
-
-The successor-local bootstrap and transfer issues are linked here after `dornglut/runen-render` exists and can own them directly.
 
 ## Risks and rollback
 
