@@ -85,40 +85,29 @@ Each semantic invariant set SHOULD have one clear authority. An invariant that m
 MUST be enforced by its owning authority or an explicit validation boundary, not only
 by UI, callers, documentation, or convention.
 
-Different representations MAY coexist when they own different invariants. Their
-correspondence SHOULD be explicit rather than inferred from one universal identity or
-one global object model.
+Multiple representations MAY coexist when their roles and correspondence are explicit.
+Distinct representations MUST NOT be treated as distinct authorities unless they
+actually own different invariant sets.
 
 Helpers and reusable implementation MUST NOT be promoted to semantic authority merely
 because they are shared.
 
 ## 2. Boundary contracts and flows
 
-Boundaries SHOULD expose owner-defined contracts rather than foreign internals.
-Contracts can include function or interface signatures, commands, queries, events,
-DTOs, immutable snapshots, schemas, persisted formats, protocol messages, products,
-projections, status, and diagnostics.
-
-When this standard uses the following flow terms, they mean:
-
-```text
-Command     request to change state
-Query       request to read state
-Event       accepted fact that happened
-Product     owner-defined formed or derived output
-Projection  derived read or view model
-Status      observed current condition
-Diagnostic  explanation of a failure, warning, or rejection
-```
+Boundaries SHOULD expose owner-defined interaction contracts rather than foreign
+internals. A contract MAY take the form of a callable API, request, event, message,
+immutable snapshot, schema, persisted format, protocol, stream, output, status, or
+diagnostic. When the distinction affects semantics, the contract SHOULD make clear
+whether it requests change, observes state, reports an accepted fact, or returns
+derived output.
 
 A proposed change capable of violating owned invariants MUST be accepted or validated
 by the owning authority before it becomes authoritative. Unrelated semantic owners
-MUST NOT be collapsed into one universal command model merely to unify transport or
+MUST NOT be collapsed into one universal interaction model merely to unify transport or
 invocation.
 
 Reads across an authority boundary MUST use an owner-defined contract rather than
-foreign private mutable state. The owner contract MAY be a query result, immutable
-snapshot, product, projection, prepared input, stream, or another owner-defined value.
+foreign private mutable state.
 
 ## 3. Dependency direction and representation
 
@@ -129,8 +118,8 @@ Stable semantic contracts MUST NOT depend on UI, transport, persistence, vendor,
 or deployment details unless those details are themselves part of the semantics or a
 more-specific accepted decision establishes the dependency.
 
-Dependency inversion MUST NOT be used to justify universal registries, global service
-locators, vague extension points, or a shared meta-model that erases distinct owners.
+Dependency inversion SHOULD make dependencies more explicit or replaceable. It MUST
+NOT erase distinct owners or replace explicit dependencies with global implicit state.
 
 When an editable or persistent description and an optimized executable realization
 have materially different responsibilities, they SHOULD remain distinct.
@@ -147,8 +136,8 @@ explicit.
 Provenance or production mechanism does not by itself establish authority. The owning
 authority MUST define whether and how externally produced, generated, imported,
 migrated, or projected state is admitted. Consuming another authority's accepted
-output MUST NOT silently transfer that authority's invariants or mutation rights to the
-consumer.
+output MUST NOT be treated as transferring ownership of the source invariants or
+mutation rights to the consumer.
 
 ## 5. Policy, capability, and validity
 
@@ -177,13 +166,13 @@ When different actors or observations can see different state in a way that affe
 correctness, the required consistency guarantees MUST be explicit.
 
 When correctness depends on compatibility between facts from multiple authorities, the
-combining boundary MUST define its admission criteria. It MUST NOT silently assume one
-global transaction, identity, revision, or "latest" state unless such a contract
+combining boundary MUST define its compatibility criteria. It MUST NOT silently assume
+one global transaction, identity, revision, or "latest" state unless such a contract
 actually exists.
 
-Admission MAY consider owner-local revision, time, scope, completeness, freshness,
-availability, provenance, correspondence, or an explicitly legal fallback. Admission
-SHOULD depend only on facts required by the consumer's semantics.
+Compatibility MAY depend on owner-local revision, time, scope, completeness, freshness,
+availability, provenance, correspondence, or an explicitly legal fallback. It SHOULD
+depend only on facts required by the consumer's semantics.
 
 ## 7. Storage and execution
 
@@ -216,7 +205,7 @@ use when compatibility or persistence can outlive one implementation revision.
 Design SHOULD support migration, replacement, simplification, and deletion as well as
 growth.
 
-A compatibility surface MUST be retained while a current published contract or
+A compatibility surface MUST be retained while a current compatibility commitment or
 consumer obligation requires it. A temporary compatibility surface MUST have an
 explicit removal condition and SHOULD NOT remain solely to avoid consumer edits after
 the obligation ends.
@@ -233,12 +222,12 @@ choice, physical encoding, or another replaceable realization detail.
 
 A new boundary or abstraction SHOULD buy a concrete property such as semantic
 ownership, information hiding, isolation, security, independent scale, deployment
-independence, testability, observability, reuse under an accepted reusable role,
-freedom to change physical realization, or material reduction in drift and coupled
-change.
+independence, testability, observability, reusability when reuse is an accepted
+repository purpose, freedom to change physical realization, or material reduction in
+drift and coupled change.
 
-Generality MAY be justified when the owning repository has an accepted foundational or
-reusable role, or when a more orthogonal contract removes real special cases and
+Generality MAY be justified when the owning repository is explicitly intended to serve
+multiple consumers, or when a more orthogonal contract removes real special cases and
 reduces total complexity. A universal meta-model MUST NOT be introduced solely because
 several callers look superficially similar.
 
@@ -254,8 +243,8 @@ Physical optimization strategy SHOULD remain private unless it is itself part of
 required semantic contract.
 
 Every boundary carries code, testing, debugging, versioning, coordination, and
-maintainer cost. Additional structure SHOULD remain only while the durable property it
-buys justifies that cost.
+maintainer cost. Additional structure SHOULD remain only while the property or
+temporary purpose it serves justifies that cost.
 
 ## 11. Decomposition and source structure
 
@@ -298,13 +287,13 @@ shared responsibility or shared knowledge emerges. Sharing implementation MUST N
 itself create semantic authority. Repository-specific language, framework conventions,
 and file-layout rules remain owned by the repository that needs them.
 
-## 12. Tests, fitness functions, and public surfaces
+## 12. Tests, mechanical checks, and public surfaces
 
 Tests SHOULD protect semantic invariants and boundary behavior rather than only examples
 of current implementation.
 
 When an important architectural rule can be checked mechanically at reasonable cost,
-the owning repository SHOULD prefer a fitness function such as a test, lint, metadata
+the owning repository SHOULD prefer a mechanical check such as a test, lint, metadata
 check, schema validator, dependency-direction check, or CI gate over prose alone.
 Validation policy and exact-head acceptance remain owned by the
 [validation standard](validation.md).
@@ -315,9 +304,10 @@ diagnostics without depending on private internals.
 
 ## 13. Automation is a caller, not an authority
 
-Agents, scripts, generators, and workflow automation MUST use the same public
-contracts, policy gates, validation, diagnostics, and acceptance boundaries as other
-callers unless more-specific accepted authority explicitly defines another path.
+Automation crossing an authority boundary MUST obey the same owner-defined contracts,
+policy gates, validation, and acceptance rules as other callers. Internal automation
+MAY use repository-local implementation interfaces when it remains within that
+authority and does not create a second semantic path.
 
 Automation MAY inspect, propose, generate candidates, and run validation. It MUST NOT
 turn generated output into accepted truth by bypassing the authority that owns the
@@ -331,10 +321,10 @@ questions that materially apply need answers:
 1. **Authority** — who owns the truth?
 2. **Invariants** — what conditions cannot be violated?
 3. **Contract** — what crosses the boundary?
-4. **Flow** — is it a command, query, event, product, projection, status, or diagnostic?
+4. **Flow** — what request, fact, observation, or output crosses the boundary, and what semantics does it carry?
 5. **Policy and validity** — who can request it, and who decides whether it is valid?
 6. **Time** — what ordering or temporal model affects meaning?
-7. **Consistency** — what consistency is required, including cross-owner admission?
+7. **Consistency** — what consistency is required, including cross-owner compatibility?
 8. **Storage** — what persists state, and is it distinct from authority?
 9. **Execution** — where and how does work run?
 10. **Failure and observation** — how does it fail, recover, and become observable?
@@ -374,14 +364,13 @@ Common anti-patterns include:
   compatibility criteria;
 - durable shared contracts used across revisions without an evolution or compatibility
   strategy;
-- universal registries, command models, extension models, or meta-models that erase
-  real ownership;
+- universal interaction models or extension mechanisms that erase real ownership;
 - thin abstractions or forwarding layers that add indirection without hiding a real
   decision or responsibility;
 - physical file/module splitting presented as architectural decomposition while
   responsibility concentration remains;
 - speculative capability or generic extension machinery with no current requirement,
-  established variation, or accepted reusable role;
+  established variation, or accepted reuse requirement;
 - deduplicating similar code into false shared ownership;
 - ignoring a known complexity or resource bound that conflicts with an accepted
   workload or scale requirement;
