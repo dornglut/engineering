@@ -107,13 +107,13 @@ base for initial work and the exact previous feature head for a correction.
 
 1. Read current repository authority and record the exact accepted default-branch
    commit and tree.
-2. Select an executor capable of the required inspection and of establishing the
-   evidence that the applicable executor procedure requires before publication. Do not
-   infer a pre-publication execution requirement merely because compilation, tests, or
-   runtime execution are eventually required for acceptance. The executor-specific
-   procedure defines when execution may first occur after publication. If required
-   inspection or pre-publication evidence cannot be established through that procedure,
-   use a suitable checked-out executor. GPT Web work follows the
+2. Select an executor capable of the required inspection and of establishing any
+   evidence that must exist before publication. Do not infer a pre-publication
+   execution requirement merely because some execution is eventually required for
+   acceptance. When an executor-specific procedure exists, it defines supported
+   mechanics and when that execution may first occur. If required inspection or
+   pre-publication evidence cannot be established through the selected procedure or
+   environment, use a suitable checked-out executor. GPT Web work follows the
    [GPT Web GitHub procedure](../tooling/gpt-web-github.md).
 3. Treat exact revision-bound repository inventory and file contents as authoritative
    state. Search may aid discovery but does not prove absence or dependency closure.
@@ -157,8 +157,8 @@ accepted substitutes for this workflow.
 The private Inbox, Engineering Portfolio, priority semantics, and work lifecycle are
 owned by [Authority and work](../governance/authority-and-work.md).
 
-GitHub Projects represent live operational state. They do not replace ADRs, repository
-issues, roadmaps, source, or repository-local implementation authority.
+GitHub Projects are the forge representation of that operational state; this standard
+defines no additional Project semantics.
 
 ## Parent issues and child links
 
