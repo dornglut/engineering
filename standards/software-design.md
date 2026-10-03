@@ -4,8 +4,7 @@ This standard is Dornglut's organization-wide default for project-neutral softwa
 design. It applies when an owning repository has no more specific accepted authority
 for the question. Repository code and tests still own current behavior, repository
 ADRs own local durable architecture, and organization ADRs own accepted
-cross-repository architecture. More-specific accepted authority MAY specialize this
-standard.
+cross-repository architecture.
 
 This document is not a product architecture, roadmap, implementation plan, or catalog
 of mandatory patterns. It defines project-neutral design defaults and review criteria.
@@ -59,7 +58,7 @@ or tooling MAY be justified when they materially buy durable properties such as:
 - observability, diagnosability, and testability;
 - efficient or scalable algorithms, data representation, and execution;
 - evolvability, replaceability, and deletion;
-- reusable framework quality when reuse is an accepted repository purpose.
+- reusability when reuse is an accepted repository purpose.
 
 More structure is not automatically more complexity. A larger decomposition can reduce
 system complexity when it reduces hidden dependencies, the number of places that need
@@ -94,8 +93,7 @@ because they are shared.
 
 ## 2. Boundary contracts and flows
 
-Boundaries SHOULD expose owner-defined interaction contracts rather than foreign
-internals. A contract MAY take the form of a callable API, request, event, message,
+Boundaries SHOULD expose owner-defined contracts rather than foreign internals. A contract MAY take the form of a callable API, request, event, message,
 immutable snapshot, schema, persisted format, protocol, stream, output, status, or
 diagnostic. When the distinction affects semantics, the contract SHOULD make clear
 whether it requests change, observes state, reports an accepted fact, or returns
@@ -103,7 +101,7 @@ derived output.
 
 A proposed change capable of violating owned invariants MUST be accepted or validated
 by the owning authority before it becomes authoritative. Unrelated semantic owners
-MUST NOT be collapsed into one universal interaction model merely to unify transport or
+MUST NOT be collapsed into one universal boundary model merely to unify transport or
 invocation.
 
 Reads across an authority boundary MUST use an owner-defined contract rather than
@@ -170,9 +168,9 @@ combining boundary MUST define its compatibility criteria. It MUST NOT silently 
 one global transaction, identity, revision, or "latest" state unless such a contract
 actually exists.
 
-Compatibility MAY depend on owner-local revision, time, scope, completeness, freshness,
-availability, provenance, correspondence, or an explicitly legal fallback. It SHOULD
-depend only on facts required by the consumer's semantics.
+Compatibility MAY depend on revision, time, scope, completeness, freshness, provenance,
+identity correspondence, or an explicitly legal fallback. It SHOULD depend only on
+facts required by the consumer's semantics.
 
 ## 7. Storage and execution
 
@@ -192,7 +190,7 @@ A boundary whose failures affect caller or system behavior MUST define how mater
 different outcomes are represented or handled. Outcomes that callers need to handle
 differently MUST remain distinguishable.
 
-Failure modes that affect correctness, durability, security, or supported operation
+Failure modes that affect correctness, durability, security, or supported behavior
 MUST be observable to the relevant callers, operators, tests, or automation.
 Diagnostics SHOULD identify the affected subject and provide enough stable context to
 distinguish and act on meaningful failures.
@@ -240,6 +238,7 @@ Algorithmic complexity, indexing strategy, memory traffic, data locality, batchi
 parallelism MAY be reasoned about architecturally before a concrete bottleneck is
 measured when those properties are already material to accepted workload or design
 requirements.
+
 Physical optimization strategy SHOULD remain private unless it is itself part of the
 required semantic contract.
 
@@ -334,9 +333,9 @@ questions that materially apply need answers:
 12. **Decomposition** — are semantic ownership, dependency direction, hidden
     implementation decisions, and physical source placement aligned without being
     conflated?
-13. **Cost and quality** — which durable properties justify this structure, what coupled
-    change or unrelated knowledge does it remove, and which concrete performance claims
-    need evidence?
+13. **Cost and quality** — which properties or temporary purposes justify this
+    structure, what coupled change or unrelated knowledge does it remove, and which
+    concrete performance claims need evidence?
 
 ## Conventional terminology mapping
 
@@ -372,7 +371,7 @@ Common anti-patterns include:
 - physical file/module splitting presented as architectural decomposition while
   responsibility concentration remains;
 - speculative capability or generic extension machinery with no current requirement,
-  established variation, or accepted reuse requirement;
+  observed variation, or accepted reuse requirement;
 - deduplicating similar code into false shared ownership;
 - ignoring a known complexity or resource bound that conflicts with an accepted
   workload or scale requirement;
