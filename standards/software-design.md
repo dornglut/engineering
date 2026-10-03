@@ -390,7 +390,7 @@ For a significant boundary, answer only the questions that materially apply:
 10. **Failure and observation** — how does it fail, recover, and become observable?
 11. **Evolution** — how is it versioned, migrated, replaced, simplified, or deleted?
 12. **Decomposition** — are semantic ownership, dependency direction, hidden implementation decisions, and physical source placement aligned without being conflated?
-13. **Cost and quality** — which durable properties justify this structure, what coupled change or foreign knowledge does it remove, and are concrete performance claims supported by evidence?
+13. **Cost and quality** — which durable properties justify this structure, what coupled change or unrelated implementation knowledge does it remove, and are concrete performance claims supported by evidence?
 
 ## Conventional terminology mapping
 
