@@ -129,7 +129,7 @@ The parent issue owns the outcome, boundary, sequencing constraints, major gates
 
 Do not create a parent issue merely to reserve a future name. Activate it when the first child slice is accepted. Do not copy child acceptance criteria, Project fields, pull-request state, or validation evidence into the parent body.
 
-The parent closes only after its final accepted gate. GitHub Milestone objects are not a second hierarchy for internal technical phases; Dornglut reserves them for real repository-local release or shipping targets. Work that crosses repositories may require an engineering initiative under the criteria below; the initiative links repository-local issues rather than replacing them.
+The parent closes only after its final accepted gate. GitHub Milestone objects are not a second hierarchy for internal technical phases; Dornglut reserves them for real repository-local release or shipping targets. Completed historical work does not receive a retrospective parent issue or milestone unless an unresolved operational need requires one. Work that crosses repositories may require an engineering initiative under the criteria below; the initiative links repository-local issues rather than replacing them.
 
 ## Projects
 
