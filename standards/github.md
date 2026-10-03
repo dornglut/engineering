@@ -107,13 +107,13 @@ base for initial work and the exact previous feature head for a correction.
 
 1. Read current repository authority and record the exact accepted default-branch
    commit and tree.
-2. Select an executor capable of the required inspection and of establishing any
-   evidence that must exist before publication. Compilation, tests, or runtime
-   execution do not need to precede publication merely because they are eventually
-   required. Executor-specific procedures may use repository-owned exact-head hosted
-   workflows for first execution when no specific pre-publication fact is required.
-   Use a checked-out executor when required inspection or pre-publication evidence
-   cannot be established through the selected procedure. GPT Web work follows the
+2. Select an executor capable of the required inspection and of establishing the
+   evidence that the applicable executor procedure requires before publication. Do not
+   infer a pre-publication execution requirement merely because compilation, tests, or
+   runtime execution are eventually required for acceptance. The executor-specific
+   procedure defines when execution may first occur after publication. If required
+   inspection or pre-publication evidence cannot be established through that procedure,
+   use a suitable checked-out executor. GPT Web work follows the
    [GPT Web GitHub procedure](../tooling/gpt-web-github.md).
 3. Treat exact revision-bound repository inventory and file contents as authoritative
    state. Search may aid discovery but does not prove absence or dependency closure.
