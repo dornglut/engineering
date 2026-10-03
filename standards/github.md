@@ -216,6 +216,7 @@ For maintained repositories:
   before merge; the queue does not waive required checks or exact-revision evidence;
 - conversations are resolved before merge;
 - force pushes and default-branch deletion are blocked;
+- linear history is preferred;
 - bypass access is minimized; ordinary changes must not use bypass to evade required
   validation, integration, review, or acceptance evidence. Emergency recovery outside
   the ordinary path requires explicit authority and post-action reconciliation.
