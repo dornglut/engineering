@@ -40,6 +40,129 @@ Persistent contracts must evolve deliberately.
 Failure must be observable.
 ```
 
+## Strategic design posture
+
+Dornglut optimizes for long-term code health and conceptual simplicity, not minimum
+initial code volume. Additional modules, types, boundaries, validation, diagnostics,
+or tooling are justified when they materially buy durable properties such as:
+
+- correctness and invariant protection;
+- explicit ownership, information hiding, and lower coupling;
+- type safety and clear contracts;
+- observability, diagnosability, and testability;
+- efficient or scalable algorithms, data representation, and execution;
+- evolvability, replaceability, and deletion;
+- reusable framework quality when reuse is an actual repository purpose.
+
+More structure is not automatically more complexity. A larger decomposition can reduce
+apparent complexity when it lowers cognitive load, change amplification, hidden
+dependencies, or the amount of foreign knowledge a maintainer must hold at once.
+Conversely, a small file or short implementation can still be architecturally complex
+when it concentrates unrelated responsibilities or leaks decisions across boundaries.
+
+Deliberate design investment may precede an immediate feature when the pressure is
+structurally predictable: for example durable public-contract evolution, a known
+cross-owner boundary, a foundational reusable-framework role, or an asymptotic scaling
+constraint. Future-proof the stable seam and preserve implementation freedom; do not
+pre-build speculative product behavior whose requirements are still unknown.
+
+Prefer:
+
+```text
+clear model + explicit seam + hidden complexity + replaceable realization
+```
+
+over:
+
+```text
+minimum initial code + implicit coupling + later compatibility debt
+```
+
+## Conventional principles as review lenses
+
+The conventional KISS, DRY, YAGNI, SOLID, Separation of Concerns, premature-
+optimization, and Law-of-Demeter principles are useful review vocabulary, but they are
+not independent authorities or mechanical rules. Interpret them through the ownership,
+invariant, contract, evolution, and cost model in this standard.
+
+### KISS
+
+Prefer the simplest coherent mental model that protects the required semantics and
+intended evolution path. Simplicity means obvious ownership, contracts, lifecycle,
+failure behavior, and dependency direction; it does not mean the fewest files, types,
+modules, or lines of code.
+
+Push unavoidable complexity behind narrow, explicit contracts instead of spreading it
+among callers. Do not simplify by omitting invariants, collapsing distinct authorities,
+or concentrating unrelated reasons to change.
+
+### DRY
+
+Keep each durable semantic rule, invariant, protocol fact, generated contract, and
+authoritative decision in one canonical owner. Remove duplicated knowledge that would
+otherwise have to change in lockstep.
+
+Do not deduplicate merely similar code across independent authorities when doing so
+would create false ownership or coupling. Repetition can be cheaper and more truthful
+than a shared abstraction that owns no shared invariant.
+
+### YAGNI
+
+Do not implement speculative product capability, compatibility surfaces, plugin points,
+registries, configuration, or generality whose requirements are not known well enough
+to define a truthful contract.
+
+YAGNI does not prohibit strategic design. It is valid to establish a clean seam,
+reserve implementation freedom, or design a foundational reusable contract for
+structurally predictable pressure without implementing the hypothetical future feature
+itself.
+
+### SOLID
+
+Use SOLID as boundary heuristics rather than as a class-oriented architecture mandate:
+
+- responsibilities follow coherent authority, invariants, lifecycle, and reasons to
+  change;
+- extension happens through owned contracts without exposing unrelated internals;
+- substitutable implementations preserve the documented semantic contract;
+- interfaces expose only the capability their consumers need;
+- dependencies point toward stable semantics rather than incidental outer wiring.
+
+Traits, interfaces, dependency inversion, and extension points still carry cost. Do
+not introduce them solely to make the code look SOLID.
+
+### Separation of Concerns
+
+Separate concerns when they have materially different authority, invariants, lifecycle,
+failure semantics, dependencies, scaling behavior, security policy, or reasons to
+change. Keep related complexity together when splitting it would only create thin
+pass-through layers.
+
+Physical structure should make responsibility discoverable. File count and line count
+are signals, not architecture rules.
+
+### Avoid premature optimization
+
+Correctness and truthful semantics come first, and targeted optimization claims should
+be supported by measurement or bounded evidence. Profile and benchmark when choosing
+among concrete performance tradeoffs or attributing a bottleneck.
+
+This does not require intentionally weak foundations until a profiler complains.
+Algorithmic complexity, memory traffic, data locality, batching opportunities,
+parallelism boundaries, and scalable query topology are legitimate design concerns when
+their pressure is known. Prefer designs that preserve room for optimization without
+exposing one physical optimization strategy as semantic identity.
+
+### Law of Demeter
+
+Depend on the direct semantic owner or its explicit public contract. Do not reach
+through collaborators into transitive implementation state or require callers to know
+an internal object graph.
+
+Do not satisfy this principle by adding chains of forwarding wrappers. A boundary
+should hide a real decision or responsibility; indirection without information hiding
+only relocates complexity.
+
 ## 1. Authority and invariants
 
 An authority is the owner that decides what is valid for one semantic invariant set.
@@ -215,17 +338,30 @@ forwarding surface merely because deleting it would require consumer edits.
 
 ## 10. Abstraction, patterns, and boundary cost
 
-Choose the lightest implementation form that protects the actual boundary. Functions,
-modules, components, domain authorities, ECS, actors, event sourcing, jobs, services,
-and cells are tools, not universal architecture layers.
+Choose the simplest coherent implementation form that protects the actual boundary,
+its known quality requirements, and its structurally predictable evolution pressure.
+Functions, modules, components, domain authorities, ECS, actors, event sourcing, jobs,
+services, and cells are tools, not universal architecture layers.
+
+Prefer deep boundaries: a small, clear contract may hide substantial implementation
+complexity when doing so reduces what consumers must understand. Avoid thin wrappers,
+pass-through services, marker abstractions, or interface layers that add indirection
+without hiding a decision, invariant, policy, or physical realization.
 
 Introduce a boundary or abstraction when it buys a concrete property such as semantic
-ownership, isolation, security, independent scale, deployment independence,
-reusability, or material reduction in drift.
+ownership, information hiding, isolation, security, independent scale, deployment
+independence, testability, observability, reusable framework value, performance
+freedom, or material reduction in drift and change amplification.
+
+Generality is justified when the owner is genuinely foundational or reusable, or when a
+more orthogonal contract removes special cases and reduces total complexity. Keep that
+generality bounded by real invariant and consumer pressure; do not create a universal
+meta-model merely because several callers look superficially similar.
 
 Every boundary also costs code, tests, latency, versioning, debugging, observability,
-coordination, and cognitive load. Reuse existing local patterns before inventing a new
-abstraction, and simplify or delete abstractions whose cost is no longer justified.
+coordination, and cognitive load. The goal is not the fewest boundaries or the most
+boundaries: it is the architecture whose justified structure minimizes long-term
+system complexity while preserving required quality attributes.
 
 ## 11. Tests, fitness functions, and public surfaces
 
@@ -269,7 +405,7 @@ For a significant boundary, answer only the questions that materially apply:
 9. **Execution** — where and how does work run?
 10. **Failure and observation** — how does it fail, recover, and become observable?
 11. **Evolution** — how is it versioned, migrated, replaced, simplified, or deleted?
-12. **Cost** — is the boundary worth maintaining?
+12. **Cost and quality** — which durable properties justify this structure, what cognitive or change cost does it remove, and are performance claims measured or structurally justified?
 
 ## Common anti-patterns
 
@@ -285,6 +421,11 @@ Avoid:
 - unversioned durable formats that become de facto public contracts;
 - universal object, command, registry, or extension models that erase ownership;
 - services or other deployment boundaries created only for code organization;
+- minimizing files, types, or modules by concentrating unrelated responsibilities;
+- thin abstractions or forwarding layers that add indirection without information hiding;
+- speculative capability or generic extension machinery with no truthful contract pressure;
+- deduplicating similar code across independent authorities into false shared ownership;
+- targeted micro-optimization claims without evidence, or knowingly unscalable foundations excused as "measure later";
 - generated or automated output bypassing validation;
 - compatibility surfaces retained without a proven consumer and removal condition.
 
