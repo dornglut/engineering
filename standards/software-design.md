@@ -135,7 +135,7 @@ explicit.
 
 Provenance or production mechanism does not by itself establish authority. The owning
 authority MUST define whether and how externally produced, generated, imported,
-migrated, or projected state is admitted. Consuming another authority's accepted
+migrated, or projected state is accepted. Consuming another authority's accepted
 output MUST NOT be treated as transferring ownership of the source invariants or
 mutation rights to the consumer.
 
@@ -227,8 +227,8 @@ repository purpose, freedom to change physical realization, or material reductio
 drift and coupled change.
 
 Generality MAY be justified when the owning repository is explicitly intended to serve
-multiple consumers, or when a more orthogonal contract removes real special cases and
-reduces total complexity. A universal meta-model MUST NOT be introduced solely because
+multiple consumers, or when a broader contract removes real special cases and reduces
+total complexity. A universal meta-model MUST NOT be introduced solely because
 several callers look superficially similar.
 
 Concrete optimization claims and trade-offs between viable implementations SHOULD be
@@ -238,7 +238,8 @@ dimension MUST NOT be ignored solely under a "measure later" rationale.
 
 Algorithmic complexity, indexing strategy, memory traffic, data locality, batching, and
 parallelism MAY be reasoned about architecturally before a concrete bottleneck is
-measured when those properties are already material to the accepted design pressure.
+measured when those properties are already material to accepted workload or design
+requirements.
 Physical optimization strategy SHOULD remain private unless it is itself part of the
 required semantic contract.
 
@@ -307,24 +308,25 @@ diagnostics without depending on private internals.
 Automation crossing an authority boundary MUST obey the same owner-defined contracts,
 policy gates, validation, and acceptance rules as other callers. Internal automation
 MAY use repository-local implementation interfaces when it remains within that
-authority and does not create a second semantic path.
+authority and preserves the same invariant enforcement.
 
-Automation MAY inspect, propose, generate candidates, and run validation. It MUST NOT
-turn generated output into accepted truth by bypassing the authority that owns the
-invariants.
+Automation MAY inspect, propose, generate, and validate candidates. It MUST NOT treat
+generated output as authoritative by bypassing the authority that owns the invariants.
 
 ## Design checklist
 
 For a significant boundary, the following questions provide review coverage. Only the
 questions that materially apply need answers:
 
-1. **Authority** — who owns the truth?
+1. **Authority** — who owns the authoritative state or decision?
 2. **Invariants** — what conditions cannot be violated?
 3. **Contract** — what crosses the boundary?
-4. **Flow** — what request, fact, observation, or output crosses the boundary, and what semantics does it carry?
+4. **Flow** — what request, fact, observation, or output crosses the boundary, and what
+   semantics does it carry?
 5. **Policy and validity** — who can request it, and who decides whether it is valid?
 6. **Time** — what ordering or temporal model affects meaning?
-7. **Consistency** — what consistency is required, including cross-owner compatibility?
+7. **Consistency** — what consistency is required, including cross-owner
+   compatibility?
 8. **Storage** — what persists state, and is it distinct from authority?
 9. **Execution** — where and how does work run?
 10. **Failure and observation** — how does it fail, recover, and become observable?
