@@ -178,8 +178,6 @@ a due date only when a genuine dated commitment exists. GitHub owns the associat
 issue/PR inventory and automatic completion percentage; do not copy that live inventory
 or completion state into durable Markdown or Project custom fields.
 
-Completed historical work does not receive a retrospective milestone unless an
-unresolved operational need requires one.
 
 ## Cross-repository programs
 
