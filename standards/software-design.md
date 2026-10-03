@@ -203,9 +203,10 @@ A boundary whose failures affect caller or system behavior MUST define how mater
 different outcomes are represented or handled. Outcomes that callers need to handle
 differently MUST remain distinguishable.
 
-Important failure modes MUST be observable to the relevant callers, operators, tests,
-or automation. Diagnostics SHOULD identify the affected subject and provide enough
-stable context to distinguish and act on meaningful failures.
+Failure modes that affect correctness, durability, security, or supported operation
+MUST be observable to the relevant callers, operators, tests, or automation.
+Diagnostics SHOULD identify the affected subject and provide enough stable context to
+distinguish and act on meaningful failures.
 
 ## 9. Durable contracts and evolution
 
@@ -309,7 +310,7 @@ Validation policy and exact-head acceptance remain owned by the
 [validation standard](validation.md).
 
 A public API is also a usability surface. Normal consumers SHOULD be able to discover
-and compose the supported path from package exports, documentation, examples, and
+and compose the supported path from public exports, documentation, examples, and
 diagnostics without depending on private internals.
 
 ## 13. Automation is a caller, not an authority
@@ -369,10 +370,10 @@ Common anti-patterns include:
   mutable internals;
 - mutable derived state becoming source truth without an explicit authority change;
 - capability facts being treated as permission or semantic validity;
-- silent composition of independently versioned authority outputs without required
+- silent composition of independently evolving authority outputs without required
   compatibility criteria;
-- durable shared contracts with no evolution or compatibility strategy where one is
-  required;
+- durable shared contracts used across revisions without an evolution or compatibility
+  strategy;
 - universal registries, command models, extension models, or meta-models that erase
   real ownership;
 - thin abstractions or forwarding layers that add indirection without hiding a real
