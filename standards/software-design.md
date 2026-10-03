@@ -62,15 +62,15 @@ or tooling MAY be justified when they materially buy durable properties such as:
 - reusable framework quality when reuse is an accepted repository purpose.
 
 More structure is not automatically more complexity. A larger decomposition can reduce
-system complexity when it reduces hidden dependencies, the number of places that must
-change together, or the amount of unrelated implementation knowledge required to make
-a safe change. Conversely, a small file or short implementation can still be
+system complexity when it reduces hidden dependencies, the number of places that need
+coordinated change, or the amount of unrelated implementation knowledge required to
+make a safe change. Conversely, a small file or short implementation can still be
 architecturally complex when it concentrates unrelated responsibilities or leaks
 decisions across boundaries.
 
 Deliberate design investment MAY precede an immediate feature when current accepted
 authority or demonstrated domain pressure already establishes material volatility,
-boundary pressure, or a workload/scale dimension that the design must support.
+boundary pressure, or a workload/scale dimension targeted by the design.
 Implementations MUST NOT add speculative product behavior or extension machinery solely
 for hypothetical consumers or requirements whose actual shape is still unknown.
 Preserving implementation freedom around known pressure remains valid design work.
@@ -111,9 +111,10 @@ Status      observed current condition
 Diagnostic  explanation of a failure, warning, or rejection
 ```
 
-A mutation capable of violating owned invariants MUST pass through an owner-defined
-change or validation boundary. Unrelated semantic owners MUST NOT be collapsed into one
-universal command model merely to unify transport or invocation.
+A proposed change capable of violating owned invariants MUST be accepted or validated
+by the owning authority before it becomes authoritative. Unrelated semantic owners
+MUST NOT be collapsed into one universal command model merely to unify transport or
+invocation.
 
 Reads across an authority boundary MUST use an owner-defined contract rather than
 foreign private mutable state. The owner contract MAY be a query result, immutable
@@ -158,7 +159,7 @@ support/capability  what can this implementation or host do?
 requirement         what does this consumer need?
 policy              what is this actor or environment allowed to request?
 validity            is the proposed state semantically valid?
-authority           who may decide or mutate the governed truth?
+authority           who is authorized to decide or mutate the governed truth?
 ```
 
 Capability MUST NOT be treated as permission. Permission MUST NOT be treated as
@@ -190,8 +191,8 @@ Storage persists state; execution realizes work; neither automatically owns sema
 truth.
 
 Storage and execution placement MUST NOT silently acquire semantic authority. Storage
-and authority MAY be colocated, and execution MAY move across in-process, worker,
-service, process, or remote boundaries when the owner contract permits it.
+and authority MAY be colocated, and execution MAY move across deployment boundaries
+when the owner contract permits it.
 
 A semantic contract MUST NOT change solely because execution or deployment placement
 changes unless the move changes the contract's actual semantics.
@@ -261,7 +262,7 @@ Four related forms of decomposition MUST NOT be conflated:
 
 ```text
 semantic decomposition        what concepts and authorities exist?
-dependency decomposition      who may depend on whom?
+dependency decomposition      which dependency directions are allowed?
 implementation decomposition  which decisions and responsibilities are hidden together?
 physical decomposition        which source units contain the implementation?
 ```
@@ -327,7 +328,7 @@ For a significant boundary, the following questions provide review coverage. Onl
 questions that materially apply need answers:
 
 1. **Authority** — who owns the truth?
-2. **Invariants** — what must not be violated?
+2. **Invariants** — what conditions cannot be violated?
 3. **Contract** — what crosses the boundary?
 4. **Flow** — is it a command, query, event, product, projection, status, or diagnostic?
 5. **Policy and validity** — who can request it, and who decides whether it is valid?
