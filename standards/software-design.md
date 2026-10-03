@@ -93,10 +93,11 @@ because they are shared.
 
 ## 2. Boundary contracts and flows
 
-Boundaries SHOULD expose owner-defined contracts rather than foreign internals. A contract MAY take the form of a callable API, request, event, message,
+Boundaries SHOULD expose owner-defined contracts rather than foreign internals. A
+contract MAY take the form of a callable API, request, event, message,
 immutable snapshot, schema, persisted format, protocol, stream, output, status, or
 diagnostic. When the distinction affects semantics, the contract SHOULD make clear
-whether it requests change, observes state, reports an accepted fact, or returns
+whether it requests change, observes state, reports an established fact, or returns
 derived output.
 
 A proposed change capable of violating owned invariants MUST be accepted or validated
@@ -133,7 +134,7 @@ explicit.
 
 Provenance or production mechanism does not by itself establish authority. The owning
 authority MUST define whether and how externally produced, generated, imported,
-migrated, or projected state is accepted. Consuming another authority's accepted
+migrated, or projected state becomes authoritative. Consuming another authority's
 output MUST NOT be treated as transferring ownership of the source invariants or
 mutation rights to the consumer.
 
@@ -371,7 +372,7 @@ Common anti-patterns include:
 - physical file/module splitting presented as architectural decomposition while
   responsibility concentration remains;
 - speculative capability or generic extension machinery with no current requirement,
-  observed variation, or accepted reuse requirement;
+  observed variation, or accepted reuse purpose;
 - deduplicating similar code into false shared ownership;
 - ignoring a known complexity or resource bound that conflicts with an accepted
   workload or scale requirement;
