@@ -173,9 +173,13 @@ relationships are optional navigation and must not outrank the owning issue bodi
 [Authority and work](../governance/authority-and-work.md#parent-issues-and-roadmap-milestones)
 owns milestone eligibility and purpose.
 
-GitHub owns milestone due dates, associated issue/PR inventory, and automatic
-completion percentage. Do not copy that live inventory or completion state into
-durable Markdown or Project custom fields.
+A milestone description states the release or shipping outcome and exit criteria. Use
+a due date only when a genuine dated commitment exists. GitHub owns the associated
+issue/PR inventory and automatic completion percentage; do not copy that live inventory
+or completion state into durable Markdown or Project custom fields.
+
+Completed historical work does not receive a retrospective milestone unless an
+unresolved operational need requires one.
 
 ## Cross-repository programs
 
@@ -206,10 +210,10 @@ For maintained repositories:
   reason;
 - merged head branches deleted automatically;
 - normal changes require pull requests;
-- canonical validation is a required merge check;
-- repositories may require additional evidence checks when their owning validation or
-  acceptance authority requires them;
-- repositories without a required merge queue use strict/up-to-date required merge
+- canonical validation is a required status check;
+- repositories may require additional status or evidence checks when their owning
+  validation or acceptance authority requires them;
+- repositories without a required merge queue use strict/up-to-date required status
   checks so merge eligibility is tested against the current default-branch state;
 - a merge-queue repository may disable strict required-status checking only when its
   required `merge_group` checks validate the exact latest-base integration revision
