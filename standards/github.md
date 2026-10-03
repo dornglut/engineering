@@ -108,12 +108,13 @@ base for initial work and the exact previous feature head for a correction.
 1. Read current repository authority and record the exact accepted default-branch
    commit and tree.
 2. Select an executor capable of the required inspection and of establishing any
-   evidence that must exist before publication. Lack of local compilation, tests, or
-   runtime execution is not by itself a publication blocker when no pre-publication
-   evidence requirement exists and the applicable executor procedure supports
-   repository-owned exact-head hosted execution. Use a checked-out executor when
-   required inspection or pre-publication evidence cannot be established through the
-   selected procedure.
+   evidence that must exist before publication. Compilation, tests, or runtime
+   execution do not need to precede publication merely because they are eventually
+   required. Executor-specific procedures may use repository-owned exact-head hosted
+   workflows for first execution when no specific pre-publication fact is required.
+   Use a checked-out executor when required inspection or pre-publication evidence
+   cannot be established through the selected procedure. GPT Web work follows the
+   [GPT Web GitHub procedure](../tooling/gpt-web-github.md).
 3. Treat exact revision-bound repository inventory and file contents as authoritative
    state. Search may aid discovery but does not prove absence or dependency closure.
 4. Read every modified existing file completely from the exact publication parent.
@@ -143,9 +144,8 @@ base for initial work and the exact previous feature head for a correction.
     rules require it.
 
 Executor-specific procedures define supported mechanics without weakening these
-invariants. GPT Web + GitHub connector work additionally follows the
-[GPT Web GitHub procedure](../tooling/gpt-web-github.md); canonical and exact-revision
-evidence remain owned by the [Validation standard](validation.md).
+invariants. Canonical and exact-revision evidence remain owned by the
+[Validation standard](validation.md).
 
 Blind rebasing of stale candidates, sequential writes that expose partial candidate
 state, search results presented as completeness proof, force-overwriting unexpected
@@ -163,37 +163,27 @@ issues, roadmaps, source, or repository-local implementation authority.
 ## Parent issues and child links
 
 [Authority and work](../governance/authority-and-work.md#parent-issues-and-roadmap-milestones)
-owns when a parent issue is justified, what parent and child issues own, and when the
-parent closes.
+owns parent/child eligibility, ownership, sequencing, and closure.
 
-On GitHub:
-
-- the parent body keeps one concise linked slice index and each child links back;
-- the creator of a child issue updates that index in the same workflow;
-- native parent/sub-issue relationships are optional when the active tool can maintain
-  them without extra owner work;
-- native relationship metadata is navigation and must not become more authoritative
-  than the owning issue bodies.
+GitHub issue bodies retain the durable parent/child links. Native parent/sub-issue
+relationships are optional navigation and must not outrank the owning issue bodies.
 
 ## GitHub milestones
 
 [Authority and work](../governance/authority-and-work.md#parent-issues-and-roadmap-milestones)
-owns when a GitHub Milestone is semantically justified.
+owns milestone eligibility and purpose.
 
-A milestone is GitHub's repository-local grouping of issues and pull requests with an
-optional due date and automatic completion percentage. Its description should state the
-release or shipping outcome and exit criteria. GitHub owns its associated issue/PR
-inventory and completion percentage; do not copy those into durable Markdown or
-Project custom fields.
+GitHub owns milestone due dates, associated issue/PR inventory, and automatic
+completion percentage. Do not copy that live inventory or completion state into
+durable Markdown or Project custom fields.
 
 ## Cross-repository programs
 
-[Authority and work](../governance/authority-and-work.md#initiatives) owns when
-cross-repository work requires an Engineering initiative and what that initiative owns.
+[Authority and work](../governance/authority-and-work.md#initiatives) owns initiative
+criteria, authority, and closure.
 
-Native cross-repository sub-issue or relationship links may support navigation when
-tooling can maintain them without extra owner work. They do not replace the owning
-repository issues or any required initiative.
+Native cross-repository relationships are optional navigation. They do not replace
+owning repository issues or a required initiative.
 
 ## Repository properties
 
@@ -226,8 +216,9 @@ For maintained repositories:
   before merge; the queue does not waive required checks or exact-revision evidence;
 - conversations are resolved before merge;
 - force pushes and default-branch deletion are blocked;
-- bypass access is minimized and does not waive repository-required validation,
-  integration, review, or acceptance evidence.
+- bypass access is minimized; ordinary changes must not use bypass to evade required
+  validation, integration, review, or acceptance evidence. Emergency recovery outside
+  the ordinary path requires explicit authority and post-action reconciliation.
 
 A solo-maintainer repository should not require meaningless approval counts. Review
 quality comes from bounded scope, independent validation, explicit acceptance, and
