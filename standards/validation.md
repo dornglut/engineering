@@ -67,6 +67,13 @@ A repository that exposes partitions owns:
 - proof that the complete set of partitions is semantically equivalent to the complete
   canonical invocation.
 
+When discovery or inventory is a checked-in projection of the authoritative validation
+plan, the complete canonical invocation and every single-partition invocation must
+validate that projection against the authoritative partition inventory before any
+partition-specific work executes. This proof must not live only in one ordinary
+partition, because stale or modified discovery data could omit that partition itself.
+Inventory mismatch fails closed before partition-specific validation.
+
 Partitioning must not silently change package selection, feature resolution, generated
 state requirements, test semantics, policy coverage, or another validation invariant
 merely to improve scheduling. Shared automation must not infer semantic lanes, decide
