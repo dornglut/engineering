@@ -104,7 +104,7 @@ adopts a newer accepted revision explicitly.
 
 An accepted base is the accepted default-branch revision from which pull-request work was prepared and reviewed. A reviewed feature head is the exact branch commit that contains the proposed change.
 
-Exact-head validation evidence is a successful validation of the revision selected for that evidence stage. For a `pull_request` event, reviewed feature-head evidence selects `github.event.pull_request.head.sha`; for `merge_group`, queue-integration evidence selects `github.sha`; for `push` and `workflow_dispatch`, it selects `github.sha`. The workflow explicitly selects the expected revision for checkout and proves that `git rev-parse HEAD` equals the expected revision before any repository-owned canonical validation invocation runs.
+Exact-head validation evidence is a successful validation of the revision selected for that evidence stage. For a `pull_request` event, reviewed feature-head evidence selects `github.event.pull_request.head.sha`; for `merge_group`, queue-integration evidence selects `github.sha`; for `push` and `workflow_dispatch`, it selects `github.sha`. The workflow explicitly selects the expected revision for checkout and proves that `git rev-parse HEAD` equals the expected revision before any invocation of the repository-owned canonical command runs.
 
 A moved feature head invalidates earlier exact-head evidence. A workflow definition may be loaded from a pull-request merge ref while the reusable workflow explicitly checks out feature-head repository content. These are separate facts: the definition ref is not the validated repository revision.
 
