@@ -16,6 +16,7 @@ Allowed statuses are `proposed`, `active`, `completed`, and `cancelled`.
 
 ## Active
 
+- [Partitioned Rust validation rollout](partitioned-rust-validation-rollout.md) — coordinate shared Rust workflow modernization, RunenUI pilot evidence, and default adoption
 - [RunenECS schedule semantics and Runenwerk lifecycle cutover](runenecs-schedule-semantics-and-runenwerk-lifecycle-cutover.md) — coordinate ordering-presence and publication-frontier migrations across RunenECS and Runenwerk
 
 ## Proposed
