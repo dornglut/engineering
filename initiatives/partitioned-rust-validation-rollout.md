@@ -1,9 +1,9 @@
 # Partitioned Rust validation rollout
 
-- Status: active
+- Status: completed
 - Owner: Dornglut organization
 - Opened: 2026-10-06
-- Closed:
+- Closed: 2026-10-06
 - Owning issue: [engineering#118](https://github.com/dornglut/engineering/issues/118)
 - Decision authority: [Validation standard](../standards/validation.md)
 
@@ -76,8 +76,10 @@ and other independent optimization work is outside this rollout.
 
 - [engineering#118](https://github.com/dornglut/engineering/issues/118)
 - [github-workflows#31](https://github.com/dornglut/github-workflows/issues/31)
-
-The RunenUI pilot issue is added only after the shared workflow revision is accepted.
+- [github-workflows#33](https://github.com/dornglut/github-workflows/issues/33)
+- [runen-ui#385](https://github.com/dornglut/runen-ui/issues/385)
+- [.github#18](https://github.com/dornglut/.github/issues/18)
+- [rust-framework-template#6](https://github.com/dornglut/rust-framework-template/issues/6)
 
 ## Risks and rollback
 
@@ -93,6 +95,18 @@ artifacts for correctness.
 
 ## Closure record
 
-Open until the shared workflow is accepted, the RunenUI pilot is accepted or rejected
-with evidence, successful-pilot defaults are reconciled when applicable, and remaining
-caller migrations are explicitly dispositioned.
+Completed after the shared Rust workflow and its fail-closed inventory clarification
+were accepted, RunenUI accepted the partitioned pilot with exact-head and accepted-main
+evidence showing a material hosted-latency reduction, and both new-repository Rust
+defaults adopted the accepted shared generation.
+
+The organization workflow template advances only the Rust default; its active caller
+and Python documentation template retain their prior immutable revisions. The generic
+Rust framework template advances its bootstrap caller without adding a partition
+manifest, so complete serial `cargo validate` remains the default until a generated
+repository explicitly owns a partition plan.
+
+Other existing repositories are intentionally not migrated by this initiative. Any
+future caller adoption requires repository-local justification and acceptance. Linker,
+runner, workspace-target cache, and other independent CI optimizations remain outside
+this completed rollout.
