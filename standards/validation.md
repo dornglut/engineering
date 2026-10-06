@@ -48,7 +48,6 @@ Reusable workflows must not:
 
 Third-party Actions are pinned to full commit SHAs with readable version comments and maintained through reviewed dependency updates.
 
-
 ## Partitioned hosted execution
 
 When measured hosted-validation latency justifies the additional orchestration, a
