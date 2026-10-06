@@ -48,11 +48,64 @@ Reusable workflows must not:
 
 Third-party Actions are pinned to full commit SHAs with readable version comments and maintained through reviewed dependency updates.
 
+
+## Partitioned hosted execution
+
+When measured hosted-validation latency justifies the additional orchestration, a
+repository may expose bounded partitions of its canonical validation command for
+parallel execution. Partitioning changes execution placement; it must not create a
+second validation authority or weaken the complete canonical baseline.
+
+The complete canonical invocation remains authoritative and must run every required
+check without GitHub-specific state or partition orchestration. A partitioned interface
+is an additional execution projection of that same repository-owned validation plan.
+
+A repository that exposes partitions owns:
+
+- the bounded partition inventory and stable partition identifiers;
+- the assignment of every required validation obligation to those partitions;
+- the fixed discovery and single-partition invocation contract;
+- proof that the complete set of partitions is semantically equivalent to the complete
+  canonical invocation.
+
+Partitioning must not silently change package selection, feature resolution, generated
+state requirements, test semantics, policy coverage, or another validation invariant
+merely to improve scheduling. Shared automation must not infer semantic lanes, decide
+which repository checks may be omitted, or copy repository-specific commands into
+workflow YAML.
+
+A reusable workflow may discover a repository-owned partition inventory and execute the
+fixed repository-owned partition entrypoint only when it:
+
+- strictly validates the discovered data as bounded identifiers before using it for
+  orchestration;
+- accepts no repository-produced shell fragment, script, runner, toolchain, working
+  directory, path, secret, or arbitrary command as execution policy;
+- checks out and proves the same exact expected revision independently for every
+  partition;
+- does not require one partition's mutable workspace or build artifacts for another
+  partition's correctness;
+- collects independent partition failures without treating cancellation or omission as
+  success;
+- reports one stable aggregate validation result that succeeds only when discovery and
+  every required partition succeed.
+
+Partition job identities are supporting evidence, not separate semantic authorities.
+The aggregate result remains the ordinary canonical hosted merge-readiness check unless
+the owning repository explicitly requires additional independent evidence for another
+reason.
+
+No organization-wide partition count or semantic lane vocabulary is defined. A
+repository may expose one partition, several partitions, or no partitioned interface.
+Changing shared orchestration to support partitions is compatibility-significant:
+existing immutable workflow revisions retain their historical behavior and each caller
+adopts a newer accepted revision explicitly.
+
 ## Exact-head evidence
 
 An accepted base is the accepted default-branch revision from which pull-request work was prepared and reviewed. A reviewed feature head is the exact branch commit that contains the proposed change.
 
-Exact-head validation evidence is a successful validation of the revision selected for that evidence stage. For a `pull_request` event, reviewed feature-head evidence selects `github.event.pull_request.head.sha`; for `merge_group`, queue-integration evidence selects `github.sha`; for `push` and `workflow_dispatch`, it selects `github.sha`. The workflow explicitly selects the expected revision for checkout and proves that `git rev-parse HEAD` equals the expected revision before the repository-owned canonical command runs.
+Exact-head validation evidence is a successful validation of the revision selected for that evidence stage. For a `pull_request` event, reviewed feature-head evidence selects `github.event.pull_request.head.sha`; for `merge_group`, queue-integration evidence selects `github.sha`; for `push` and `workflow_dispatch`, it selects `github.sha`. The workflow explicitly selects the expected revision for checkout and proves that `git rev-parse HEAD` equals the expected revision before any repository-owned canonical validation invocation runs.
 
 A moved feature head invalidates earlier exact-head evidence. A workflow definition may be loaded from a pull-request merge ref while the reusable workflow explicitly checks out feature-head repository content. These are separate facts: the definition ref is not the validated repository revision.
 
