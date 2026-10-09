@@ -53,8 +53,10 @@ acceptance path below.
 
 A solo maintainer with no practicably available independent reviewer MAY explicitly
 accept a corrected head **without independent re-review** only for bounded,
-implementation-only work that changes no normative semantics, public or cross-repository
-contract, security-sensitive behavior, or accepted ownership boundary. Before acceptance,
+nonnormative, non-security-sensitive implementation changes (including accurate
+repository-local architecture documentation) that neither alter an externally
+supported public or cross-repository contract nor transfer an existing semantic or
+physical authority boundary. Before acceptance,
 the actual maintainer (not an agent's self-review) MUST record on the pull request:
 the exact head and finding dispositions; why independent review is unavailable; the
 complete acceptance-criterion coverage and independent exact-head CI/conformance
