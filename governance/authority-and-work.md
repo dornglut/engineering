@@ -43,65 +43,69 @@ accepted issue
 
 ## Agent-mediated critical review and acceptance
 
-For substantive agent-mediated repository changes, the default is a **cold,
-AI-assisted critical review** by an actor separate from the implementer.
-Review the exact accepted-base-to-feature-head change against the owning issue,
-primary semantic and architecture authorities, implementation and tests,
-dependency closure, negative cases, security and failure boundaries, and
-required executable evidence. Trivial edits with demonstrably no behavior,
-contract, security, or authority impact MAY use proportionate author-side
-review instead; calling a change "mechanical" does not itself establish that.
+For substantive agent-mediated changes, the default is a **documented,
+adversarial critical review** of the complete accepted-base-to-exact-feature-
+head diff. The implementing agent, including GPT Web, MAY perform that review
+itself; a second AI service, account, or human reviewer is not a routine
+prerequisite. Inspect the owning issue and acceptance criteria, canonical
+semantic and architectural authority, dependency and ownership closure,
+the implementation and test evidence, negative and boundary cases,
+security and failure behavior, and limitations of executable and
+conformance claims. Do not infer correctness merely from green tests or
+from the implementing agent's prior reasoning.
 
-A separate, non-authoring AI agent instance with fresh review context MAY
-provide a **procedurally separate AI review**. A human reviewer MAY use AI
-assistance. The reviewer must reach a verdict from primary evidence rather
-than endorse the implementing agent's conclusion. A new conversation,
-different prompt, authoring agent's self-review, or replay of its assessment
-does not by itself establish reviewer separation. Record the reviewer mode
-(separate AI, human/AI-assisted, or author-side), the separation basis, exact
-head, issue criteria, material finding dispositions, evidence gaps, and an
-accept/hold verdict in the pull request. Do not report AI review as
-independent **human** approval. Review and CI are distinct forms of assurance.
+Record the exact head, review mode, investigated criteria and evidence,
+material finding IDs and their dispositions, evidence gaps, residual
+risks, and an explicit **accept** or **hold** verdict in the PR. A
+review performed by its implementer is **author-side AI-assisted critical
+review**, not an independent review. A genuinely separate AI or human
+reviewer MAY provide additional assurance; report actual separation and
+provenance, not a fresh-chat or reused-author-assessment fiction.
+Demonstrably trivial no-impact changes MAY receive proportional review.
 
-For a bounded, nonnormative, non-security-sensitive implementation change
-with no changed public/cross-repository contract or transferred semantic
-authority, a separate AI critical-review verdict plus independently run
-exact-head CI and the owning repository's normal acceptance rules are
-sufficient by default; no second human approval count is introduced.
-Changes to normative meaning, security/trust boundaries, supported API or
-compatibility, irreversible state/migration, cross-repository ownership,
-repository governance or validation/protection, or materially unproven
-execution/conformance claims require explicit human-maintainer acceptance
-and risk-specific assurance in addition to critical review. Any stronger
-repository-owned independent-review or semantic-assurance requirement wins.
+For bounded nonnormative, non-security-sensitive implementation changes
+that do not change supported public/cross-repository contracts, accepted
+semantic authority, or protected validation, an **accepting exact-head
+critical-review verdict** (including a documented author-side GPT Web
+verdict), independently executed canonical exact-head CI, and ordinary
+repository acceptance/merge controls suffice by default. A **hold** is
+never an accepting verdict. Every outstanding hold, including a separate
+reviewer's hold, MUST be corrected and explicitly superseded by a
+supported current-head disposition before acceptance. The author cannot
+simply relabel an established unresolved defect or missing required
+acceptance evidence as acceptable risk.
 
-Only when a separate reviewer is genuinely unavailable for an otherwise
-routine bounded change MAY the actual maintainer explicitly accept without
-a separate review. The pull request must record the reason, exact head,
-author-side critical findings and dispositions, full acceptance-criterion
-and independent-CI evidence, residual risk, and a specific acceptance of
-missing reviewer separation; any earlier review hold must be expressly
-superseded. This is an exceptional owner risk decision, never an independent
-review verdict. It is not available for the heightened-risk cases above.
+Changes to normative language meaning, security/trust boundaries,
+supported APIs or compatibility, irreversible state/migration,
+cross-repository ownership, governance or validation/protection, or
+materially unproven physical or conformance behavior require explicit
+human-maintainer acceptance and proportionate, risk-specific assurance
+in addition to documented critical review and CI. Separate review is
+required only where stronger accepted repository authority requires it
+or a material risk cannot otherwise be resolved. An ordinary review
+cannot waive that stronger requirement. The human-maintainer decision
+does not substitute for missing executable evidence or repair an
+unresolved correctness or security defect.
 
-No reviewer verdict, model assessment, passing CI, or GitHub zero-approval
-setting authorizes a merge by itself. The authorized acceptance actor must
-reconcile current base, exact feature head, review state, unresolved findings,
-required checks and threads, and any heightened-risk decisions. Do not
-waive missing acceptance evidence, established correctness/security defects,
-or independent physical qualification required by a claim. A changed head
-invalidates prior review and validation; acceptance follows the guarded
-repository workflow.
+A review verdict, model assessment, passing CI, or a GitHub zero-approval
+setting never grants merge authority by itself. Before guarded merge,
+the authorized acceptance actor must reconcile current base, exact
+feature head, dependency scope, findings and holds, required checks,
+review threads, assurance limits, and any heightened-risk decisions.
+A moved feature head invalidates earlier review and validation evidence.
+Never claim hardware qualification without the qualifying evidence.
 
 ## Material review reconciliation
 
-A material finding records a stable finding ID, the exact reviewed revision,
-severity, owning issue or pull request, and its required correction or
-accepted disposition. The finding ID persists across corrected revisions.
-A moved feature head makes an earlier verdict stale; record the correction
-against the same ID and obtain a new exact-head critical-review verdict with
-the separation required above, or a properly documented routine-only owner
-exception. Historical reviews remain evidence, not current acceptance.
+A material finding records a stable finding ID, the exact reviewed
+revision, severity, owning issue or pull request, and required correction
+or accepted disposition. Keep the ID across corrections. A moved head
+makes earlier review verdicts stale for acceptance, not historical
+evidence: record the same finding and disposition against the new exact
+revision, perform the current-head critical review required above, and
+explicitly supersede any earlier hold. Obtain a separate new-head
+review only when the owning risk or stronger accepted authority requires
+one. Historical findings are not automatically resolved by a passing CI.
 
 | Route | Observable trigger | Required record |
 |---|---|---|
