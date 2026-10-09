@@ -48,7 +48,27 @@ owning issue or pull request, and its required correction or accepted dispositio
 finding ID persists across corrected revisions. A moved feature head makes the earlier
 approval or rejection stale for acceptance, not historical evidence: record the same
 finding ID and disposition on the corrected head, then bind an independent re-review
-verdict to that new exact revision.
+verdict to that new exact revision, except under the explicitly recorded solo-maintainer
+acceptance path below.
+
+A solo maintainer with no practicably available independent reviewer MAY explicitly
+accept a corrected head **without independent re-review** only for bounded,
+implementation-only work that changes no normative semantics, public or cross-repository
+contract, security-sensitive behavior, or accepted ownership boundary. Before acceptance,
+the actual maintainer (not an agent's self-review) MUST record on the pull request:
+the exact head and finding dispositions; why independent review is unavailable; the
+complete acceptance-criterion coverage and independent exact-head CI/conformance
+evidence; remaining limitations and residual risk; and an explicit decision to accept
+without an independent reviewer. A previously recorded review hold MUST be
+explicitly superseded. This is an owner risk-acceptance exception, **not** an
+independent review verdict, and no GitHub approval-count setting or passing CI
+automatically selects it. A moved head voids the recorded acceptance.
+
+The exception MUST NOT waive missing acceptance evidence, known unresolved
+correctness/security findings, required status checks or review-thread resolution,
+the repository's semantic assurance requirements, or independently required physical
+qualification. If any eligibility condition is unproven, normal independent re-review
+remains required.
 
 | Route | Observable trigger | Required record |
 |---|---|---|
