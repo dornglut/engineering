@@ -41,14 +41,71 @@ accepted issue
     -> closed issue and completed Project item
 ```
 
+## Agent-mediated critical review and acceptance
+
+For substantive agent-mediated changes, the default is a **documented,
+adversarial critical review** of the complete accepted-base-to-exact-feature-
+head diff. The implementing agent, including GPT Web, MAY perform that review
+itself; a second AI service, account, or human reviewer is not a routine
+prerequisite. Inspect the owning issue and acceptance criteria, canonical
+semantic and architectural authority, dependency and ownership closure,
+the implementation and test evidence, negative and boundary cases,
+security and failure behavior, and limitations of executable and
+conformance claims. Do not infer correctness merely from green tests or
+from the implementing agent's prior reasoning.
+
+Record the exact head, review mode, investigated criteria and evidence,
+material finding IDs and their dispositions, evidence gaps, residual
+risks, and an explicit **accept** or **hold** verdict in the PR. A
+review performed by its implementer is **author-side AI-assisted critical
+review**, not an independent review. A genuinely separate AI or human
+reviewer MAY provide additional assurance; report actual separation and
+provenance, not a fresh-chat or reused-author-assessment fiction.
+Demonstrably trivial no-impact changes MAY receive proportional review.
+
+For bounded nonnormative, non-security-sensitive implementation changes
+that do not change supported public/cross-repository contracts, accepted
+semantic authority, or protected validation, an **accepting exact-head
+critical-review verdict** (including a documented author-side GPT Web
+verdict), independently executed canonical exact-head CI, and ordinary
+repository acceptance/merge controls suffice by default. A **hold** is
+never an accepting verdict. Every outstanding hold, including a separate
+reviewer's hold, MUST be corrected and explicitly superseded by a
+supported current-head disposition before acceptance. The author cannot
+simply relabel an established unresolved defect or missing required
+acceptance evidence as acceptable risk.
+
+Changes to normative language meaning, security/trust boundaries,
+supported APIs or compatibility, irreversible state/migration,
+cross-repository ownership, governance or validation/protection, or
+materially unproven physical or conformance behavior require explicit
+human-maintainer acceptance and proportionate, risk-specific assurance
+in addition to documented critical review and CI. Separate review is
+required only where stronger accepted repository authority requires it
+or a material risk cannot otherwise be resolved. An ordinary review
+cannot waive that stronger requirement. The human-maintainer decision
+does not substitute for missing executable evidence or repair an
+unresolved correctness or security defect.
+
+A review verdict, model assessment, passing CI, or a GitHub zero-approval
+setting never grants merge authority by itself. Before guarded merge,
+the authorized acceptance actor must reconcile current base, exact
+feature head, dependency scope, findings and holds, required checks,
+review threads, assurance limits, and any heightened-risk decisions.
+A moved feature head invalidates earlier review and validation evidence.
+Never claim hardware qualification without the qualifying evidence.
+
 ## Material review reconciliation
 
-A material finding records a stable finding ID, the exact reviewed revision, severity,
-owning issue or pull request, and its required correction or accepted disposition. The
-finding ID persists across corrected revisions. A moved feature head makes the earlier
-approval or rejection stale for acceptance, not historical evidence: record the same
-finding ID and disposition on the corrected head, then bind an independent re-review
-verdict to that new exact revision.
+A material finding records a stable finding ID, the exact reviewed
+revision, severity, owning issue or pull request, and required correction
+or accepted disposition. Keep the ID across corrections. A moved head
+makes earlier review verdicts stale for acceptance, not historical
+evidence: record the same finding and disposition against the new exact
+revision, perform the current-head critical review required above, and
+explicitly supersede any earlier hold. Obtain a separate new-head
+review only when the owning risk or stronger accepted authority requires
+one. Historical findings are not automatically resolved by a passing CI.
 
 | Route | Observable trigger | Required record |
 |---|---|---|
