@@ -16,7 +16,6 @@ Allowed statuses are `proposed`, `active`, `completed`, and `cancelled`.
 
 ## Active
 
-- [Partitioned Rust validation rollout](partitioned-rust-validation-rollout.md) — coordinate shared Rust workflow modernization, RunenUI pilot evidence, and default adoption
 - [RunenECS schedule semantics and Runenwerk lifecycle cutover](runenecs-schedule-semantics-and-runenwerk-lifecycle-cutover.md) — coordinate ordering-presence and publication-frontier migrations across RunenECS and Runenwerk
 
 ## Proposed
@@ -25,6 +24,7 @@ None.
 
 ## Closed
 
+- [Partitioned Rust validation rollout](partitioned-rust-validation-rollout.md) — completed shared Rust partition execution, RunenUI pilot, and new-repository default adoption
 - [RunenRender RX standalone authority cutover](runenrender-rx-standalone-authority-cutover.md) — completed standalone RunenRender authority transfer and Runenwerk predecessor retirement
 - [Maintained-repository GitHub protection normalization](repository-protection-normalization.md) — completed maintained-repository protection and merge-setting normalization with an explicit private-repository capability exception for Chimera Signal
 - [RunenInput standalone authority cutover](runeninput-standalone-authority-cutover.md) — completed standalone RunenInput authority handoff and Runenwerk exact-revision predecessor retirement
