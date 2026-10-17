@@ -201,6 +201,36 @@ The following work remains serialized unless an accepted issue defines and prove
 - source extraction, transfer, deletion, and consumer cutover;
 - dependency or public-contract transitions that require coordinated acceptance.
 
+### Provisional integration of dependent deliveries
+
+The default is a bounded pull request into accepted `main` whenever that change can independently
+preserve all accepted behavior and contracts. A large parent issue does not itself justify a long-lived
+feature branch, separate implementation issues for every commit, or parallel writers.
+
+An accepted owning issue MAY authorize **one temporary provisional integration branch** when multiple
+coherent, independently reviewable delivery slices cannot safely enter `main` separately and the
+expected review/integration benefit justifies the extra coordination. The owning issue records the
+accepted-main origin, integration ownership, dependencies, participating work, required combined/final
+proofs, abort condition, and deletion condition. A single atomic pull request remains preferable when
+boundaries cannot be isolated.
+
+Child work MAY start from an exact provisional integration revision **within that same repository and
+authorized delivery only**. This is an execution dependency, not an accepted dependency revision,
+source of semantic authority, or permission for another repository to pin unmerged framework code. Each
+child retains an issue-owned scope and independent review; provisional integration does not close an
+accepted delivery issue, complete the parent outcome, or change accepted capability status. Source,
+contract, and manifest collisions remain serialized or need an explicitly proved isolation plan; the
+integration branch has one controlled integration writer.
+
+Before the first provisional integration, the owning repository MUST provide branch protection and
+validation of the reviewed child and resulting combined revision under the
+[GitHub standard](../standards/github.md#provisional-integration-branches) and
+[Validation standard](../standards/validation.md#provisional-integration-evidence). Only the complete
+independently reviewed and protected acceptance into `main` can establish the delivered capability. If
+conflicts, CI drift, or review overhead defeat the rationale, cease staging and choose one coherent PR
+or independently safe `main` slices instead. Delete the temporary branch after accepted completion or
+explicit abandonment; do not make it a permanent `develop` baseline.
+
 When parallel tracks become difficult to review, repeatedly conflict, or obscure the critical path, reduce concurrency through Portfolio priority and explicit issue status rather than a universal count.
 
 ## Initiatives

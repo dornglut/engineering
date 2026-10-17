@@ -99,6 +99,40 @@ reviewed feature head. Moving the feature head invalidates prior exact-head evid
 
 Pull requests remain bounded. Merge uses exact-head evidence.
 
+## Provisional integration branches
+
+The default remains one bounded pull request targeting accepted `main`. A provisional integration
+branch is an **exception**, authorized by an accepted issue under
+[Authority and work](../governance/authority-and-work.md#provisional-integration-of-dependent-deliveries),
+for a finite set of dependent changes that cannot individually preserve accepted-main behavior.
+
+The owning repository MUST establish the following **before the first child PR is integrated**:
+
+- one named integration owner and branch; an exact accepted-main origin, bounded participating scopes,
+  integration order/dependencies, stopping condition and removal condition in the owning issue;
+- repository-owned CI that validates PRs targeting the provisional branch and the **actual combined
+  revision** after each accepted child integration, together with appropriate protected-branch
+  PR/review, non-force and up-to-date checks; missing or failing combined checks prevent further
+  dependent integrations and final acceptance;
+- an explicit single-writer/serialization plan for overlapping source, shared manifests or lockfiles,
+  public-contract migration and other jointly mutable authority; no uncoordinated direct branch writes.
+
+Each child PR MUST name the owning delivery issue, exact provisional parent revision, accepted-main
+origin and scope, dependency assumptions, and which tests demonstrate its contribution. Before child
+integration, reconcile the complete child diff with the live provisional target, prove the parent
+lineage, revalidate stale reviews or checks, and use normal guarded publication. Do not substitute
+checks of an outdated staging parent. Provisional PR review/merge qualifies only that implementation
+slice for combined development; it does not constitute accepted-main delivery, permit consumer pinning,
+or satisfy a downstream repository's accepted dependency gate.
+
+A final PR targeting `main` MUST review the **entire accepted-main-to-integration change**, reconcile
+the current accepted `main` and all child findings, validate its exact feature head, and pass the
+repository's ordinary protected merge and accepted-main gates. Prior child and provisional combined
+checks are additional supporting evidence, not substitutes. An accepted squash of a child into a
+temporary branch remains provisional; only final default-branch acceptance establishes repository
+capability. On completion or abandonment, retire the temporary branch, with no standing second baseline
+or extra Project state.
+
 ## Agent-mediated repository changes
 
 Agent-mediated changes use one exact accepted base, one complete isolated candidate,
