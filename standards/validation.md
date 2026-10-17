@@ -125,30 +125,6 @@ The authoring tool, local evidence, and model assessment do not replace independ
 
 Agent-mediated publication and acceptance follow the [GitHub standard](github.md#agent-mediated-repository-changes). Executor-specific procedures may select exact-head CI when local execution is unavailable, but they do not redefine this validation contract.
 
-## Provisional integration evidence
-
-When an owning issue explicitly authorizes a temporary integration branch, validation has distinct
-**evidence scopes**, not separate semantic authorities:
-
-1. **Child PR:** execute the repository-owned canonical checks on the exact reviewed child feature
-   head. Record its exact provisional parent revision and accepted-main origin; a passing child head
-   alone does not prove compatibility with other provisional changes.
-2. **Combined provisional revision:** after integrating each child, execute and prove the canonical
-   required checks against the **actual updated integration-branch SHA**, including repository-required
-   native or other supplemental gates when applicable. Do not accept further dependent integrations or
-   claim a ready final candidate from failed, absent, or stale combined evidence.
-3. **Final default-branch delivery:** review the full combined change against the current accepted
-   `main` and require the normal exact feature-head, protected merge-group (when configured), and
-   independently observed accepted-main checks. Earlier provisional checks never become accepted-main
-   or public-framework qualification.
-
-The owning repository MUST enable the appropriate PR-target and integration-branch triggers and
-protection **before** using the provisional path; it cannot rely on a `main`-only workflow, omitted
-check, or an unprotected synthetic merge. Repository-owned `cargo validate` or its documented
-equivalent remains the single canonical baseline. These proofs augment, never relax, the
-[exact-head evidence](#exact-head-evidence) and
-[GitHub acceptance rules](github.md#provisional-integration-branches).
-
 ## Documentation repositories
 
 Documentation-oriented repositories validate at least:

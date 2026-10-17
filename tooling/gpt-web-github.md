@@ -52,21 +52,11 @@ Re-resolve refs immediately before publication. Create a new branch directly at 
 
 Do not claim compare-and-swap semantics unless the connector explicitly provides an expected-old-head guard. Never publish coherent multi-file work as sequential branch-visible file writes.
 
-## Provisional integration publications
-
-Use this path only for a temporary integration branch explicitly authorized by an accepted owning issue
-and already configured with protected child and combined-revision CI under the
-[GitHub standard](../standards/github.md#provisional-integration-branches). A child candidate may
-parent the **exact verified provisional integration revision**, rather than accepted `main`, solely
-within that authorized repository delivery. Record both that parent and the original accepted-main
-baseline; neither the provisional parent nor its descendants become accepted dependency authority.
-
-Inspect the complete file contents and dependency closure from the exact provisional parent. Construct
-and review the off-ref candidate, re-resolve live target and feature refs, and stop on unexpected
-movement. Publish atomically using the normal guarded non-force mechanics; do not weaken child-head,
-combined-integration, or final `main` review and validation. If the connector or repository cannot
-prove those conditions, use a suitable checked-out executor or retain the ordinary single-PR workflow
-instead.
+For an explicitly authorized [temporary integration branch](../standards/github.md#temporary-integration-branches),
+a child candidate MAY use its **exact verified integration parent** instead of accepted `main`.
+Read the relevant files from that parent, recheck the live branch before publication, and
+retain guarded non-force writes. Provisional revisions are not accepted dependency authority;
+all existing validation and publication requirements still apply.
 
 ## Validation and handoff
 
