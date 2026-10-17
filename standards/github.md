@@ -118,7 +118,8 @@ gates. See [validation](validation.md#exact-head-evidence) for revision evidence
 
 Agent-mediated changes use one exact accepted base, one complete isolated candidate,
 exact-head validation, and guarded acceptance. The publication parent is the accepted
-base for initial work and the exact previous feature head for a correction.
+base for initial work and the exact previous feature head for a correction, except
+for the explicitly authorized provisional-parent case below.
 
 1. Read current repository authority and record the exact accepted default-branch
    commit and tree.
@@ -136,7 +137,8 @@ base for initial work and the exact previous feature head for a correction.
 5. Audit material dependency closure before editing. Do not modify unauthorized paths;
    amend the owning authority first when additional scope is proven necessary.
 6. Construct the complete candidate off-ref. Initial work parents the accepted base;
-   corrections parent the exact previous feature head. Keep the lineage linear.
+   an authorized provisional child instead parents the exact verified integration revision.
+   Corrections parent the exact previous feature head. Keep the lineage linear.
 7. Before publication, verify publication-parent-to-candidate and
    accepted-base-to-candidate diffs against authorized scope.
 8. Re-resolve default and feature refs immediately before publication. Material
