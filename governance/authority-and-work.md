@@ -201,6 +201,24 @@ The following work remains serialized unless an accepted issue defines and prove
 - source extraction, transfer, deletion, and consumer cutover;
 - dependency or public-contract transitions that require coordinated acceptance.
 
+### Dependent delivery workflow
+
+1. **Independent changes:** Use bounded PRs into accepted `main` when each change preserves
+   accepted behavior.
+2. **Dependent changes:** An accepted owning issue MAY authorize one temporary integration branch
+   when coherent slices cannot safely merge into `main` separately. Record the accepted-main
+   origin, owner, child scopes/dependencies, collision plan, final gate, and deletion condition.
+3. **Parallel work:** Child issues and PRs MAY proceed independently, but overlapping code,
+   manifests, and public-contract transitions MUST be serialized. Staged work is provisional,
+   never an accepted capability or cross-repository dependency.
+4. **Completion:** Require protected child PRs, canonical exact-head and combined-branch checks,
+   then full review and ordinary protected acceptance into `main`. Delete the branch after
+   acceptance or abandonment.
+
+Use the [GitHub standard](../standards/github.md#temporary-integration-branches) for branch
+controls and the [validation standard](../standards/validation.md#exact-head-evidence) for
+revision evidence. If staging adds more conflicts than it removes, use one coherent PR.
+
 When parallel tracks become difficult to review, repeatedly conflict, or obscure the critical path, reduce concurrency through Portfolio priority and explicit issue status rather than a universal count.
 
 ## Initiatives

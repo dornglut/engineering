@@ -52,6 +52,12 @@ Re-resolve refs immediately before publication. Create a new branch directly at 
 
 Do not claim compare-and-swap semantics unless the connector explicitly provides an expected-old-head guard. Never publish coherent multi-file work as sequential branch-visible file writes.
 
+For an explicitly authorized [temporary integration branch](../standards/github.md#temporary-integration-branches),
+a child candidate MAY use its **exact verified integration parent** instead of accepted `main`.
+Read the relevant files from that parent, recheck the live branch before publication, and
+retain guarded non-force writes. Provisional revisions are not accepted dependency authority;
+all existing validation and publication requirements still apply.
+
 ## Validation and handoff
 
 Normal bounded path: complete candidate → draft PR → exact-head CI → assurance → guarded merge. Do not simulate local canonical validation when no local executor exists. Any feature-head change requires fresh CI and assurance.

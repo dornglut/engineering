@@ -99,11 +99,27 @@ reviewed feature head. Moving the feature head invalidates prior exact-head evid
 
 Pull requests remain bounded. Merge uses exact-head evidence.
 
+## Temporary integration branches
+
+Use only with explicit [owning-issue authorization](../governance/authority-and-work.md#dependent-delivery-workflow).
+Before integrating a child, protect the temporary target and enable repository-owned canonical
+CI for PRs targeting it **and** its updated combined branch revision.
+
+Each child PR MUST name its owning issue, accepted-main origin, and exact integration parent.
+Recheck the live target, child diff, review, and exact-head validation before integrating;
+serialize conflicting writers, and prohibit unreviewed direct or forced branch updates.
+A child merge remains provisional and MUST NOT qualify an accepted cross-repository dependency.
+
+The final PR into `main` MUST cover the complete integration diff against current accepted
+`main` and pass the ordinary protected review, merge-queue (if applicable), and accepted-main
+gates. See [validation](validation.md#exact-head-evidence) for revision evidence.
+
 ## Agent-mediated repository changes
 
 Agent-mediated changes use one exact accepted base, one complete isolated candidate,
 exact-head validation, and guarded acceptance. The publication parent is the accepted
-base for initial work and the exact previous feature head for a correction.
+base for initial work and the exact previous feature head for a correction, except
+for the explicitly authorized provisional-parent case below.
 
 1. Read current repository authority and record the exact accepted default-branch
    commit and tree.
@@ -121,7 +137,8 @@ base for initial work and the exact previous feature head for a correction.
 5. Audit material dependency closure before editing. Do not modify unauthorized paths;
    amend the owning authority first when additional scope is proven necessary.
 6. Construct the complete candidate off-ref. Initial work parents the accepted base;
-   corrections parent the exact previous feature head. Keep the lineage linear.
+   an authorized provisional child instead parents the exact verified integration revision.
+   Corrections parent the exact previous feature head. Keep the lineage linear.
 7. Before publication, verify publication-parent-to-candidate and
    accepted-base-to-candidate diffs against authorized scope.
 8. Re-resolve default and feature refs immediately before publication. Material
