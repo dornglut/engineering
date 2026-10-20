@@ -150,6 +150,8 @@ for the explicitly authorized provisional-parent case below.
 10. Use a draft pull request and repository-owned exact-head validation. CI may falsify
     a candidate but does not expand scope.
 11. Any feature-head change invalidates earlier validation, review, and assurance.
+    [Agent-mediated critical review and acceptance](../governance/authority-and-work.md#agent-mediated-critical-review-and-acceptance)
+    owns GPT Web critical review, optional reviewer separation, and risk-based acceptance.
 12. Before direct merge or queue enqueue, reconcile the exact final feature head with
     authority, dependency closure, complete diff, CI, review state, and current default
     branch. Accept or enqueue only that exact reviewed feature-head SHA.
