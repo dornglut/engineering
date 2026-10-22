@@ -184,7 +184,12 @@ fn text_and_workflow_suffixes_are_ascii_case_insensitive() {
 #[test]
 fn public_portfolio_observer_has_an_explicit_workflow_allowlist() {
     let fixture = Fixture::new();
-    fs::remove_file(fixture.0.join(".github/workflows/public-portfolio-snapshot.yml")).unwrap();
+    fs::remove_file(
+        fixture
+            .0
+            .join(".github/workflows/public-portfolio-snapshot.yml"),
+    )
+    .unwrap();
     fixture.fails("public-portfolio-snapshot.yml");
 
     let fixture = Fixture::new();

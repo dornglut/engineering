@@ -43,9 +43,10 @@ unit tests and CI alone **do not** qualify the export as operational.
 
 ## How ChatGPT reads it
 
-Using the connected GitHub integration, fetch the most recent **successful** run of
-`public-portfolio-snapshot.yml` via the repository Actions workflow-run API, then
-fetch its `Read public Engineering Portfolio` job logs. Parse the records:
+Using the connected GitHub integration, fetch the most recent **successful schedule or manual dispatch** run of
+`public-portfolio-snapshot.yml` via the repository Actions workflow-run API, verify that
+its `Read public Engineering Portfolio` job succeeded (PRs only run unit tests), then
+fetch that job's logs. Parse the records:
 
 - `DORNGLUT_PORTFOLIO_START=`: source URL, timestamp, coverage, field names.
 - `DORNGLUT_PORTFOLIO_VIEW=`: saved view identity/layout (not its complete filters).
