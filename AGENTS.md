@@ -9,6 +9,9 @@ Start with:
 3. `architecture/runen-family.md` when repository boundaries or extraction order are involved;
 4. the owning ADR, initiative, issue, and pull request.
 
+For Engineering-owned investigations or audits, use
+`tooling/investigation-workflow.md` as method guidance, not additional authority.
+
 Rules:
 
 - do not implement product behavior in this repository;
