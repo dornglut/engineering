@@ -1,0 +1,45 @@
+name: Public portfolio snapshot
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/public-portfolio-snapshot.yml'
+      - 'tooling/portfolio_snapshot.py'
+      - 'tests/test_portfolio_snapshot.py'
+  workflow_dispatch:
+  schedule:
+    - cron: '17 */6 * * *' # UTC; manual workflow_dispatch is also supported
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Snapshot unit tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out exact triggering revision
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
+      - name: Run no-network unit tests
+        run: python3 -m unittest discover -s tests -p test_portfolio_snapshot.py -v
+
+  snapshot:
+    name: Read public Engineering Portfolio
+    needs: validate
+    if: github.event_name == 'workflow_dispatch' || github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out accepted default-branch revision
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          ref: ${{ github.sha }}
+      - name: Observe Projects v2 and publish filtered records to job logs
+        env:
+          DORNGLUT_PROJECTS_READ_TOKEN: ${{ secrets.DORNGLUT_PROJECTS_READ_TOKEN }}
+        run: python3 tooling/portfolio_snapshot.py --organization dornglut --project 1

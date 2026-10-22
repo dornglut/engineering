@@ -185,12 +185,15 @@ fn workflow(root: &Path, failures: &mut BTreeSet<String>) {
             ),
         ),
     }
-    let expected = BTreeSet::from([".github/workflows/validate.yml".to_owned()]);
+    let expected = BTreeSet::from([
+        ".github/workflows/validate.yml".to_owned(),
+        ".github/workflows/public-portfolio-snapshot.yml".to_owned(),
+    ]);
     if actual != expected {
         fail(
             failures,
             format!(
-                "workflow inventory must be .github/workflows/validate.yml; found {}",
+                "workflow inventory must be .github/workflows/validate.yml and .github/workflows/public-portfolio-snapshot.yml; found {}",
                 actual.iter().cloned().collect::<Vec<_>>().join(", ")
             ),
         );
