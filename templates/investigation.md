@@ -38,5 +38,5 @@ disposition. An inventory or text scan is not proof of semantic correctness.
 
 ---
 
-Procedure: [Engineering investigation and audit workflow](../tooling/investigation-workflow.md).
+Procedure: [Engineering investigation and audit workflow](https://github.com/dornglut/engineering/blob/main/tooling/investigation-workflow.md).
 Omit irrelevant sections rather than supplying invented evidence or decisions.
