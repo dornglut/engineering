@@ -177,7 +177,7 @@ fn text_and_workflow_suffixes_are_ascii_case_insensitive() {
     for filename in ["workflow.YML", "workflow.YAML"] {
         let fixture = Fixture::new();
         fixture.write(&format!(".github/workflows/{filename}"), "name: extra\n");
-        fixture.fails("workflow inventory must be .github/workflows/validate.yml");
+        fixture.fails("workflow inventory must include");
     }
 }
 
@@ -193,8 +193,17 @@ fn public_portfolio_observer_has_an_explicit_workflow_allowlist() {
     fixture.fails("public-portfolio-snapshot.yml");
 
     let fixture = Fixture::new();
+    fs::remove_file(
+        fixture
+            .0
+            .join(".github/workflows/public-portfolio-writer.yml"),
+    )
+    .unwrap();
+    fixture.fails("public-portfolio-writer.yml");
+
+    let fixture = Fixture::new();
     fixture.write(".github/workflows/unknown.yml", "name: unreviewed\n");
-    fixture.fails("workflow inventory must be");
+    fixture.fails("workflow inventory must include");
 }
 
 #[test]

@@ -1,0 +1,80 @@
+name: Public portfolio writer
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/public-portfolio-writer.yml'
+      - 'tooling/portfolio_writer.py'
+      - 'tests/test_portfolio_writer.py'
+      - 'xtask/src/lib.rs'
+      - 'xtask/tests/validation.rs'
+  workflow_dispatch:
+    inputs:
+      request_issue:
+        description: 'Open dornglut/engineering change-request issue number'
+        type: number
+        required: true
+      request_sha256:
+        description: 'Exact canonical JSON SHA-256 (64 lowercase hex characters)'
+        type: string
+        required: true
+      mode:
+        description: 'plan is read-only; apply executes the approved mutations'
+        type: choice
+        options:
+          - plan
+          - apply
+        default: plan
+        required: true
+
+permissions:
+  contents: read
+  issues: read
+
+jobs:
+  tests:
+    name: Portfolio writer unit tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out exact event revision
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
+      - name: Run no-network unit tests
+        run: python3 -m unittest discover -s tests -p test_portfolio_writer.py -v
+
+  writer:
+    name: Manually approved portfolio request
+    needs: tests
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && github.actor == 'aschenrot'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    concurrency:
+      group: dornglut-portfolio-v2-writer
+      cancel-in-progress: false
+    steps:
+      - name: Check out accepted main revision
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          ref: ${{ github.sha }}
+      - name: Prove exact dispatch revision
+        env:
+          EXPECTED_SHA: ${{ github.sha }}
+        run: |
+          test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+          test "$(git branch --show-current)" != "invalid"
+      - name: Preflight or apply approved request
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          DORNGLUT_PROJECTS_WRITE_TOKEN: ${{ secrets.DORNGLUT_PROJECTS_WRITE_TOKEN }}
+          REQUEST_ISSUE: ${{ inputs.request_issue }}
+          REQUEST_SHA256: ${{ inputs.request_sha256 }}
+          REQUEST_MODE: ${{ inputs.mode }}
+        run: |
+          python3 tooling/portfolio_writer.py \
+            --issue-number "$REQUEST_ISSUE" \
+            --sha256 "$REQUEST_SHA256" \
+            --mode "$REQUEST_MODE"
