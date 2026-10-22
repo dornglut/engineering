@@ -223,6 +223,24 @@ class ApplyTests(unittest.TestCase):
         writer.execute(api, request, plan, emit=lambda s: None)
         self.assertEqual(writes, [writer.SET_FIELD, writer.CLEAR_FIELD])
 
+    def test_schema_bootstrap_writes_only_governed_kind(self):
+        request = envelope(ensure_kind=True)
+        plan = writer.plan_changes(api_for([project_page(kind=False)]), request)
+        calls = []
+        def api(query, variables):
+            calls.append((query, variables))
+            return {'createProjectV2Field': {'projectV2Field': {'id': 'FIELD_KIND'}}}
+        writer.execute(api, request, plan, emit=lambda message: None)
+        self.assertEqual([x[0] for x in calls], [writer.CREATE_KIND])
+        self.assertEqual([x['name'] for x in calls[0][1]['options']], list(writer.KINDS))
+
+    def test_verify_requires_actual_persisted_values(self):
+        planned = writer.plan_changes(api_for([project_page()]), envelope())
+        with self.assertRaisesRegex(RuntimeError, 'Post-write verification failed'):
+            writer.verify(api_for([project_page()]), planned)
+        updated = project_item(op()['url'], status='Blocked', priority='P1', kind='Delivery')
+        writer.verify(api_for([project_page([updated])]), planned)
+
     def test_no_broad_project_mutations(self):
         for query in (writer.ADD_ITEM, writer.SET_FIELD, writer.CLEAR_FIELD, writer.CREATE_KIND):
             self.assertNotIn('deleteProjectV2', query)
