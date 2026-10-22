@@ -193,6 +193,15 @@ fn public_portfolio_observer_has_an_explicit_workflow_allowlist() {
     fixture.fails("public-portfolio-snapshot.yml");
 
     let fixture = Fixture::new();
+    fs::remove_file(
+        fixture
+            .0
+            .join(".github/workflows/public-portfolio-writer.yml"),
+    )
+    .unwrap();
+    fixture.fails("public-portfolio-writer.yml");
+
+    let fixture = Fixture::new();
     fixture.write(".github/workflows/unknown.yml", "name: unreviewed\n");
     fixture.fails("workflow inventory must be");
 }
