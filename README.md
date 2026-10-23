@@ -19,6 +19,7 @@ It does not own product implementation. Each product or framework repository ret
 
 ## Tooling procedures
 
+- [Implementation and delivery workflow](tooling/implementation-workflow.md) — task-proportional design, implementation, proof and critical review; no additional authority
 - [Investigation and audit workflow](tooling/investigation-workflow.md) — reusable evidence and decision method, not additional work authority
 - [Investigation issue outline](templates/investigation.md) — optional lightweight issue-body template for investigations and audits
 - [Autonomous repository goal template](tooling/autonomous-repository-goal.md) — dependency-aware, parallel-capable executor-neutral goal that delegates to current Engineering and repository-local authority

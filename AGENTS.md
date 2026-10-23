@@ -10,7 +10,9 @@ Start with:
 4. the owning ADR, initiative, issue, and pull request.
 
 For Engineering-owned investigations or audits, use
-`tooling/investigation-workflow.md` as method guidance, not additional authority.
+`tooling/investigation-workflow.md`; for Engineering-owned implementation or
+other delivery, use `tooling/implementation-workflow.md`. These are method
+guides, not additional authority.
 
 Rules:
 
