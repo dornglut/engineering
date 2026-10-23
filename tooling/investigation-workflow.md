@@ -103,6 +103,7 @@ implementation.
 An accepted investigation conclusion is **not** production implementation
 authority by default. Implementation, contract change, validation, independent
 review, and protected acceptance follow their existing owning authorities.
+For authorized delivery, see the [implementation workflow](implementation-workflow.md).
 
 ### Example cold start
 
