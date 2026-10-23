@@ -104,6 +104,10 @@ not run must not be described as passing.
   by **current accepted** standards and the owning repository; this method
   neither waives nor adds a reviewer requirement.
 
+For a delivery spanning GPT Web sessions, use the
+[bounded execution and evidence checkpoint procedure](gpt-web-github.md#bounded-multi-session-execution);
+a batch does not create a separately mergeable or accepted change.
+
 ## Validate, accept or stop truthfully
 
 Use focused tests and the owning repository's complete canonical validation;

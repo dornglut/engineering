@@ -90,6 +90,10 @@ Promote a research artifact into versioned source only if its reproducibility or
 ongoing technical value independently justifies maintenance. Do not duplicate
 current Project state, PR/head status, or permanent contracts in durable Markdown.
 
+For a multi-session GPT Web audit, follow the
+[bounded execution and evidence checkpoint procedure](gpt-web-github.md#bounded-multi-session-execution);
+a reviewed batch is not whole-corpus clearance.
+
 ## Decide and finish
 
 Report what was established, viable alternatives and their tradeoffs, what was
