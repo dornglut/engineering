@@ -104,6 +104,11 @@ not run must not be described as passing.
   by **current accepted** standards and the owning repository; this method
   neither waives nor adds a reviewer requirement.
 
+For a clearer review record, use the optional
+[critical review template](../templates/critical-review.md) for code, docs,
+designs, or workflows. Scale the detail to actual risk; it does not add a gate,
+replace required independent review, or require a form for minor changes.
+
 For a delivery spanning GPT Web sessions, use the
 [bounded execution and evidence checkpoint procedure](gpt-web-github.md#bounded-multi-session-execution);
 a batch does not create a separately mergeable or accepted change.
