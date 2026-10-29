@@ -104,10 +104,10 @@ not run must not be described as passing.
   by **current accepted** standards and the owning repository; this method
   neither waives nor adds a reviewer requirement.
 
-When a review benefits from a structured PR-comment record, adapt the
-[critical review outline](../templates/critical-review.md) to the actual
-scope and risk. It is optional documentation, not another approval gate,
-replacement for required independent review, or a form for trivial changes.
+For a clearer review record, use the optional
+[critical review template](../templates/critical-review.md) for code, docs,
+designs, or workflows. Scale the detail to actual risk; it does not add a gate,
+replace required independent review, or require a form for minor changes.
 
 For a delivery spanning GPT Web sessions, use the
 [bounded execution and evidence checkpoint procedure](gpt-web-github.md#bounded-multi-session-execution);

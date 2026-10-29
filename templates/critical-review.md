@@ -1,122 +1,98 @@
-# Critical pull-request review — reusable outline
+# Critical review
 
-Use this outline in a pull-request review comment when it helps make a substantive
-review reproducible. Adapt it to the risk and scope; omit irrelevant prompts rather
-than filling them with boilerplate. A trivial editorial change may need only a brief,
-source-grounded verdict. Do not duplicate the PR description, issue, test logs, or
-a permanent status ledger.
+A clear record of **what was checked, what was found, and whether the change is ready**.
+Use it for code, tests, documentation, designs, configuration, or workflows.
 
-This is **optional reporting guidance**, not a review policy, additional approval
-gate, or grant of merge authority. Follow the currently accepted
-[Engineering review governance](https://github.com/dornglut/engineering/blob/main/governance/authority-and-work.md),
-[GitHub standard](https://github.com/dornglut/engineering/blob/main/standards/github.md),
-and any stronger accepted repository-local requirements. In particular, a
-documented author-side review does **not** satisfy an independently required
-reviewer merely by using this template. Do not apply an unmerged policy proposal.
+Copy the useful parts into a pull-request comment or another review record. Keep
+small reviews short. Replace the prompts with real findings, omit irrelevant
+questions, and link to evidence instead of copying logs.
 
-## Review identity and coverage
+> This template helps document a review. It does **not** change project rules,
+> replace any required independent reviewer, or grant permission to merge.
 
-- **Repository / PR / owning issue:** [links]
-- **Accepted base → exact reviewed feature head:** [full commit SHAs]
-- **Reviewer and provenance:** [actual person or agent; author-side AI-assisted /
-  genuinely non-authoring human / genuinely non-authoring AI]
-- **Inspected:** [complete base-to-head diff, modified source, owning contracts,
-  relevant consumers/tests and their exact revisions]
-- **Not inspected / visibility limits:** [explicit gaps, including inaccessible paths]
-- **Applicable review rules:** [current accepted sources, including any required
-  separate reviewer, platform qualification, or maintainer authorization]
+## 1. Overview
 
-A new chat or account label is not proof of genuine independence. State what
-was actually reviewed; a file list, search result, or green check is not a full
-semantic inspection. Re-review the new complete diff when the feature head changes.
-
-## Risk and obligations
-
-- **Classification and reason:** [routine / heightened, by applicable authority]
-- **Affected boundaries:** [accepted semantics/architecture and owner; public API
-  or compatibility; security/trust; persistent data or irreversible migration;
-  concurrency/ordering/resource lifetime; cross-repository contracts;
-  governance/CI/protection; native/hardware/conformance; other actual risks]
-- **Required additional assurance:** [named owner decision, distinct reviewer if
-  required, executable proof, hardware/platform evidence, or none with rationale]
-
-A risk category not affected is not the same as a category not investigated.
-The template never relaxes a stronger accepted review or evidence requirement.
-
-## Adversarial source review
-
-Record **specific answers and source/evidence links**, not merely checked boxes.
-Challenge the author's claims against the current accepted contracts:
-
-1. **Outcome and scope:** Which issue criteria are demonstrably satisfied or
-   missed? Does the complete diff include unauthorized behavior or hidden scope?
-2. **Ownership and design:** Are the correct semantic owners, dependency
-   directions, invariants, compatibility boundaries, and long-term maintenance
-   costs preserved? Are any abstractions or dual authorities unjustified?
-3. **Correctness and failure:** What concrete counterexample could break the
-   design? Examine applicable empty/invalid/boundary inputs, error/recovery,
-   cancellation, stale state, concurrency/ordering, and resource lifetimes.
-4. **Integration and regressions:** Which existing/public consumers, negative
-   contracts, migrations, platforms, or cross-repository pins are affected?
-5. **Proof strength:** Do tests cover real observable behavior and relevant
-   negative paths? What remains unproven by tests, static inspection, mocks,
-   simulations, or unsupported performance/physical claims?
-
-**Counterexamples actually investigated:** [scenario → source/test or reproduction
-→ observed result; distinguish an unexecuted hypothesis from a verified test]
-
-**Source-grounded assessment:** [material facts and reasoning, including why
-the implementation does or does not satisfy the owning issue]
-
-## Validation and evidence
-
-| Check / proof | Actual result and link |
+| | Details |
 | --- | --- |
-| Exact base-to-head diff and relevant consumers | [coverage / gaps] |
-| Focused positive, boundary, negative, regression checks | [PASS / FAIL / NOT RUN] |
-| Repository-owned canonical exact-head CI | [run URL, actual checkout SHA, PASS / FAIL / PENDING / NOT RUN] |
-| Required integration, public conformance or physical qualification | [evidence / unavailable / not applicable with rationale] |
-| Prior review findings, holds, and review threads | [IDs, exact-head dispositions, unresolved items] |
+| **Change** | [PR, issue, document, or proposal link] |
+| **Version reviewed** | [For a PR: full base and head commit SHAs; otherwise: exact version] |
+| **Reviewer** | [Name and role; author-side or genuinely separate review] |
+| **Coverage** | [Files, changes, requirements, and relevant users/consumers examined] |
+| **Not reviewed** | [Anything left out or inaccessible] |
 
-Do not describe planned, unavailable, static, or simulated evidence as executed
-qualification. A passing CI result alone does not prove acceptance criteria.
+**Goal:** [What is this change meant to achieve?]
 
-## Material findings and disposition
+**Initial risk:** Low / Moderate / High — [why, based on its actual effects]
 
-| Stable ID / severity | Exact revision, source and observed impact | Required disposition and supporting evidence |
+## 2. Review notes
+
+Explain the important answers. Do not mark a topic as checked without examining it.
+
+- **Does it do the right thing?** Compare the change with its requirements.
+  Note missing behavior, unexpected changes, or incorrect claims.
+- **Could it fail?** Look for realistic bad inputs, edge cases, errors,
+  cancellation, timing, security problems, or data loss where relevant.
+- **Could it break something else?** Check affected users, integrations,
+  compatibility, dependencies, and existing behavior.
+- **Is it a sound long-term solution?** Consider clarity, ownership,
+  maintainability, unnecessary complexity, and changes to existing contracts.
+- **What evidence supports it?** Check relevant source, tests, examples,
+  documentation, and real-world behavior. Identify assumptions or missing proof.
+
+**Most important failure case examined:** [What might go wrong, how you
+investigated it, and what you actually found]
+
+**Assessment:** [Brief source- or evidence-based explanation of what is correct,
+incorrect, or uncertain]
+
+## 3. Checks and evidence
+
+| Check | Result and evidence |
+| --- | --- |
+| Change and affected context | [Reviewed scope; link to source/diff] |
+| Tests or practical checks | [Passed / Failed / Not run / Not applicable — why; link] |
+| Required CI or automated validation | [Status, run link, and exact checked version] |
+| Other required proof | [Integration, security, performance, platform, or physical evidence if relevant] |
+| Earlier findings and open discussions | [Resolved with evidence / Still open / None] |
+
+Be precise: **not run** is not **passed**. A successful automated check
+does not prove that every requirement is met.
+
+## 4. Findings
+
+List meaningful problems, not speculative or cosmetic filler.
+
+| ID / priority | Problem and impact | Status or required action |
 | --- | --- | --- |
-| [F-... / P1 etc.] | [location, falsifier and consequence] | [corrected / unresolved HOLD / authorized nonblocking follow-up] |
+| [ID if needed] | [Evidence and why it matters] | [Fixed with proof / Open / Valid nonblocking follow-up] |
 
-Keep existing finding IDs across corrections; identify any old review HOLD
-and the current-head evidence that explicitly supersedes it. Do not relabel
-an unresolved correctness/security defect or missing mandatory evidence as
-accepted risk merely to clear a PR. If no material findings were identified,
-say so with actual coverage and limitations, not an assertion of defect-free code.
+**Open risks or missing evidence:** [None identified, or specific limitations]
 
-## Technical verdict
+Keep stable IDs for material findings across revisions. An existing
+**HOLD** stays open until the problem is fixed and the updated version is
+reviewed, or an authorized decision explicitly resolves it. Missing required
+proof and known correctness or security defects cannot be waved away.
 
-**ACCEPT / HOLD:** [one; bind it to the exact reviewed head]
+## 5. Decision
 
-**Rationale and residual risk:** [source-grounded conclusion, limits, any
-correlated author-side review risk, and exact corrective work if HOLD]
+**Technical review: ACCEPT / HOLD**
 
-An **ACCEPT** requires a supported positive assessment of the applicable review
-criteria; an unresolved material HOLD cannot count as accepting. Technical
-ACCEPT is **not** a GitHub approval event or authorization to merge.
+**Why:** [Short explanation based on inspected evidence]
 
-## Separate merge-eligibility reconciliation
+**What still needs to happen:** [Concrete actions, or none]
 
-**ELIGIBLE / HOLD / NOT ASSESSED:** [one; not a substitute for the authorized
-acceptance actor]
+For pull requests only:
 
-- [Current base, exact head, dependency closure, required hosted CI and
-  integration/merge-group/accepted-main proof as applicable]
-- [Unresolved material findings or holds; required review threads]
-- [Any required genuinely independent review, risk-specific human-maintainer
-  decision, security/conformance/physical evidence and repository protections]
+**Ready to merge: YES / NO / NOT CHECKED**
 
-**Evidence or blockers:** [links and remaining gates]
+**Merge blockers:** [Required checks, unresolved findings or conversations,
+separately required review, maintainer decisions, and repository protections]
 
-A template-complete record does not override missing evidence, repository
-protections, current accepted authority, or an explicit hold. A new feature
-head requires a new exact-head review and validation before acceptance.
+A technical **ACCEPT** is not a GitHub approval or permission to merge.
+Follow the current project's review and acceptance rules. An author reviewing
+their own work must say **author-side review**, not **independent review**;
+a different chat alone does not establish independence.
+
+If the proposed version changes, update the review and rerun required
+version-specific checks before acceptance. Verify post-merge results
+separately when the project requires them.
