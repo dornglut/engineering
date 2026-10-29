@@ -15,14 +15,14 @@ questions, and link to evidence instead of copying logs.
 | | Details |
 | --- | --- |
 | **Change** | [PR, issue, document, or proposal link] |
-| **Version reviewed** | [For a PR: full base and head commit SHAs; otherwise: exact version] |
-| **Reviewer** | [Name and role; author-side or genuinely separate review] |
-| **Coverage** | [Files, changes, requirements, and relevant users/consumers examined] |
+| **Version reviewed** | [For a PR: full before/after commit IDs (base/head); otherwise: exact version] |
+| **Reviewer** | [Who reviewed it; did they also create the change, or are they separate?] |
+| **Coverage** | [Changes, requirements, affected people/systems, and other context examined] |
 | **Not reviewed** | [Anything left out or inaccessible] |
 
 **Goal:** [What is this change meant to achieve?]
 
-**Initial risk:** Low / Moderate / High — [why, based on its actual effects]
+**Risk and impact:** [What could go wrong, and is extra review or proof required?]
 
 ## 2. Review notes
 
@@ -75,7 +75,7 @@ proof and known correctness or security defects cannot be waved away.
 
 ## 5. Decision
 
-**Technical review: ACCEPT / HOLD**
+**Review decision: ACCEPT / HOLD**
 
 **Why:** [Short explanation based on inspected evidence]
 
@@ -88,7 +88,7 @@ For pull requests only:
 **Merge blockers:** [Required checks, unresolved findings or conversations,
 separately required review, maintainer decisions, and repository protections]
 
-A technical **ACCEPT** is not a GitHub approval or permission to merge.
+A review **ACCEPT** is not a GitHub approval or permission to merge.
 Follow the current project's review and acceptance rules. An author reviewing
 their own work must say **author-side review**, not **independent review**;
 a different chat alone does not establish independence.
