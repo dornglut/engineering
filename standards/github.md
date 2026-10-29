@@ -150,6 +150,8 @@ for the explicitly authorized provisional-parent case below.
 10. Use a draft pull request and repository-owned exact-head validation. CI may falsify
     a candidate but does not expand scope.
 11. Any feature-head change invalidates earlier validation, review, and assurance.
+    [Critical review and acceptance](../governance/authority-and-work.md#critical-review-and-acceptance)
+    owns review eligibility and findings; an accepting verdict does not grant merge authority.
 12. Before direct merge or queue enqueue, reconcile the exact final feature head with
     authority, dependency closure, complete diff, CI, review state, and current default
     branch. Accept or enqueue only that exact reviewed feature-head SHA.

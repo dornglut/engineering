@@ -41,14 +41,27 @@ accepted issue
     -> closed issue and completed Project item
 ```
 
+## Critical review and acceptance
+
+Substantive changes require a critical review of the complete accepted-base-to-exact-head change.
+
+A fresh ChatGPT/GPT Web session is sufficient for a separate review. The implementing agent may also review its own work. Reviewer identity does not affect review validity.
+
+Reviews must examine the actual source, identify meaningful problems, and conclude with **ACCEPT** or **HOLD**.
+
+A HOLD remains blocking until its findings are resolved and the corrected version is reviewed.
+
+Reviews do not replace required validation, evidence, or merge authorization.
+
 ## Material review reconciliation
 
 A material finding records a stable finding ID, the exact reviewed revision, severity,
 owning issue or pull request, and its required correction or accepted disposition. The
 finding ID persists across corrected revisions. A moved feature head makes the earlier
 approval or rejection stale for acceptance, not historical evidence: record the same
-finding ID and disposition on the corrected head, then bind an independent re-review
-verdict to that new exact revision.
+finding ID and disposition on the corrected head, then record a fresh exact-head
+critical-review verdict on that corrected revision, explicitly reconciling the
+same finding ID and any earlier HOLD.
 
 | Route | Observable trigger | Required record |
 |---|---|---|
