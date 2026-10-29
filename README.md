@@ -23,6 +23,7 @@ It does not own product implementation. Each product or framework repository ret
 - [Critical review template](templates/critical-review.md) — clear, optional review notes for code, docs, designs, and workflows; no new gate
 - [Investigation and audit workflow](tooling/investigation-workflow.md) — reusable evidence and decision method, not additional work authority
 - [Investigation issue outline](templates/investigation.md) — optional lightweight issue-body template for investigations and audits
+- [Delivery issue outline](templates/delivery.md) — optional bounded implementation issue structure; not a new form or authority
 - [Autonomous repository goal template](tooling/autonomous-repository-goal.md) — dependency-aware, parallel-capable executor-neutral goal that delegates to current Engineering and repository-local authority
 - [GPT Web GitHub procedure](tooling/gpt-web-github.md) — connector-specific procedure for exact inspection, publication, and validation
 
