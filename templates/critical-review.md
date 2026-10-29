@@ -86,7 +86,7 @@ For pull requests only:
 **Ready to merge: YES / NO / NOT CHECKED**
 
 **Merge blockers:** [Required checks, unresolved findings or conversations,
-separately required review, maintainer decisions, and repository protections]
+review evidence, maintainer decisions, and repository protections]
 
 A review **ACCEPT** is not a GitHub approval or permission to merge.
 Follow [Engineering critical review and acceptance](../governance/authority-and-work.md#critical-review-and-acceptance).
