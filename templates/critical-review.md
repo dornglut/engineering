@@ -90,8 +90,6 @@ review evidence, maintainer decisions, and repository protections]
 
 A review **ACCEPT** is not a GitHub approval or permission to merge.
 Follow [Engineering critical review and acceptance](../governance/authority-and-work.md#critical-review-and-acceptance).
-A fresh source-grounded review session qualifies without a distinct reviewer identity;
-the evidence and findings, not the account or session label, determine the verdict.
 
 If the proposed version changes, update the review and rerun required
 version-specific checks before acceptance. Verify post-merge results
