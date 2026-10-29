@@ -7,8 +7,8 @@ Copy the useful parts into a pull-request comment or another review record. Keep
 small reviews short. Replace the prompts with real findings, omit irrelevant
 questions, and link to evidence instead of copying logs.
 
-> This template helps document a review. It does **not** change project rules,
-> replace any required independent reviewer, or grant permission to merge.
+> This template documents a review. It does **not** change project rules,
+> replace required evidence or approvals, or grant permission to merge.
 
 ## 1. Overview
 
@@ -16,7 +16,7 @@ questions, and link to evidence instead of copying logs.
 | --- | --- |
 | **Change** | [PR, issue, document, or proposal link] |
 | **Version reviewed** | [For a PR: full before/after commit IDs (base/head); otherwise: exact version] |
-| **Reviewer** | [Who reviewed it; did they also create the change, or are they separate?] |
+| **Reviewer / session** | [Who or what conducted the review; identify the reviewed session if useful] |
 | **Coverage** | [Changes, requirements, affected people/systems, and other context examined] |
 | **Not reviewed** | [Anything left out or inaccessible] |
 
@@ -89,9 +89,9 @@ For pull requests only:
 separately required review, maintainer decisions, and repository protections]
 
 A review **ACCEPT** is not a GitHub approval or permission to merge.
-Follow the current project's review and acceptance rules. An author reviewing
-their own work must say **author-side review**, not **independent review**;
-a different chat alone does not establish independence.
+Follow [Engineering critical review and acceptance](../governance/authority-and-work.md#critical-review-and-acceptance).
+A fresh source-grounded review session qualifies without a distinct reviewer identity;
+the evidence and findings, not the account or session label, determine the verdict.
 
 If the proposed version changes, update the review and rerun required
 version-specific checks before acceptance. Verify post-merge results

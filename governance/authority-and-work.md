@@ -41,14 +41,48 @@ accepted issue
     -> closed issue and completed Project item
 ```
 
+## Critical review and acceptance
+
+A substantive change receives a documented, adversarial critical review of the complete
+accepted-base-to-exact-feature-head diff. Check the accepted issue, owning contracts,
+design and ownership, realistic failures and regressions, compatibility, available
+tests and evidence, and any missing proof. Record the exact version, meaningful
+findings and dispositions, residual risks, and a clear **ACCEPT** or **HOLD**.
+A HOLD never qualifies the change for acceptance.
+
+Review quality is determined by the source investigation and evidence, **not** by
+whether the reviewer shares the author's account or identity. The implementing
+agent MAY perform the critical review. A **fresh ChatGPT/GPT Web session** that
+re-examines the actual source and exact candidate qualifies as a separate
+critical-review session even when the connected GitHub account or maintainer is
+unchanged. Do not impose an author-side versus independent-review classification,
+a second reviewer account, or another AI service as a default or as a prerequisite
+for the session to count. Freshness of a session alone is not an ACCEPT verdict.
+
+Review and acceptance are distinct: an ACCEPT review is not a GitHub APPROVE
+event or merge authorization. Correct or explicitly disposition outstanding
+material findings; do not clear a HOLD merely because the author changed code,
+another session was started, or CI passed. Heightened-risk changes involving
+security, supported public contracts, irreversible data/migration, cross-repository
+authority, governance, protected CI, or unproven physical behavior require
+explicit maintainer risk acceptance and proportionate additional evidence.
+Repository-specific stronger evidence or approval rules remain applicable.
+
+Independently executed canonical **exact-head** validation, any required physical
+or external-consumer qualification, resolved review threads, current-base
+reconciliation, protected merge-group checks and accepted-main verification remain
+required under their owning standards. Never substitute model judgment for
+executable or hardware evidence.
+
 ## Material review reconciliation
 
 A material finding records a stable finding ID, the exact reviewed revision, severity,
 owning issue or pull request, and its required correction or accepted disposition. The
 finding ID persists across corrected revisions. A moved feature head makes the earlier
 approval or rejection stale for acceptance, not historical evidence: record the same
-finding ID and disposition on the corrected head, then bind an independent re-review
-verdict to that new exact revision.
+finding ID and disposition on the corrected head, then record a fresh exact-head
+critical-review verdict on that corrected revision, explicitly reconciling the
+same finding ID and any earlier HOLD.
 
 | Route | Observable trigger | Required record |
 |---|---|---|
