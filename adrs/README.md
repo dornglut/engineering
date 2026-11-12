@@ -16,6 +16,7 @@ Allowed statuses are `proposed`, `accepted`, `superseded`, and `rejected`.
 - [ADR 0009 — Establish RunenShader as standalone shader-toolchain authority](0009-establish-runen-shader-boundary.md)
 - [ADR 0010 — Establish RunenGraph as standalone graph-framework authority](0010-establish-runen-graph-boundary.md)
 - [ADR 0011 — Establish RunenInput as standalone device-input framework authority](0011-establish-runen-input-boundary.md)
+- [ADR 0012 — Establish RunenPCG as standalone procedural-generation framework authority](0012-establish-runen-pcg-boundary.md)
 
 ## Proposed
 

@@ -22,6 +22,7 @@ dornglut
 ├── runen-ecs
 ├── runen-shader
 ├── runen-graph
+├── runen-pcg
 ├── runen-input
 └── runen-render
 ```
@@ -49,6 +50,7 @@ dornglut
 | `dornglut/runen-shader` | Shader-source and shader-toolchain framework producing canonical shader artifacts | Standalone semantic authority; sibling of RunenGPU; concrete frontend implementation remains repository-owned |
 | `dornglut/runen-render` | Reusable semantic rendering and maintained image-formation framework | Standalone semantic and conformance authority; Runenwerk consumes its accepted public contract and owns product integration |
 | `dornglut/runen-graph` | Reusable graph and relationship framework over caller-owned identities | Standalone foundational framework authority; adoption remains repository-owned |
+| `dornglut/runen-pcg` | Reusable engine-independent procedural-generation algorithms and capability-specific contracts | Standalone framework authority; current bootstrap has no generation API, and adoption remains repository-owned |
 | `dornglut/runen-input` | Host/backend-neutral device-input observation and deterministic confirmed-state framework | Standalone semantic authority; Runenwerk is an exact-pinned downstream integration/product consumer |
 | `dornglut/runen-net` | Host- and transport-independent realtime multiplayer networking framework | Standalone; Runenwerk is a downstream consumer, and RunenOnline does not redefine its semantics |
 | `dornglut/runen-online` | Provider-neutral online-game control-plane framework | Standalone sibling of RunenNet; game/server applications may compose both through explicit integration |
@@ -56,6 +58,8 @@ dornglut
 
 The durable RunenNet/RunenOnline ownership and composition boundary is defined by
 [ADR 0006](../adrs/0006-separate-realtime-networking-from-online-control-plane.md).
+
+The RunenPCG boundary is established by [ADR 0012](../adrs/0012-establish-runen-pcg-boundary.md).
 
 The durable RunenShader/RunenGPU/RunenRender ownership and composition boundary is defined by
 [ADR 0009](../adrs/0009-establish-runen-shader-boundary.md). RunenInput ownership and
@@ -79,6 +83,8 @@ RunenUI
 RunenInput ──> explicit consumers
 
 RunenGraph ──> explicit consumers
+RunenGraph / RunenSpatial / RunenSDF ──> RunenPCG (only where needed)
+RunenPCG ──> explicit application consumers
 
 RunenNet ─────┐
 RunenOnline ──┼──> consumer game/server applications
@@ -130,6 +136,14 @@ RunenGraph is a standalone foundational framework authority for reusable graph a
 relationship semantics over caller-owned identities. RunenGraph must not depend upward
 on RunenECS, RunenUI, Runenwerk, RunenRender, or any future RunenKnowledge repository;
 consumer adoption and any explicit integration remain separately owned by the consumer.
+RunenPCG is the independent owner for reusable procedural-generation algorithms and
+capability-specific inputs, deterministic behavior, bounds, and outputs. It may
+compose RunenGraph, RunenSpatial, or RunenSDF when justified, but those frameworks
+retain their own semantics. RunenPCG does not own application recipes, world or
+Site acceptance, spatial/physical realization, lifecycle, persistence, or engine
+plugins. Runenwerk's existing cave generator remains Runenwerk-owned until a
+separately accepted, compatibility-proven transfer. No consumer adoption follows
+from family recognition alone.
 RunenInput is the standalone authority for reusable backend-neutral device-input
 observation and deterministic confirmed-state semantics after its completed ADR 0008
 source-authority handoff. Runenwerk consumes the accepted standalone framework and
