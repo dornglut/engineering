@@ -214,6 +214,29 @@ The following work remains serialized unless an accepted issue defines and prove
 - source extraction, transfer, deletion, and consumer cutover;
 - dependency or public-contract transitions that require coordinated acceptance.
 
+### Local checkout and recovery discipline
+
+A branch or issue does not by itself require a separate physical checkout.
+Reuse an existing compatible checkout for serialized work. Additional worktrees
+or clones require an actual isolation, concurrent-writer, validation or recovery
+need; keep one writer per mutable checkout and do not switch or mutate a
+checkout during validation.
+
+Preserve coherent, recoverable source and untracked work at a session or
+ownership handoff. Before removing a checkout, branch or stash, establish that
+valuable changes and otherwise unreachable commits are integrated or retained
+through verified, durable references and appropriate backups. A squash merge,
+reflog retention, or a tracked-only patch alone does not prove preservation.
+Review rescued content before publishing it; exclude secrets, generated build
+output and unrelated private material.
+
+On acceptance, abandonment or transfer, remove obsolete worktrees and temporary
+refs once their preservation obligations are satisfied. Retain useful compatible
+build caches when safe; do not share mutable outputs between concurrent
+incompatible builds or weaken canonical validation to reduce rebuild cost.
+No fixed organization-wide checkout count or mandatory cache implementation
+is imposed. Repositories may choose a stricter local checkout policy.
+
 ### Dependent delivery workflow
 
 1. **Independent changes:** Use bounded PRs into accepted `main` when each change preserves
