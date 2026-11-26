@@ -113,7 +113,7 @@ An accepted base is the accepted default-branch revision from which pull-request
 
 Exact-head validation evidence is a successful validation of the revision selected for that evidence stage. For a `pull_request` event, reviewed feature-head evidence selects `github.event.pull_request.head.sha`; for `merge_group`, queue-integration evidence selects `github.sha`; for `push` and `workflow_dispatch`, it selects `github.sha`. The workflow explicitly selects the expected revision for checkout and proves that `git rev-parse HEAD` equals the expected revision before any invocation of the repository-owned canonical command runs.
 
-A moved feature head invalidates earlier exact-head evidence. A workflow definition may be loaded from a pull-request merge ref while the reusable workflow explicitly checks out feature-head repository content. These are separate facts: the definition ref is not the validated repository revision.
+A moved feature head invalidates earlier exact-head evidence. The opt-in documentation projection below may establish new exact-head evidence using an independently verified full run for identical executable inputs; it does not relabel the earlier run as validation of the new head. A workflow definition may be loaded from a pull-request merge ref while the reusable workflow explicitly checks out feature-head repository content. These are separate facts: the definition ref is not the validated repository revision.
 
 Synthetic merge-result evidence validates GitHub's generated pull-request merge revision. It can be useful when intentionally requested, but it must be named merge-result evidence and must not be substituted for reviewed feature-head evidence. A merge-queue `merge_group` revision is a separate integration evidence stage, not this ordinary pull-request synthetic merge ref. Exact feature-head validation does not require duplicating the complete canonical suite against an ordinary synthetic pull-request merge result by default; queue-enabled repositories instead validate the required checks against the exact merge-group integration revision before the queue may merge it.
 
@@ -124,6 +124,49 @@ Successful validation presents compact repository, event, revision, command, and
 The authoring tool, local evidence, and model assessment do not replace independent CI. Local validation remains valuable preparation and should be reported honestly.
 
 Agent-mediated publication and acceptance follow the [GitHub standard](github.md#agent-mediated-repository-changes). Executor-specific procedures may select exact-head CI when local execution is unavailable, but they do not redefine this validation contract.
+
+## Change-aware documentation validation
+
+The complete local command remains authoritative and runs every required check.
+A Rust repository may opt in to a hosted documentation projection only after an
+accepted caller change proves that its explicit documentation allowlist excludes
+every file consumed by build, tests, generated products, packaging or runtime
+behavior. The repository owns the allowlist and the fixed lightweight invocation
+`cargo validate --docs`; the complete command and lightweight invocation share
+the same documentation and repository-policy checks. Full validation must also
+validate the allowlist structure and required documentation files.
+
+Selective hosted validation is permitted only when all of these hold:
+
+- the exact expected feature or push revision is checked out and proved;
+- the allowlist and caller workflow are byte-identical to the accepted default
+  branch policy (for a default-branch push, use the previous accepted revision);
+- the repository-owned allowlist consists of explicit regular Markdown paths,
+  not globs or executable content; only existing regular file content changes
+  are eligible (additions, removals, renames and mode/type changes run full);
+- a successful full run is independently verified through GitHub Actions
+  metadata, including repository, workflow path, pinned reusable revision,
+  exact source revision, full-validation job and successful aggregate;
+- all tracked paths, modes and object identities outside the allowlist match
+  that full-run revision, and at least one eligible document differs;
+- current exact-head documentation/policy validation succeeds.
+
+A docs-only run cannot establish reusable executable evidence. No workspace
+artifacts or test binaries are carried between revisions. The evidence record
+identifies the current revision and the verified full-run revision and run ID.
+No classification decision may be made from a path filter, commit message,
+user-supplied run ID, untrusted head classifier or unverified check label.
+
+Uncertain, missing, truncated or inaccessible evidence selects full validation.
+Manual dispatch, merge-group integration, policy/allowlist changes, unsupported
+partition layouts and unsupported events receive the complete baseline. The
+first adoption requires complete validation; older workflow pins remain
+unchanged. Keep one stable required aggregate; skipped or failed selected work
+must not report success. The reusable workflow may implement this fixed,
+opt-in evidence projection, not repository-specific semantic inference.
+
+The first implementation is deliberately restricted to a complete unpartitioned
+Rust baseline for evidence reuse. Expand only with separate equivalence proof.
 
 ## Documentation repositories
 
