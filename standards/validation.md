@@ -148,7 +148,8 @@ Selective hosted validation is permitted only when all of these hold:
   metadata, including repository, workflow path, pinned reusable revision,
   exact source revision, full-validation job and successful aggregate;
 - all tracked paths, modes and object identities outside the allowlist match
-  that full-run revision, and at least one eligible document differs;
+  both the accepted default-branch revision and that full-run revision, and at
+  least one eligible document differs from each;
 - current exact-head documentation/policy validation succeeds.
 
 A docs-only run cannot establish reusable executable evidence. No workspace
@@ -166,7 +167,11 @@ must not report success. The reusable workflow may implement this fixed,
 opt-in evidence projection, not repository-specific semantic inference.
 
 The first implementation is deliberately restricted to a complete unpartitioned
-Rust baseline for evidence reuse. Expand only with separate equivalence proof.
+Rust baseline and accepted executable inputs. A mixed code/documentation PR must
+run full validation even after an earlier green code checkpoint: unmerged code
+may introduce a new dependency on an allowlisted document. Reusing such evidence
+requires a separate trusted dependency-boundary proof, not simply equal code
+hashes between two feature revisions. Expand only with separate equivalence proof.
 
 ## Documentation repositories
 
