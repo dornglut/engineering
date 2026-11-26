@@ -129,28 +129,67 @@ Agent-mediated publication and acceptance follow the [GitHub standard](github.md
 
 The complete local command remains authoritative and runs every required check.
 A Rust repository may opt in to a hosted documentation projection only after an
-accepted caller change proves that its explicit documentation allowlist excludes
-every file consumed by build, tests, generated products, packaging or runtime
-behavior. The repository owns the allowlist and the fixed lightweight invocation
-`cargo validate --docs`; the complete command and lightweight invocation share
-the same documentation and repository-policy checks. Full validation must also
-validate the allowlist structure and required documentation files.
+accepted caller change establishes an audited documentation boundary. The
+repository owns the classification policy and fixed lightweight invocation
+`cargo validate --docs`; the complete and lightweight invocations share the
+same documentation and repository-policy checks. Full validation also validates
+the policy structure and required documentation files.
+
+Two opt-in policies are supported; select exactly one.
+
+- **Explicit inventory:** the existing `validation-docs.txt` lists individual
+  regular Markdown paths, not globs or executable content. Only content
+  changes to existing listed regular files are eligible; additions, removals,
+  renames and mode/type changes run full.
+- **Documentation namespaces:** a regular root `validation-docs-policy.txt`
+  containing exactly `markdown-namespaces-v1` and a final LF selects a fixed
+  classification of regular, non-executable Markdown files directly at the
+  repository root or under `docs/`. Use bounded, unambiguous ASCII path
+  components; reject traversal, hidden components, ambiguous names, symlinks,
+  executable files, submodules and non-Markdown content as eligible changes.
+  The explicit inventory must be absent. Additions, removals and renames wholly
+  within the eligible namespace may use the documentation projection; there
+  is no per-document manifest to update. Renames are evaluated as removal
+  and addition, and a move across the boundary changes non-documentation
+  inputs. Mode/type changes never qualify.
+
+Before adopting either policy, prove that accepted executable inputs do not
+depend on the excluded documentation. For namespace mode, the proof must also
+cover absence, presence, names and inventory of documents, including future
+additions: build scripts, compilation inputs, tests, generated products,
+packaging and runtime discovery must not consume or enumerate eligible
+documents in a way that changes executable behavior. Repository-policy checks
+may inspect documentation and its inventory when they run equivalently in
+both validation modes. A filename extension, existing tree audit alone, or
+successful full run is not proof of this namespace invariant. Review the
+boundary whenever executable dependencies, file discovery or validation policy
+change; revoke namespace eligibility through a full-validated policy change
+if the invariant cannot be preserved. Repositories unable to establish the
+stronger boundary retain the explicit inventory or full validation.
 
 Selective hosted validation is permitted only when all of these hold:
 
 - the exact expected feature or push revision is checked out and proved;
-- the allowlist and caller workflow are byte-identical to the accepted default
-  branch policy (for a default-branch push, use the previous accepted revision);
-- the repository-owned allowlist consists of explicit regular Markdown paths,
-  not globs or executable content; only existing regular file content changes
-  are eligible (additions, removals, renames and mode/type changes run full);
+- the classification policy and caller workflow are byte-identical to the
+  accepted default-branch policy (for a default-branch push, use the previous
+  accepted revision), and the mutually exclusive policy selection is unchanged;
+- the trusted classifier checks complete tracked inventories, including paths,
+  modes and object identities, using the accepted policy, never candidate
+  classification code. The comparison covers the union of paths in each pair
+  of trees; every difference must satisfy the selected documentation policy.
+  Non-eligible paths must match exactly. For namespace mode, every present side
+  of a changed eligible leaf must be a regular non-executable Markdown blob;
+  directory/file collisions or uncertain inventories select full validation;
 - a successful full run is independently verified through GitHub Actions
   metadata, including repository, workflow path, pinned reusable revision,
   exact source revision, full-validation job and successful aggregate;
-- all tracked paths, modes and object identities outside the allowlist match
-  both the accepted default-branch revision and that full-run revision, and at
-  least one eligible document differs from each;
-- current exact-head documentation/policy validation succeeds.
+- all non-documentation inputs match both the accepted default-branch revision
+  and that full-run revision, including classification policy and caller, and
+  at least one eligible document differs from each;
+- current exact-head documentation/policy validation succeeds, including
+  required-document presence, link integrity and the selected policy checks.
+  A documentation-only deletion cannot remove a required authority document
+  or leave invalid links.
 
 A docs-only run cannot establish reusable executable evidence. No workspace
 artifacts or test binaries are carried between revisions. The evidence record
@@ -161,17 +200,25 @@ user-supplied run ID, untrusted head classifier or unverified check label.
 Uncertain, missing, truncated or inaccessible evidence selects full validation.
 Manual dispatch, merge-group integration, policy/allowlist changes, unsupported
 partition layouts and unsupported events receive the complete baseline. The
-first adoption requires complete validation; older workflow pins remain
-unchanged. Keep one stable required aggregate; skipped or failed selected work
-must not report success. The reusable workflow may implement this fixed,
-opt-in evidence projection, not repository-specific semantic inference.
+first adoption or migration between policies requires complete validation;
+older workflow pins remain unchanged. Keep one stable required aggregate;
+skipped or failed selected work must not report success. The reusable workflow
+may implement this fixed, opt-in evidence projection, not repository-specific
+semantic inference.
 
-The first implementation is deliberately restricted to a complete unpartitioned
-Rust baseline and accepted executable inputs. A mixed code/documentation PR must
-run full validation even after an earlier green code checkpoint: unmerged code
-may introduce a new dependency on an allowlisted document. Reusing such evidence
+Before adopting namespace mode, qualify the actual hosted selector and
+repository validator with ordinary additions, deletions and renames, rejected
+required-document/link violations, executable or policy changes, mode/type
+changes, unavailable evidence and unsuccessful selected work. Existing
+inventory-mode behavior must remain compatible.
+
+The projection remains restricted to a complete unpartitioned Rust baseline
+and accepted executable inputs. A mixed code/documentation PR must run full
+validation even after an earlier green code checkpoint: unmerged code may
+introduce a new dependency on an excluded document. Reusing such evidence
 requires a separate trusted dependency-boundary proof, not simply equal code
-hashes between two feature revisions. Expand only with separate equivalence proof.
+hashes between two feature revisions. Expand only with separate equivalence
+proof.
 
 ## Documentation repositories
 
